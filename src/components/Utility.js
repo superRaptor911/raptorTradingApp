@@ -1,6 +1,6 @@
 // Address of our server
-// export const serverAddress='http://cucektradings.com/serverx';
-export const serverAddress='/server';
+export const serverAddress='http://cucektradings.com/serverx';
+// export const serverAddress='/server';
 
 // Funtion to get cookie value
 export function getCookie(cname) {

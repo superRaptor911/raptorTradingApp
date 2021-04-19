@@ -122,6 +122,30 @@ const generateTransactionTable = (data, classes) => {
   );
 }
 
+const generateUserCoinsTable = (data) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table  aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Coin ID</TableCell>
+            <TableCell align="center">Coin Count</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell component="th" scope="row">{row.coin}</TableCell>
+              <TableCell align="center">{row.count}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+
 const UserInfo = () => {
   const {userName} = useParams();
   const classes = useStyles()
@@ -142,12 +166,21 @@ const UserInfo = () => {
         username: userName,
       }});
 
+  const [target3, ] = useState({uri: `${serverAddress}/userCoins.php`, data: {
+        type: 'info',
+        name: userName,
+      }});
+
   // This variable is used to show status when submit button is pressed.
-  const [currentStatus, setCurrentStatus] = useState("");
+  const [currentStatus, setCurrentStatus] = useState("LOADING ...");
+  const [currentStatus2, setCurrentStatus2] = useState("LOADING ...");
+  const [currentStatus3, setCurrentStatus3] = useState("LOADING ...");
   const [transctionTable, setTransctionTable] = useState();
+  const [userCoinsTable, setUserCoinsTable] = useState();
 
   const serverResponse = useFetch(target);
   const serverResponse2 = useFetch(target2);
+  const serverResponse3 = useFetch(target3);
   const history = useHistory();
 
   // Check server response
@@ -174,18 +207,35 @@ const UserInfo = () => {
   // Check server response
   useEffect(() => {
     if (serverResponse2.error.error) {
-      setCurrentStatus(serverResponse2.error.msg);
+      setCurrentStatus2(serverResponse2.error.msg);
     }
     else if (serverResponse2.data) {
       if (!serverResponse2.data.result) {
-        setCurrentStatus(serverResponse2.data.err);
+        setCurrentStatus2(serverResponse2.data.err);
       }
       else {
-        setCurrentStatus("");
+        setCurrentStatus2("");
         setTransctionTable(generateTransactionTable(serverResponse2.data.trans, classes));
       }
     }
   }, [serverResponse2.error, serverResponse2.data])
+
+
+  // Check server response
+  useEffect(() => {
+    if (serverResponse3.error.error) {
+      setCurrentStatus3(serverResponse3.error.msg);
+    }
+    else if (serverResponse3.data) {
+      if (!serverResponse3.data.result) {
+        setCurrentStatus3(serverResponse3.data.err);
+      }
+      else {
+        setCurrentStatus3("");
+        setUserCoinsTable(generateUserCoinsTable(serverResponse3.data.userCoins));
+      }
+    }
+  }, [serverResponse3.error, serverResponse3.data])
 
   return (
     <Container className={classes.container}>
@@ -239,16 +289,35 @@ const UserInfo = () => {
         EDIT
       </Button>
       <br/>
+      <Typography variant="button" color="error">
+        {currentStatus}
+      </Typography>
+
       <br/>
       <br/>
+      <br/>
+      <Typography variant="h4">
+        Coins
+      </Typography>
+      {userCoinsTable}
+      <br/>
+      <br/>
+      <br/>
+      <Typography variant="button" color="error">
+        {currentStatus3}
+      </Typography>
+
       <Typography variant="h4">
         Transactions
       </Typography>
       {transctionTable}
 
       <Typography variant="button" color="error">
-        {currentStatus}
+        {currentStatus2}
       </Typography>
+      <br/>
+      <br/>
+      <br/>
     </Container>
   );
 }

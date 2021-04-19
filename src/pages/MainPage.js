@@ -22,6 +22,9 @@ const MainPage = () => {
       <br/>
       <br/>
       <TransactionTable/>
+      <br/>
+      <br/>
+      <br/>
     </div>
   );
 }
