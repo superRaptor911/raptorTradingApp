@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import {useEffect , useState} from "react";
 import useFetch from "../components/useFetch";
 import {serverAddress} from '../components/Utility';
@@ -11,9 +12,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    width:'90%',
+    maxWidth: 1200,
+    marginTop: 150,
+    marginBottom: 150,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    display: 'block'
+  },
   iconContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -39,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const generateTransactionTable = (data, classes) => {
+const generateTransactionTable = (data, classes, history) => {
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -52,6 +62,7 @@ const generateTransactionTable = (data, classes) => {
             <TableCell align="center">Total (INR)</TableCell>
             <TableCell align="center">Type</TableCell>
             <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Edit?</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -93,6 +104,9 @@ const generateTransactionTable = (data, classes) => {
               <TableCell align="center" className={(row.transStatus == 1) ? classes.green : classes.red}>
                 {(row.transType == 1) ? "CONFIRMED" : "PENDING"}
               </TableCell>
+              <TableCell align="center"> 
+                <Button variant="outlined" color="primary" onClick={() => {history.push("/edittransaction/" + row.id)}}>EDIT</Button> 
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -101,36 +115,47 @@ const generateTransactionTable = (data, classes) => {
   );
 }
 
-const TransactionTable = () => {
-  const classes = useStyles();
-  const [target, ] = useState({uri:  `${serverAddress}/transction.php`, data: {type: "list"}});
-  const [transctionList, setTransctionList] = useState();
+
+
+
+
+const EditTransactionMenu = () => {
+  const classes = useStyles()
+  const [target, setTarget] = useState({uri: `${serverAddress}/transction.php`, data: {type: 'list'}});
+  const history = useHistory();
+
+  // This variable is used to show status when submit button is pressed.
+  const [currentStatus, setCurrentStatus] = useState("");
   const serverResponse = useFetch(target);
+  const [transactionListJsx, setTransactionListJsx] = useState();
 
-
+  // Check server response
   useEffect(() => {
     if (serverResponse.error.error) {
-      // Fetch request failed
-      console.log("Error::TransactionTable::" + serverResponse.error.msg);
+      setCurrentStatus(serverResponse.error.msg);
+      console.log("error")
     }
     else if (serverResponse.data) {
-      if (serverResponse.data.result) {
-        setTransctionList(generateTransactionTable(serverResponse.data.trans, classes));
+      if (!serverResponse.data.result) {
+        setCurrentStatus(serverResponse.data.err);
       }
       else {
-        // Error from server
-        console.log("Error::TransactionTable::" + serverResponse.data.err);
+        setCurrentStatus("");
+        setTransactionListJsx(generateTransactionTable(serverResponse.data.trans, classes, history));
       }
     }
-  }, [serverResponse.error, serverResponse.data]);
+  }, [serverResponse.error, serverResponse.data])
 
 
   return (
-    <div>
-      <Typography variant="h4">Transactions</Typography> <br/>
-      {transctionList}
+    <div className={classes.root}>
+      <Typography color="error">
+        {currentStatus}
+      </Typography>
+
+        {transactionListJsx}
     </div>
   );
 }
 
-export default TransactionTable
+export default EditTransactionMenu

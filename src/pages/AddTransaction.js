@@ -82,6 +82,7 @@ const AddTransaction = () => {
   const [transactionStatus, setTransactionStatus] = useState(1);
   const [coinCount, setCoinCount] = useState(0);
   const [coinPrice, setCoinPrice] = useState(0);
+  const [cashPaid, setCashPaid] = useState(0);
 
   const [usersList, setUsersList] = useState();
   const [coinList, setCoinList] = useState();
@@ -116,6 +117,7 @@ const AddTransaction = () => {
         coinCount: coinCount,
         transtype: transactionType,
         transStatus: transactionStatus,
+        cashPaid: cashPaid,
         hash: getCookie("hash")
       }});
       console.log("Login::ALL_OK, submitting data to server");
@@ -260,6 +262,18 @@ const AddTransaction = () => {
         fullWidth
         type="number"
         disabled
+        required
+      />
+
+
+      <TextField className={classes.field}
+        value={cashPaid}
+        onChange={(e) => setCashPaid(e.target.value)}
+        label="Cash Paid" 
+        variant="outlined" 
+        color="secondary" 
+        fullWidth
+        type="number"
         required
       />
 

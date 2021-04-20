@@ -11,6 +11,7 @@ import EditUser from './pages/EditUser';
 import UserList from './pages/UserList';
 import UserInfo from './pages/UserInfo';
 import AdminLogin from './pages/AdminLogin';
+import EditTransactionMenu from './pages/EditTransactionMenu';
 
 function App() {
   return (
@@ -48,6 +49,11 @@ function App() {
           <Route exact path="/adminlogin">
             <AdminLogin/>
           </Route>
+
+          <Route exact path="/edittransactionmenu">
+            <EditTransactionMenu/>
+          </Route>
+
         </Switch>
       </div>
     </Router>

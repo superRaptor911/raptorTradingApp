@@ -60,6 +60,16 @@ const AdminMenu = () => {
         className={classes.button} 
         color="secondary"
         size='large'
+        onClick={() => history.push('/edittransactionmenu')}
+      >
+      EDIT TRANSACTION
+      </Button>
+
+      <Button 
+        variant="contained"
+        className={classes.button} 
+        color="secondary"
+        size='large'
         onClick={() => history.push('/listusers')}
       >
       USERS

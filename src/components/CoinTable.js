@@ -92,7 +92,9 @@ function getUserInfo(transctionList, pricing) {
     if (pricing) {
       for (let i of t.coins) {
         let coin = pricing[i.coin];
-        dict[t.username].value += coin.last * i.count;
+        if (coin) {
+          dict[t.username].value += coin.last * i.count;
+        }
       }
       dict[t.username].profit = dict[t.username].value - dict[t.username].investment ;
       dict[t.username].percent = (dict[t.username].value / dict[t.username].investment ) * 100 - 100;
