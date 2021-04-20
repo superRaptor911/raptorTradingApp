@@ -46,11 +46,12 @@ const generateTransactionTable = (data, classes) => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="left">Type</TableCell>
             <TableCell >Coin Name</TableCell>
             <TableCell align="center">Coin Count</TableCell>
             <TableCell align="center">Buying Price (INR)</TableCell>
             <TableCell align="center">Total (INR)</TableCell>
+            <TableCell align="center">Type</TableCell>
+            <TableCell align="center">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -71,7 +72,6 @@ const generateTransactionTable = (data, classes) => {
                 </Link>
               </TableCell>
 
-              <TableCell align="left" className={(row.transType === "DEPOSIT") ? classes.green : classes.red}>{row.transType}</TableCell>
               <TableCell align="right">
                 <div className={classes.iconContainer}>
                   <Avatar
@@ -87,6 +87,12 @@ const generateTransactionTable = (data, classes) => {
               <TableCell align="center">{row.coinCount}</TableCell>
               <TableCell align="center">{row.cost}</TableCell>
               <TableCell align="center">{row.cost * row.coinCount}</TableCell>
+              <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
+                {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
+              </TableCell>
+              <TableCell align="center" className={(row.transStatus == 1) ? classes.green : classes.red}>
+                {(row.transType == 1) ? "CONFIRMED" : "PENDING"}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

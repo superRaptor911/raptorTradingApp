@@ -78,6 +78,8 @@ const AddTransaction = () => {
   const classes = useStyles()
   const [username, setUsername] = useState("");
   const [coinName, setCoinName] = useState("");
+  const [transactionType, setTransactionType] = useState(1);
+  const [transactionStatus, setTransactionStatus] = useState(1);
   const [coinCount, setCoinCount] = useState(0);
   const [coinPrice, setCoinPrice] = useState(0);
 
@@ -112,6 +114,8 @@ const AddTransaction = () => {
         coinName: coinName,
         coinPrice: coinPrice,
         coinCount: coinCount,
+        transtype: transactionType,
+        transStatus: transactionStatus,
         hash: getCookie("hash")
       }});
       console.log("Login::ALL_OK, submitting data to server");
@@ -200,6 +204,32 @@ const AddTransaction = () => {
         className={classes.select}
       >
         {coinList}
+      </Select>
+
+      <InputLabel id="type">Type</InputLabel>
+      <Select
+        labelId="type"
+        id="transtype"
+        value={transactionType}
+        onChange={(e) => setTransactionType(e.target.value)}
+        fullWidth
+        className={classes.select}
+      >
+        <MenuItem value={0}>WITHDRAWL</MenuItem>
+        <MenuItem value={1}>DEPOSIT</MenuItem>
+      </Select>
+
+      <InputLabel id="status">Status</InputLabel>
+      <Select
+        labelId="status"
+        id="transstatus"
+        value={transactionStatus}
+        onChange={(e) => setTransactionStatus(e.target.value)}
+        fullWidth
+        className={classes.select}
+      >
+        <MenuItem value={0}>PENDING</MenuItem>
+        <MenuItem value={1}>COMPLETED</MenuItem>
       </Select>
 
       <TextField className={classes.field}
