@@ -75,29 +75,27 @@ const generateCoinTable = (data, pricing, classes) => {
 }
 
 function getUserInfo(transctionList, pricing) {
+  if (!transctionList) {
+    return [];
+  }
   let dict = {};
   for (let t of transctionList) {
-    if (dict[t.username] === undefined) {
-      dict[t.username] = {
-        name: t.username,
-        avatar: t.userAvatar,
-        investment: t.coinCount * t.cost,
-        value: 0,
-        profit: 0,
-        percent: 0
-      } 
-    }
-    else {
-      dict[t.username].investment += t.coinCount * t.cost;
-    }
+    dict[t.username] = {
+      name: t.username,
+      avatar: t.userAvatar,
+      investment: t.investment,
+      value: 0,
+      profit: 0,
+      percent: 0
+    };
 
     if (pricing) {
-      let coin = pricing[t.coinId];
-      if (coin) {
-        dict[t.username].value += t.coinCount * coin.last;
-        dict[t.username].profit = dict[t.username].value - dict[t.username].investment ;
-        dict[t.username].percent = (dict[t.username].value / dict[t.username].investment ) * 100 - 100;
+      for (let i of t.coins) {
+        let coin = pricing[i.coin];
+        dict[t.username].value += coin.last * i.count;
       }
+      dict[t.username].profit = dict[t.username].value - dict[t.username].investment ;
+      dict[t.username].percent = (dict[t.username].value / dict[t.username].investment ) * 100 - 100;
     }
   }
 
@@ -157,7 +155,7 @@ const CoinTable = () => {
   const classes = useStyles();
   const [target, ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "list"}});
   const [target2, setTarget2 ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "prices"}});
-  const [target3, ] = useState({uri:  `${serverAddress}/transction.php`, data: {type: "list"}});
+  const [target3, ] = useState({uri:  `${serverAddress}/transction.php`, data: {type: "investmentNcoins"}});
   const [coinList, setCoinList] = useState();
   const [userList, setUserList] = useState();
   const [timeoutCounter, setTimeoutCounter] = useState(0);
@@ -197,7 +195,7 @@ const CoinTable = () => {
   }, [serverResponse.error, serverResponse.data]);
 
 
-  // Get coins pricing
+  // Update profit/Loss
   useEffect(() => {
     if (serverResponse2.error.error) {
       // Fetch request failed
@@ -216,7 +214,7 @@ const CoinTable = () => {
   }, [serverResponse2.error, serverResponse2.data]);
 
 
-  // Get Transaction details
+  // Get investments
   useEffect(() => {
     if (serverResponse3.error.error) {
       // Fetch request failed
@@ -224,8 +222,8 @@ const CoinTable = () => {
     }
     else if (serverResponse3.data) {
       if (serverResponse3.data.result) {
-        setUserList(generateUserTable(getUserInfo(serverResponse3.data.trans, null), classes));
-        transactionData.current = serverResponse3.data.trans;
+        setUserList(generateUserTable(getUserInfo(serverResponse3.data.data, null), classes));
+        transactionData.current = serverResponse3.data.data;
       }
       else {
         // Error from server
