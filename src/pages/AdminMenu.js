@@ -50,6 +50,16 @@ const AdminMenu = () => {
         className={classes.button} 
         color="secondary"
         size='large'
+        onClick={() => history.push('/transferfund')}
+      >
+      TRANSFER FUND
+      </Button>
+
+      <Button 
+        variant="contained"
+        className={classes.button} 
+        color="secondary"
+        size='large'
         onClick={() => history.push('/addtransaction')}
       >
       ADD TRANSACTION

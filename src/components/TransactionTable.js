@@ -51,7 +51,6 @@ const generateTransactionTable = (data, classes) => {
             <TableCell align="center">Buying Price (INR)</TableCell>
             <TableCell align="center">Total (INR)</TableCell>
             <TableCell align="center">Type</TableCell>
-            <TableCell align="center">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -89,9 +88,6 @@ const generateTransactionTable = (data, classes) => {
               <TableCell align="center">{(row.cost * row.coinCount).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
                 {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
-              </TableCell>
-              <TableCell align="center" className={(row.transStatus == 1) ? classes.green : classes.red}>
-                {(row.transType == 1) ? "CONFIRMED" : "PENDING"}
               </TableCell>
             </TableRow>
           ))}

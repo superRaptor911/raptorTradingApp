@@ -74,21 +74,17 @@ function generateItems(items) {
   return postsJsx;
 }
 
-const AddTransaction = () => {
+const TransferFund = () => {
   const classes = useStyles()
   const [username, setUsername] = useState("");
-  const [coinName, setCoinName] = useState("");
   const [transactionType, setTransactionType] = useState(1);
-  const [coinCount, setCoinCount] = useState(0);
-  const [coinPrice, setCoinPrice] = useState(0);
+  const [ammount, setAmmount] = useState(0);
   const [fee, setFee] = useState(0);
 
   const [usersList, setUsersList] = useState();
-  const [coinList, setCoinList] = useState();
 
   const [submitDisabled, setSubmitDisabled] = useState(false);
   const [target, setTarget] = useState({uri: "", data:{}});
-  const [target2, setTarget2] = useState({uri:  `${serverAddress}/coin.php`, data:{ type: 'list'}});
   const [target3, setTarget3] = useState({uri:  `${serverAddress}/users.php`, data:{ type: 'list'}});
 
   const history = useHistory();
@@ -97,7 +93,6 @@ const AddTransaction = () => {
   const [currentStatus, setCurrentStatus] = useState("");
 
   const serverResponse = useFetch(target);
-  const serverResponse2 = useFetch(target2);
   const serverResponse3 = useFetch(target3);
 
   const handleSubmit = () => {
@@ -109,12 +104,9 @@ const AddTransaction = () => {
     } 
     else {
       setTarget({uri: `${serverAddress}/transction.php`, data: {
-        type: 'addTransaction',
+        type: 'fundTransfer',
         username: username,
-        coinName: coinName,
-        coinPrice: coinPrice,
-        coinCount: coinCount,
-        fee: fee,
+        ammount: ammount - fee,
         transtype: transactionType,
         hash: getCookie("hash")
       }});
@@ -149,22 +141,6 @@ const AddTransaction = () => {
 
   // Check server response
   useEffect(() => {
-    if (serverResponse2.error.error) {
-      console.log("Error::AddTransaction::Failed to get coin list");
-    }
-    else if (serverResponse2.data) {
-      if (!serverResponse2.data.result) {
-        setCurrentStatus(serverResponse2.data.err);
-      }
-      else {
-        setCoinList(generateItems(serverResponse2.data.coins));
-      }
-    }
-  }, [serverResponse2.error, serverResponse2.data])
-
-
-  // Check server response
-  useEffect(() => {
     if (serverResponse3.error.error) {
       console.log("Error::AddTransaction::Failed to get user list");
     }
@@ -194,17 +170,6 @@ const AddTransaction = () => {
         {usersList}
       </Select>
 
-      <InputLabel id="coin">Coin</InputLabel>
-      <Select
-        labelId="coin"
-        id="coinSelect"
-        value={coinName}
-        onChange={(e) => setCoinName(e.target.value)}
-        fullWidth
-        className={classes.select}
-      >
-        {coinList}
-      </Select>
 
       <InputLabel id="type">Type</InputLabel>
       <Select
@@ -221,25 +186,15 @@ const AddTransaction = () => {
 
 
       <TextField className={classes.field}
-        onChange={(e) => setCoinCount(e.target.value)}
-        label="Coin count" 
+        value={ammount}
+        onChange={(e) => setAmmount(e.target.value)}
+        label="Sum" 
         variant="outlined" 
         color="secondary" 
         fullWidth
         type="number"
         required
       />
-
-      <TextField className={classes.field}
-        onChange={(e) => setCoinPrice(e.target.value)}
-        label="Coin price" 
-        variant="outlined" 
-        color="secondary" 
-        fullWidth
-        type="number"
-        required
-      />
-
 
       <TextField className={classes.field}
         value={fee}
@@ -249,17 +204,6 @@ const AddTransaction = () => {
         color="secondary" 
         fullWidth
         type="number"
-        required
-      />
-
-      <TextField className={classes.field}
-        value={coinCount * coinPrice - fee}
-        label="Total" 
-        variant="outlined" 
-        color="secondary" 
-        fullWidth
-        type="number"
-        disabled
         required
       />
 
@@ -293,4 +237,4 @@ const AddTransaction = () => {
   );
 }
 
-export default AddTransaction
+export default TransferFund

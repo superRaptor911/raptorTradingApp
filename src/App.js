@@ -12,6 +12,7 @@ import UserList from './pages/UserList';
 import UserInfo from './pages/UserInfo';
 import AdminLogin from './pages/AdminLogin';
 import EditTransactionMenu from './pages/EditTransactionMenu';
+import TransferFund from './pages/TransferFund';
 
 function App() {
   return (
@@ -22,27 +23,39 @@ function App() {
           <Route exact path="/">
             <MainPage/>
           </Route>
+
           <Route exact path="/login">
             <Login/>
           </Route>
+
           <Route exact path="/adminmenu">
             <AdminMenu/>
           </Route>
+
           <Route exact path="/adduser">
             <AddUser/>
           </Route>
+
           <Route exact path="/addcoin">
             <AddCoin/>
           </Route>
+
+          <Route exact path="/transferfund">
+            <TransferFund/>
+          </Route>
+
           <Route exact path="/addtransaction">
             <AddTransaction/>
           </Route>
+
           <Route exact path="/listusers">
             <UserList/>
           </Route>
+
           <Route exact path="/edituser/:username">
             <EditUser/>
           </Route>
+
           <Route exact path="/user/:userName">
             <UserInfo/>
           </Route>

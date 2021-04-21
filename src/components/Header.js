@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import logo from '../logo1.png';
+import SideDrawer from "./SideDrawer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +45,7 @@ const Header = () => {
     <div>
       <AppBar className={classes.root}>
         <Toolbar>
+          <SideDrawer/>
           <Button onClick={() => history.push('/')}>
             <Avatar 
               className={classes.medium}
