@@ -24,6 +24,10 @@ const useStyles = makeStyles({
     marginLeft: 'auto',
     marginRight: 'auto',
   },
+  tableContainer: {
+    marginTop: 40,
+
+  },
 
   container: {
     marginTop: 100,
@@ -79,7 +83,7 @@ const generateTransactionTable = (data, classes) => {
             <TableCell align="center">Coin Count</TableCell>
             <TableCell align="center">Buying Price (INR)</TableCell>
             <TableCell align="center">Total (INR)</TableCell>
-            <TableCell align="center">Delete?</TableCell>
+            <TableCell align="center">Edit?</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -113,7 +117,7 @@ const generateTransactionTable = (data, classes) => {
               <TableCell align="center">{row.coinCount}</TableCell>
               <TableCell align="center">{row.cost}</TableCell>
               <TableCell align="center">{row.cost * row.coinCount}</TableCell>
-              <TableCell align="center"> <Button color="secondary">Delete</Button> </TableCell>
+              <TableCell align="center"> <Button color="secondary">Edit</Button> </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -146,6 +150,29 @@ const generateUserCoinsTable = (data) => {
 }
 
 
+const generateUserWalletTable = (data) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table  aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>User</TableCell>
+            <TableCell align="center">Wallet Balance</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row) => (
+            <TableRow key={row.username}>
+              <TableCell component="th" scope="row">{row.username}</TableCell>
+              <TableCell align="center">{row.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
 const UserInfo = () => {
   const {userName} = useParams();
   const classes = useStyles()
@@ -171,16 +198,24 @@ const UserInfo = () => {
         name: userName,
       }});
 
+  const [target4, ] = useState({uri: `${serverAddress}/transction.php`, data: {
+        type: 'walletInfo',
+        name: userName,
+      }});
+
   // This variable is used to show status when submit button is pressed.
   const [currentStatus, setCurrentStatus] = useState("LOADING ...");
   const [currentStatus2, setCurrentStatus2] = useState("LOADING ...");
   const [currentStatus3, setCurrentStatus3] = useState("LOADING ...");
+  const [currentStatus4, setCurrentStatus4] = useState("LOADING ...");
   const [transctionTable, setTransctionTable] = useState();
   const [userCoinsTable, setUserCoinsTable] = useState();
+  const [userWalletTable, setUserWalletTable] = useState();
 
   const serverResponse = useFetch(target);
   const serverResponse2 = useFetch(target2);
   const serverResponse3 = useFetch(target3);
+  const serverResponse4 = useFetch(target4);
   const history = useHistory();
 
   // Check server response
@@ -237,6 +272,23 @@ const UserInfo = () => {
     }
   }, [serverResponse3.error, serverResponse3.data])
 
+
+  // Check server response
+  useEffect(() => {
+    if (serverResponse4.error.error) {
+      setCurrentStatus4(serverResponse4.error.msg);
+    }
+    else if (serverResponse4.data) {
+      if (!serverResponse4.data.result) {
+        setCurrentStatus4(serverResponse4.data.err);
+      }
+      else {
+        setCurrentStatus4("");
+        setUserWalletTable(generateUserWalletTable(serverResponse4.data.wallet));
+      }
+    }
+  }, [serverResponse4.error, serverResponse4.data])
+
   return (
     <Container className={classes.container}>
       {/* heading */}
@@ -288,34 +340,40 @@ const UserInfo = () => {
       >
         EDIT
       </Button>
-      <br/>
+
       <Typography variant="button" color="error">
         {currentStatus}
       </Typography>
 
-      <br/>
-      <br/>
-      <br/>
-      <Typography variant="h4">
-        Coins
-      </Typography>
-      {userCoinsTable}
-      <br/>
-      <br/>
-      <br/>
-      <Typography variant="button" color="error">
-        {currentStatus3}
-      </Typography>
+      <div className={classes.tableContainer}>
+        <Typography variant="h4">
+          Wallet
+        </Typography>
+        <Typography variant="button" color="error">
+          {currentStatus4}
+        </Typography>
+        {userWalletTable}
+      </div>
 
-      <Typography variant="h4">
-        Transactions
-      </Typography>
-      {transctionTable}
+      <div className={classes.tableContainer}>
+        <Typography variant="h4">
+          Coins
+        </Typography>
+        <Typography variant="button" color="error">
+          {currentStatus3}
+        </Typography>
+        {userCoinsTable}
+      </div>
 
+      <div className={classes.tableContainer}>
+        <Typography variant="h4">
+          Transactions
+        </Typography>
       <Typography variant="button" color="error">
         {currentStatus2}
       </Typography>
-      <br/>
+        {transctionTable}
+      </div>
       <br/>
       <br/>
     </Container>

@@ -78,7 +78,7 @@ const TransferFund = () => {
   const classes = useStyles()
   const [username, setUsername] = useState("");
   const [transactionType, setTransactionType] = useState(1);
-  const [ammount, setAmmount] = useState(0);
+  const [amount, setamount] = useState(0);
   const [fee, setFee] = useState(0);
 
   const [usersList, setUsersList] = useState();
@@ -106,7 +106,7 @@ const TransferFund = () => {
       setTarget({uri: `${serverAddress}/transction.php`, data: {
         type: 'fundTransfer',
         username: username,
-        ammount: ammount - fee,
+        amount: amount - fee * (transactionType * 2 - 1),
         transtype: transactionType,
         hash: getCookie("hash")
       }});
@@ -186,8 +186,8 @@ const TransferFund = () => {
 
 
       <TextField className={classes.field}
-        value={ammount}
-        onChange={(e) => setAmmount(e.target.value)}
+        value={amount}
+        onChange={(e) => setamount(e.target.value)}
         label="Sum" 
         variant="outlined" 
         color="secondary" 
@@ -205,6 +205,16 @@ const TransferFund = () => {
         fullWidth
         type="number"
         required
+      />
+
+      <TextField className={classes.field}
+        value={amount - fee * (transactionType * 2 - 1)}
+        label="Total" 
+        variant="outlined" 
+        color="secondary" 
+        fullWidth
+        type="number"
+        disabled
       />
 
       <Container className={classes.buttonContainer}>
