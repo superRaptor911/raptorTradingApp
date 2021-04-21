@@ -106,8 +106,9 @@ const TransferFund = () => {
       setTarget({uri: `${serverAddress}/transction.php`, data: {
         type: 'fundTransfer',
         username: username,
-        amount: amount - fee * (transactionType * 2 - 1),
+        amount: amount,
         transtype: transactionType,
+        fee: fee,
         hash: getCookie("hash")
       }});
       console.log("Login::ALL_OK, submitting data to server");

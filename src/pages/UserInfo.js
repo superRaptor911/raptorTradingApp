@@ -81,7 +81,7 @@ const generateTransactionTable = (data, classes) => {
             <TableCell>Name</TableCell>
             <TableCell >Coin Name</TableCell>
             <TableCell align="center">Coin Count</TableCell>
-            <TableCell align="center">Buying Price (INR)</TableCell>
+            <TableCell align="center">Coin Price (INR)</TableCell>
             <TableCell align="center">Total (INR)</TableCell>
             <TableCell align="center">Edit?</TableCell>
           </TableRow>
@@ -157,14 +157,52 @@ const generateUserWalletTable = (data) => {
         <TableHead>
           <TableRow>
             <TableCell>User</TableCell>
-            <TableCell align="center">Wallet Balance</TableCell>
+            <TableCell align="center">Wallet Balance(INR)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell component="th" scope="row">{data.username}</TableCell>
+            <TableCell align="center">{data.amount}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+const generateFundTransferHistoryTable = (data, classes) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table  aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="center">Amount</TableCell>
+            <TableCell align="center">Fee</TableCell>
+            <TableCell align="center">Type</TableCell>
+            <TableCell align="center">Time</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <TableRow key={row.username}>
-              <TableCell component="th" scope="row">{row.username}</TableCell>
+            <TableRow key={row.time}>
+              <TableCell component="th" scope="row">
+                <div className={classes.iconContainer}>
+                  <Avatar
+                    alt={row.username}
+                    src={row.userAvatar}
+                    className={classes.icon}
+                  />
+                  <Typography className={classes.iconText}>
+                    {row.username}
+                  </Typography>
+                </div>
+              </TableCell>
               <TableCell align="center">{row.amount}</TableCell>
+              <TableCell align="center">{row.fee}</TableCell>
+              <TableCell align="center">{row.transType}</TableCell>
+              <TableCell align="center">{row.time}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -184,38 +222,46 @@ const UserInfo = () => {
   });
 
   const [target, ] = useState({uri: `${serverAddress}/users.php`, data: {
-        type: 'info',
-        name: userName,
-      }});
+    type: 'info',
+    name: userName,
+  }});
 
   const [target2, ] = useState({uri: `${serverAddress}/transction.php`, data: {
-        type: 'info',
-        username: userName,
-      }});
+    type: 'info',
+    username: userName,
+  }});
 
   const [target3, ] = useState({uri: `${serverAddress}/userCoins.php`, data: {
-        type: 'info',
-        name: userName,
-      }});
+    type: 'info',
+    name: userName,
+  }});
 
   const [target4, ] = useState({uri: `${serverAddress}/transction.php`, data: {
-        type: 'walletInfo',
-        name: userName,
-      }});
+    type: 'walletInfo',
+    username: userName,
+  }});
+
+  const [target5, ] = useState({uri: `${serverAddress}/transction.php`, data: {
+    type: 'fundTransferHistory',
+    username: userName,
+  }});
 
   // This variable is used to show status when submit button is pressed.
   const [currentStatus, setCurrentStatus] = useState("LOADING ...");
   const [currentStatus2, setCurrentStatus2] = useState("LOADING ...");
   const [currentStatus3, setCurrentStatus3] = useState("LOADING ...");
   const [currentStatus4, setCurrentStatus4] = useState("LOADING ...");
+  const [currentStatus5, setCurrentStatus5] = useState("LOADING ...");
   const [transctionTable, setTransctionTable] = useState();
   const [userCoinsTable, setUserCoinsTable] = useState();
   const [userWalletTable, setUserWalletTable] = useState();
+  const [fundTransferHistoryTable, setFundTransferHistoryTable] = useState();
 
   const serverResponse = useFetch(target);
   const serverResponse2 = useFetch(target2);
   const serverResponse3 = useFetch(target3);
   const serverResponse4 = useFetch(target4);
+  const serverResponse5 = useFetch(target5);
   const history = useHistory();
 
   // Check server response
@@ -288,6 +334,23 @@ const UserInfo = () => {
       }
     }
   }, [serverResponse4.error, serverResponse4.data])
+
+
+  // Check server response
+  useEffect(() => {
+    if (serverResponse5.error.error) {
+      setCurrentStatus5(serverResponse5.error.msg);
+    }
+    else if (serverResponse5.data) {
+      if (!serverResponse5.data.result) {
+        setCurrentStatus5(serverResponse5.data.err);
+      }
+      else {
+        setCurrentStatus5("");
+        setFundTransferHistoryTable(generateFundTransferHistoryTable(serverResponse5.data.history, classes));
+      }
+    }
+  }, [serverResponse5.error, serverResponse5.data])
 
   return (
     <Container className={classes.container}>
@@ -367,13 +430,24 @@ const UserInfo = () => {
 
       <div className={classes.tableContainer}>
         <Typography variant="h4">
-          Transactions
+          Coin Transactions
         </Typography>
-      <Typography variant="button" color="error">
-        {currentStatus2}
-      </Typography>
+        <Typography variant="button" color="error">
+          {currentStatus2}
+        </Typography>
         {transctionTable}
       </div>
+
+      <div className={classes.tableContainer}>
+        <Typography variant="h4">
+          Fund Transfer History
+        </Typography>
+        <Typography variant="button" color="error">
+          {currentStatus5}
+        </Typography>
+        {fundTransferHistoryTable}
+      </div>
+
       <br/>
       <br/>
     </Container>

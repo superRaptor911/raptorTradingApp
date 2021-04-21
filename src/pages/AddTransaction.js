@@ -114,6 +114,7 @@ const AddTransaction = () => {
         coinName: coinName,
         coinPrice: coinPrice,
         coinCount: coinCount,
+        amount: coinPrice * coinCount,
         fee: fee,
         transtype: transactionType,
         hash: getCookie("hash")
@@ -215,8 +216,8 @@ const AddTransaction = () => {
         fullWidth
         className={classes.select}
       >
-        <MenuItem value={0}>WITHDRAWL</MenuItem>
-        <MenuItem value={1}>DEPOSIT</MenuItem>
+        <MenuItem value={0}>SELL</MenuItem>
+        <MenuItem value={1}>BUY</MenuItem>
       </Select>
 
 
@@ -253,7 +254,7 @@ const AddTransaction = () => {
       />
 
       <TextField className={classes.field}
-        value={coinCount * coinPrice - fee}
+        value={parseFloat(coinCount * coinPrice) + parseFloat(fee)}
         label="Total" 
         variant="outlined" 
         color="secondary" 
