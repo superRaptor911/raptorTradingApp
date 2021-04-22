@@ -13,6 +13,7 @@ import UserInfo from './pages/UserInfo';
 import AdminLogin from './pages/AdminLogin';
 import EditTransactionMenu from './pages/EditTransactionMenu';
 import TransferFund from './pages/TransferFund';
+import Policy from './pages/Policy';
 
 function App() {
   return (
@@ -65,6 +66,10 @@ function App() {
 
           <Route exact path="/edittransactionmenu">
             <EditTransactionMenu/>
+          </Route>
+
+          <Route exact path="/policy">
+            <Policy/>
           </Route>
 
         </Switch>

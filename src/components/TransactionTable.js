@@ -87,7 +87,7 @@ const generateTransactionTable = (data, classes) => {
               <TableCell align="center">{row.cost}</TableCell>
               <TableCell align="center">{(row.cost * row.coinCount).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
-                {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
+                {(row.transType == 1) ? "BUY" : "SELL"}
               </TableCell>
             </TableRow>
           ))}
@@ -123,7 +123,7 @@ const TransactionTable = () => {
 
   return (
     <div>
-      <Typography variant="h4">Transactions</Typography> <br/>
+      <Typography variant="h4">Coin Transactions</Typography> <br/>
       {transctionList}
     </div>
   );

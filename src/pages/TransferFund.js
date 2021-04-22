@@ -109,6 +109,7 @@ const TransferFund = () => {
         amount: amount,
         transtype: transactionType,
         fee: fee,
+        externalTransfer: 1,
         hash: getCookie("hash")
       }});
       console.log("Login::ALL_OK, submitting data to server");

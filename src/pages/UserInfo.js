@@ -68,6 +68,14 @@ const useStyles = makeStyles({
   },
   iconText: {
     fontSize: 18
+  },
+  red: {
+    color: 'red',
+    fontWeight: 'bold'
+  },
+  green: {
+    color: 'green',
+    fontWeight: 'bold'
   }
 })
 
@@ -83,6 +91,7 @@ const generateTransactionTable = (data, classes) => {
             <TableCell align="center">Coin Count</TableCell>
             <TableCell align="center">Coin Price (INR)</TableCell>
             <TableCell align="center">Total (INR)</TableCell>
+            <TableCell align="center">Type</TableCell>
             <TableCell align="center">Edit?</TableCell>
           </TableRow>
         </TableHead>
@@ -117,6 +126,9 @@ const generateTransactionTable = (data, classes) => {
               <TableCell align="center">{row.coinCount}</TableCell>
               <TableCell align="center">{row.cost}</TableCell>
               <TableCell align="center">{row.cost * row.coinCount}</TableCell>
+              <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
+                {(row.transType == 1) ? "BUY" : "SELL"}
+              </TableCell>
               <TableCell align="center"> <Button color="secondary">Edit</Button> </TableCell>
             </TableRow>
           ))}
@@ -201,7 +213,9 @@ const generateFundTransferHistoryTable = (data, classes) => {
               </TableCell>
               <TableCell align="center">{row.amount}</TableCell>
               <TableCell align="center">{row.fee}</TableCell>
-              <TableCell align="center">{row.transType}</TableCell>
+              <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
+                {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
+              </TableCell>
               <TableCell align="center">{row.time}</TableCell>
             </TableRow>
           ))}
