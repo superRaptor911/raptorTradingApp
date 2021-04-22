@@ -124,8 +124,8 @@ const generateTransactionTable = (data, classes) => {
                 </div>
               </TableCell>
               <TableCell align="center">{row.coinCount}</TableCell>
-              <TableCell align="center">{row.cost}</TableCell>
-              <TableCell align="center">{row.cost * row.coinCount}</TableCell>
+              <TableCell align="center">{parseFloat(row.cost).toFixed(2)}</TableCell>
+              <TableCell align="center">{(row.cost * row.coinCount).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
                 {(row.transType == 1) ? "BUY" : "SELL"}
               </TableCell>
@@ -175,7 +175,7 @@ const generateUserWalletTable = (data) => {
         <TableBody>
           <TableRow>
             <TableCell component="th" scope="row">{data.username}</TableCell>
-            <TableCell align="center">{data.amount}</TableCell>
+            <TableCell align="center">{parseFloat(data.amount).toFixed(2)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -211,8 +211,8 @@ const generateFundTransferHistoryTable = (data, classes) => {
                   </Typography>
                 </div>
               </TableCell>
-              <TableCell align="center">{row.amount}</TableCell>
-              <TableCell align="center">{row.fee}</TableCell>
+              <TableCell align="center">{parseFloat(row.amount).toFixed(2)}</TableCell>
+              <TableCell align="center">{parseFloat(row.fee).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
                 {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
               </TableCell>

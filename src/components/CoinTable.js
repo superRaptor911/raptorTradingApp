@@ -143,7 +143,7 @@ const generateUserTable = (data, classes) => {
               <TableCell align="center">{parseFloat(row.investment).toFixed(2)}</TableCell>
               <TableCell align="center">{parseFloat(row.value).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit.toFixed(2)}</TableCell>
-              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(2)}</TableCell>
+              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(2) + "%"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -242,7 +242,7 @@ const CoinTable = () => {
       <br/>
       <br/>
       <br/>
-      <Typography variant="h4">User Stats</Typography> <br/>
+      <Typography variant="h4">Users</Typography> <br/>
       {userList}
     </div>
   );
