@@ -65,7 +65,7 @@ const generateCoinTable = (data, pricing, classes) => {
               </TableCell>
 
               <TableCell align="center">{row.id}</TableCell>
-              <TableCell align="center">{pricing && pricing[row.id] && pricing[row.id].last}</TableCell>
+              <TableCell align="center">{pricing && pricing[row.id] && parseFloat(pricing[row.id].last).toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -140,10 +140,10 @@ const generateUserTable = (data, classes) => {
                 </Link>
               </TableCell>
 
-              <TableCell align="center">{row.investment}</TableCell>
-              <TableCell align="center">{row.value.toFixed(3)}</TableCell>
-              <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit.toFixed(3)}</TableCell>
-              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(3)}</TableCell>
+              <TableCell align="center">{parseFloat(row.investment).toFixed(2)}</TableCell>
+              <TableCell align="center">{parseFloat(row.value).toFixed(2)}</TableCell>
+              <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit.toFixed(2)}</TableCell>
+              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

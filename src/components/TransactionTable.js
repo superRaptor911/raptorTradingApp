@@ -84,7 +84,7 @@ const generateTransactionTable = (data, classes) => {
                 </div>
               </TableCell>
               <TableCell align="center">{row.coinCount}</TableCell>
-              <TableCell align="center">{row.cost}</TableCell>
+              <TableCell align="center">{parseFloat(row.cost).toFixed(2)}</TableCell>
               <TableCell align="center">{(row.cost * row.coinCount).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
                 {(row.transType == 1) ? "BUY" : "SELL"}

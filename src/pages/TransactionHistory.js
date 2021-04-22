@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core'
 import TransactionTable from "../components/TransactionTable";
-import CoinTable from '../components/CoinTable';
 
 const useStyles = makeStyles({
   root: {
@@ -12,18 +11,17 @@ const useStyles = makeStyles({
   }
 })
 
-const MainPage = () => {
+const TransactionHistory = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <CoinTable/>
+      <TransactionTable/>
       <br/>
       <br/>
       <br/>
-      {/* <TransactionTable/> */}
     </div>
   );
 }
 
-export default MainPage
+export default TransactionHistory

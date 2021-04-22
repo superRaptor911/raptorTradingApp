@@ -35,6 +35,10 @@ const SideDrawer = () => {
       name: "USERS",
       path: "/listusers"
     },
+    {
+      name: "HISTORY",
+      path: "/transactionhistory"
+    },
   ];
 
   const personalList = [

@@ -14,6 +14,7 @@ import AdminLogin from './pages/AdminLogin';
 import EditTransactionMenu from './pages/EditTransactionMenu';
 import TransferFund from './pages/TransferFund';
 import Policy from './pages/Policy';
+import TransactionHistory from './pages/TransactionHistory';
 
 function App() {
   return (
@@ -70,6 +71,10 @@ function App() {
 
           <Route exact path="/policy">
             <Policy/>
+          </Route>
+
+          <Route exact path="/transactionhistory">
+            <TransactionHistory/>
           </Route>
 
         </Switch>
