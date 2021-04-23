@@ -84,6 +84,7 @@ function getUserInfo(transctionList, pricing) {
       name: t.username,
       avatar: t.userAvatar,
       investment: t.investment,
+      amount: t.amount,
       value: 0,
       profit: 0,
       percent: 0
@@ -141,7 +142,7 @@ const generateUserTable = (data, classes) => {
               </TableCell>
 
               <TableCell align="center">{parseFloat(row.investment).toFixed(2)}</TableCell>
-              <TableCell align="center">{parseFloat(row.value).toFixed(2)}</TableCell>
+              <TableCell align="center">{(parseFloat(row.value) + parseFloat(row.amount)).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit.toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(2) + "%"}</TableCell>
             </TableRow>
