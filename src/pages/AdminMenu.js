@@ -80,16 +80,6 @@ const AdminMenu = () => {
         className={classes.button} 
         color="secondary"
         size='large'
-        onClick={() => history.push('/listusers')}
-      >
-      USERS
-      </Button>
-
-      <Button 
-        variant="contained"
-        className={classes.button} 
-        color="secondary"
-        size='large'
         onClick={() => history.push('/adminlogin')}
       >
       ADMIN LOGIN
