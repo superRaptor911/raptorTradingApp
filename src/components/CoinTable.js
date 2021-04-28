@@ -85,7 +85,7 @@ function getUserInfo(transctionList, pricing) {
       avatar: t.userAvatar,
       investment: t.investment,
       amount: t.amount,
-      value: 0,
+      value: parseFloat(t.amount),
       profit: 0,
       percent: 0
     };
@@ -97,6 +97,7 @@ function getUserInfo(transctionList, pricing) {
           dict[t.username].value += coin.last * i.count;
         }
       }
+
       dict[t.username].profit = dict[t.username].value - dict[t.username].investment ;
       dict[t.username].percent = (dict[t.username].value / dict[t.username].investment ) * 100 - 100;
     }
@@ -142,7 +143,7 @@ const generateUserTable = (data, classes) => {
               </TableCell>
 
               <TableCell align="center">{parseFloat(row.investment).toFixed(2)}</TableCell>
-              <TableCell align="center">{(parseFloat(row.value) + parseFloat(row.amount)).toFixed(2)}</TableCell>
+              <TableCell align="center">{(parseFloat(row.value)).toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit.toFixed(2)}</TableCell>
               <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(2) + "%"}</TableCell>
             </TableRow>
