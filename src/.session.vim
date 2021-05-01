@@ -15,23 +15,23 @@ badd +48 components/Header.js
 badd +85 pages/AdminMenu.js
 badd +86 pages/AddUser.js
 badd +77 pages/AddCoin.js
-badd +24 pages/AddTransaction.js
+badd +112 pages/AddTransaction.js
 badd +90 components/TransactionTable.js
-badd +55 components/CoinTable.js
+badd +212 components/CoinTable.js
 badd +56 pages/EditUser.js
 badd +1 pages/UserList.js
 badd +1 components/UserCard.js
-badd +39 pages/UserInfo.js
+badd +443 pages/UserInfo.js
 badd +32 pages/AdminLogin.js
 badd +100 pages/EditTransactionMenu.js
 badd +112 pages/TransferFund.js
 badd +58 components/SideDrawer.js
 badd +3 pages/Policy.js
 badd +22 pages/TransactionHistory.js
-badd +79 pages/CoinInfo.js
+badd +245 pages/CoinInfo.js
 argglobal
 %argdel
-edit pages/CoinInfo.js
+edit pages/UserInfo.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -41,12 +41,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 104 - ((2 * winheight(0) + 22) / 45)
+let s:l = 173 - ((26 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-104
-normal! 03|
+173
+normal! 099|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

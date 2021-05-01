@@ -1,4 +1,4 @@
-import {useEffect , useState} from "react";
+import {useEffect , useRef, useState} from "react";
 import {useHistory, useParams} from "react-router";
 import useFetch from "../components/useFetch";
 import {serverAddress} from '../components/Utility';
@@ -15,6 +15,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles({
   field: {
@@ -26,14 +27,13 @@ const useStyles = makeStyles({
   },
   tableContainer: {
     marginTop: 40,
-
   },
 
   container: {
     marginTop: 100,
     margin: 'auto',
     width: '90%',
-    maxWidth: 900
+    maxWidth: 1000
   },
 
   avatarContainer: {
@@ -138,7 +138,7 @@ const generateTransactionTable = (data, classes) => {
   );
 }
 
-const generateUserCoinsTable = (data) => {
+const generateUserCoinsTable = (data, classes) => {
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -146,13 +146,32 @@ const generateUserCoinsTable = (data) => {
           <TableRow>
             <TableCell>Coin ID</TableCell>
             <TableCell align="center">Coin Count</TableCell>
+            <TableCell align="center">Investment</TableCell>
+            <TableCell align="center">Profit</TableCell>
+            <TableCell align="center">Profit %</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">{row.coin}</TableCell>
+              <TableCell component="th" scope="row">
+                <Link to={"/coininfo/" + row.coin}>
+                <div className={classes.iconContainer}>
+                  <Avatar
+                    alt={row.coinInfo.name}
+                    src={row.coinInfo.avatar}
+                    className={classes.icon}
+                  />
+                  <Typography className={classes.iconText}>
+                    {row.coinInfo.name}
+                  </Typography>
+                </div>
+                  </Link>
+              </TableCell>
               <TableCell align="center">{row.count}</TableCell>
+              <TableCell align="center">{row.investment}</TableCell>
+              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.profit}</TableCell>
+              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -225,6 +244,38 @@ const generateFundTransferHistoryTable = (data, classes) => {
   );
 }
 
+
+function computeProfit(coinName, coinId, transctionHistory, pricing) {
+  let investment = 0;
+  let coinCount = 0;
+  let profit = 0;
+  let percent = 0;
+
+  if (pricing) {
+    for (let i of transctionHistory) {
+      if (i.coin === coinName) {
+        if (i.transType == 1) {
+          investment += i.cost * i.coinCount + parseFloat(i.fee);
+          coinCount += parseFloat(i.coinCount);
+        }
+        else {
+          investment -= i.cost * i.coinCount;
+          investment += parseFloat(i.fee);
+          coinCount -= parseFloat(i.coinCount);
+        }
+      }
+    }
+
+
+    let coin = pricing[coinId];
+    if (coin) {
+      profit = coin.last * coinCount - investment;
+      percent = profit / investment * 100;
+    }
+  }
+  return {investment: investment.toFixed(2),profit: profit.toFixed(2), percent: percent.toFixed(2)};
+}
+
 const UserInfo = () => {
   const {userName} = useParams();
   const classes = useStyles()
@@ -260,6 +311,10 @@ const UserInfo = () => {
     username: userName,
   }});
 
+  const [target6, ] = useState({uri:  `${serverAddress}/coin.php`, data: {
+    type: "prices"
+  }});
+
   // This variable is used to show status when submit button is pressed.
   const [currentStatus, setCurrentStatus] = useState("LOADING ...");
   const [currentStatus2, setCurrentStatus2] = useState("LOADING ...");
@@ -276,6 +331,11 @@ const UserInfo = () => {
   const serverResponse3 = useFetch(target3);
   const serverResponse4 = useFetch(target4);
   const serverResponse5 = useFetch(target5);
+  const serverResponse6 = useFetch(target6);
+
+  const transctionHistory = useRef(null);
+  const userCoins = useRef(null);
+  const coinPricing = useRef(null);
   const history = useHistory();
 
   // Check server response
@@ -311,6 +371,7 @@ const UserInfo = () => {
       else {
         setCurrentStatus2("");
         setTransctionTable(generateTransactionTable(serverResponse2.data.trans, classes));
+        transctionHistory.current = serverResponse2.data.trans;
       }
     }
   }, [serverResponse2.error, serverResponse2.data])
@@ -327,7 +388,8 @@ const UserInfo = () => {
       }
       else {
         setCurrentStatus3("");
-        setUserCoinsTable(generateUserCoinsTable(serverResponse3.data.userCoins));
+        setUserCoinsTable(generateUserCoinsTable(serverResponse3.data.userCoins, classes));
+        userCoins.current = serverResponse3.data.userCoins;
       }
     }
   }, [serverResponse3.error, serverResponse3.data])
@@ -365,6 +427,30 @@ const UserInfo = () => {
       }
     }
   }, [serverResponse5.error, serverResponse5.data])
+
+
+  // Check server response
+  useEffect(() => {
+    if (serverResponse6.error.error) {
+    }
+    else if (serverResponse6.data) {
+      if (!serverResponse6.data.result) {
+      }
+      else {
+        let newUserCoins = [];
+        for (let i of userCoins.current) {
+          let profitDict = computeProfit(i.coinInfo.name, i.coin, transctionHistory.current, serverResponse6.data.coins);
+          i.profit = profitDict.profit;
+          i.percent = profitDict.percent;
+          i.investment = profitDict.investment;
+          newUserCoins.push(i);
+        }
+        setUserCoinsTable(generateUserCoinsTable(newUserCoins , classes));
+        coinPricing.current = serverResponse6.data.coins;
+      }
+    }
+  }, [serverResponse6.error, serverResponse6.data])
+
 
   return (
     <Container className={classes.container}>

@@ -26,8 +26,8 @@ const useStyles = makeStyles({
     display: 'block',
     marginLeft: 'auto',
     marginRight: 'auto',
-    overflowX: 'auto',
-    overflowY: 'hidden'
+    // overflowX: 'auto',
+    // overflowY: 'hidden'
   },
   avatarContainer: {
     textAlign: 'center',
@@ -43,10 +43,8 @@ const useStyles = makeStyles({
   },
 
   graph: {
-    width: 1000,
+    width: '100%',
     backgroundColor: '#f4f4f4',
-    padding: 20,
-    borderRadius: 10,
   },
   selectContainer: {
     margin: 40,
@@ -228,7 +226,7 @@ const CoinInfo = () => {
       <Typography variant='h4'>
         Coin History
       </Typography>
-      <div className={classes.graph}>
+      <Paper>
         {
           coinData && (
             <Chart
@@ -247,7 +245,7 @@ const CoinInfo = () => {
               rootProps={{ 'data-testid': '1' }}
             />)
         }
-      </div>
+      </Paper>
 
       <div className={classes.selectContainer}>
         <InputLabel id="type">Time Period</InputLabel>
