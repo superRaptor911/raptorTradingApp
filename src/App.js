@@ -15,6 +15,7 @@ import EditTransactionMenu from './pages/EditTransactionMenu';
 import TransferFund from './pages/TransferFund';
 import Policy from './pages/Policy';
 import TransactionHistory from './pages/TransactionHistory';
+import CoinInfo from './pages/CoinInfo';
 
 function App() {
   return (
@@ -75,6 +76,10 @@ function App() {
 
           <Route exact path="/transactionhistory">
             <TransactionHistory/>
+          </Route>
+
+          <Route exact path="/coininfo/:coin">
+            <CoinInfo/>
           </Route>
 
         </Switch>

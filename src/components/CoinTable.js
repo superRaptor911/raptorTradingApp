@@ -52,6 +52,7 @@ const generateCoinTable = (data, pricing, classes) => {
           {data.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
+                <Link to={"/coininfo/" + row.id}>
                 <div className={classes.iconContainer}>
                   <Avatar
                     alt={row.name}
@@ -62,6 +63,7 @@ const generateCoinTable = (data, pricing, classes) => {
                     {row.name}
                   </Typography>
                 </div>
+                  </Link>
               </TableCell>
 
               <TableCell align="center">{row.id}</TableCell>
