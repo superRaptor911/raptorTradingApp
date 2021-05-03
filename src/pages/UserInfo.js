@@ -16,6 +16,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Link} from "react-router-dom";
+import Chart from "react-google-charts";
 
 const useStyles = makeStyles({
   field: {
@@ -76,6 +77,13 @@ const useStyles = makeStyles({
   green: {
     color: 'green',
     fontWeight: 'bold'
+  },
+  pieChartContainer: {
+        marginTop: 20,
+  },
+  pieChart: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
   }
 })
 
@@ -276,6 +284,32 @@ function computeProfit(coinName, coinId, transctionHistory, pricing) {
   return {investment: investment.toFixed(2),profit: profit.toFixed(2), percent: percent.toFixed(2)};
 }
 
+function genPieChart(coinData, classes) {
+  let data = [];
+  data.push(['coin', 'investment']);
+  for (let i of coinData) {
+    data.push([i.coinInfo.name, parseFloat(i.investment)]);
+  }
+  console.log(data);
+  return (
+    <Chart
+      height={350}
+      className={classes.pieChart}
+      chartType="PieChart"
+      loader={<div>Loading Chart</div>}
+      data={
+        data
+      }
+      options={{
+        title: 'Investments',
+        is3D: true,
+      }}
+      rootProps={{ 'data-testid': '2' }}
+    />
+  ); 
+}
+
+
 const UserInfo = () => {
   const {userName} = useParams();
   const classes = useStyles()
@@ -324,6 +358,7 @@ const UserInfo = () => {
   const [transctionTable, setTransctionTable] = useState();
   const [userCoinsTable, setUserCoinsTable] = useState();
   const [userWalletTable, setUserWalletTable] = useState();
+  const [pieChart, setPieChart] = useState();
   const [fundTransferHistoryTable, setFundTransferHistoryTable] = useState();
 
   const serverResponse = useFetch(target);
@@ -446,6 +481,7 @@ const UserInfo = () => {
           newUserCoins.push(i);
         }
         setUserCoinsTable(generateUserCoinsTable(newUserCoins , classes));
+        setPieChart(genPieChart(newUserCoins, classes));
         coinPricing.current = serverResponse6.data.coins;
       }
     }
@@ -516,6 +552,13 @@ const UserInfo = () => {
           {currentStatus4}
         </Typography>
         {userWalletTable}
+      </div>
+
+      <div className={classes.tableContainer}>
+        <Typography variant="h4">
+          Investment Breakdown
+        </Typography>
+        {pieChart}
       </div>
 
       <div className={classes.tableContainer}>
