@@ -1,6 +1,6 @@
 import {useEffect , useRef, useState} from "react";
 import useFetch from "../components/useFetch";
-import {serverAddress} from '../components/Utility';
+import {readableValue, serverAddress} from '../components/Utility';
 import Avatar from '@material-ui/core/Avatar';
 import Table from '@material-ui/core/Table';
 import Typography from '@material-ui/core/Typography';
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
 const generateCoinTable = (data, pricing, classes) => {
   return (
     <TableContainer component={Paper}>
@@ -67,7 +68,7 @@ const generateCoinTable = (data, pricing, classes) => {
               </TableCell>
 
               <TableCell align="center">{row.id}</TableCell>
-              <TableCell align="center">{pricing && pricing[row.id] && parseFloat(pricing[row.id].last).toFixed(2)}</TableCell>
+              <TableCell align="center">{pricing && pricing[row.id] && readableValue(pricing[row.id].last)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
