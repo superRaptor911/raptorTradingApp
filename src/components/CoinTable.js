@@ -93,6 +93,7 @@ function getUserInfo(transctionList, pricing) {
       percent: 0
     };
 
+    dict[t.username].investment = Math.max(dict[t.username].investment, 0);
     if (pricing) {
       for (let i of t.coins) {
         let coin = pricing[i.coin];

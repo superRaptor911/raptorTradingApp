@@ -275,6 +275,7 @@ function computeProfit(coinName, coinId, transctionHistory, pricing) {
     }
 
 
+    investment = Math.max(investment, 0);
     let coin = pricing[coinId];
     if (coin) {
       profit = coin.last * coinCount - investment;
@@ -288,7 +289,7 @@ function genPieChart(coinData, classes) {
   let data = [];
   data.push(['coin', 'investment']);
   for (let i of coinData) {
-    data.push([i.coinInfo.name, parseFloat(i.investment)]);
+    data.push([i.coinInfo.name, parseFloat(i.investment) ]);
   }
   console.log(data);
   return (

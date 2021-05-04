@@ -38,7 +38,7 @@ export function checkForSpecialChars(string) {
 }
 
 export function readableValue(value) {
-  value = parseFloat(value);
+  value = parseFloat(value).toFixed(2);
   if (value > 1000000) {
     value = (value / 1000000).toFixed(2);
     value = value + "M";
