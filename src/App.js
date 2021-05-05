@@ -16,6 +16,7 @@ import TransferFund from './pages/TransferFund';
 import Policy from './pages/Policy';
 import TransactionHistory from './pages/TransactionHistory';
 import CoinInfo from './pages/CoinInfo';
+import Company from './pages/Company';
 
 function App() {
   return (
@@ -80,6 +81,10 @@ function App() {
 
           <Route exact path="/coininfo/:coin">
             <CoinInfo/>
+          </Route>
+
+          <Route exact path="/company">
+            <Company/>
           </Route>
 
         </Switch>

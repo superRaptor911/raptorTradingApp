@@ -54,7 +54,7 @@ const Header = () => {
             />
           </Button>
           <Typography variant="h6" className={classes.title}>
-            Cucek Trading
+            Raptor Trading
           </Typography>
           <Container className={classes.container}>
             <Button color="inherit" onClick={() => history.push('/')}>HOME</Button>

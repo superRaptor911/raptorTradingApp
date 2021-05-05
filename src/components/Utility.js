@@ -51,3 +51,14 @@ export function readableValue(value) {
 
   return value;
 }
+
+export function sortBy(field, order = "asc") {
+  return function(a, b) {
+    let v1 = parseFloat(a[field]);
+    let v2 = parseFloat(b[field]);
+    if (order === "desc") {
+      return (v2 > v1) - (v2 < v1);
+    }
+    return (v1 > v2) - (v1 < v2);
+  };
+}

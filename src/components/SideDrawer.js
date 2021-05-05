@@ -39,6 +39,10 @@ const SideDrawer = () => {
       name: "HISTORY",
       path: "/transactionhistory"
     },
+    {
+      name: "RAPTOR INC",
+      path: "/company"
+    },
   ];
 
   const personalList = [
