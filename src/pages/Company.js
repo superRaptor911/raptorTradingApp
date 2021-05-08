@@ -69,7 +69,7 @@ function genPortfolioValue(investmentData, coinPricing, donations, classes) {
   
   if (donations) {
     for (let i of donations) {
-      totalInvestment += i.amount;
+      totalDonation += parseFloat(i.amount);
     }
   }
 
@@ -89,6 +89,7 @@ function genPortfolioValue(investmentData, coinPricing, donations, classes) {
 
   total = total.toFixed(2);
   totalInvestment = totalInvestment.toFixed(2);
+  totalDonation = totalDonation.toFixed(2);
   inWallet = inWallet.toFixed(2);
 
   return (
@@ -170,14 +171,14 @@ function genInvestorPieChart(investmentData, classes) {
     investmentData.sort(sortBy("investment", "desc"));
   }
   for (let i of investmentData) {
-    data.push([i.username, parseFloat(i.investment) ]);
+    data.push([i.username, Math.max(parseFloat(i.investment), 0) ]);
   }
 
   if (investmentData) {
     investmentData.sort(sortBy("amount", "desc"));
   }
   for (let i of investmentData) {
-    data2.push([i.username, parseFloat(i.amount) ]);
+    data2.push([i.username, Math.max(parseFloat(i.investment), 0)]);
   }
   return (
     <div>
@@ -214,6 +215,36 @@ function genInvestorPieChart(investmentData, classes) {
   ); 
 }
 
+function genDonationPieChart(donations, classes) {
+  let data = [];
+
+  if (donations) {
+    for (let i of donations) {
+      data.push([i.username, parseFloat(i.amount)]);
+    }
+  }
+
+  data.sort(sortBy(1, "desc"));
+  data.unshift(['User', 'Donation']);
+  return (
+    <Chart
+      height={'46vw'}
+      className={classes.pieChart}
+      chartType="PieChart"
+      loader={<div>Loading Chart</div>}
+      data={
+        data
+      }
+      options={{
+        title: 'Donations',
+        is3D: true,
+      }}
+      rootProps={{ 'data-testid': '2' }}
+    />
+  ); 
+}
+
+
 const Company = () => {
   const classes = useStyles();
   const [target, ] = useState({uri: `${serverAddress}/userCoins.php`, data: { type: 'count', }});
@@ -239,6 +270,7 @@ const Company = () => {
   const coinCount = useRef();
   const coinPrices = useRef();
   const investments = useRef();
+  const donations = useRef();
 
   // Get coins
   useEffect(() => {
@@ -269,7 +301,7 @@ const Company = () => {
       if (serverResponse2.data.result) {
         setCurrentStatus2("");
         coinPrices.current = serverResponse2.data.coins;
-        setPortfolio(genPortfolioValue(investments.current, serverResponse2.data.coins, null,  classes))
+        setPortfolio(genPortfolioValue(investments.current, serverResponse2.data.coins, donations.current,  classes))
         setCoinInvestmentPieChart(genCoinCountPieChart(coinCount.current, serverResponse2.data.coins, classes));
       }
       else {
@@ -289,7 +321,7 @@ const Company = () => {
       if (serverResponse3.data.result) {
         setCurrentStatus3("");
         investments.current = serverResponse3.data.data;
-        setPortfolio(genPortfolioValue(serverResponse3.data.data, coinPrices.current, null, classes));
+        setPortfolio(genPortfolioValue(serverResponse3.data.data, coinPrices.current, donations.current, classes));
         setInvestmentPieChart(genInvestorPieChart(serverResponse3.data.data, classes));
       }
       else {
@@ -308,6 +340,9 @@ const Company = () => {
     else if (serverResponse4.data) {
       if (serverResponse4.data.result) {
         setCurrentStatus4("");
+        donations.current = serverResponse4.data.donations;
+        setPortfolio(genPortfolioValue(investments.current, coinPrices.current, serverResponse4.data.donations, classes));
+        setDonationPieChart(genDonationPieChart(serverResponse4.data.donations, classes));
       }
       else {
         // Error from server
@@ -334,6 +369,7 @@ const Company = () => {
       </Typography>
       {coinInvestmentPieChart}
       {investmentPieChart}
+      {donationPieChart}
 
       <Typography variant="button" color="error">
         {currentStatus3}

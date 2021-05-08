@@ -162,7 +162,7 @@ const generateUserTable = (data, classes) => {
 const CoinTable = () => {
   const classes = useStyles();
   const [target, ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "list"}});
-  const [target2, setTarget2 ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "prices"}});
+  const [target2, setTarget2 ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "prices" , firstFetch: true}});
   const [target3, ] = useState({uri:  `${serverAddress}/transction.php`, data: {type: "investmentNcoins"}});
   const [coinList, setCoinList] = useState();
   const [userList, setUserList] = useState();
@@ -213,6 +213,7 @@ const CoinTable = () => {
       if (serverResponse2.data.result) {
         setCoinList(generateCoinTable(coinData.current, serverResponse2.data.coins , classes));
         setUserList(generateUserTable(getUserInfo(transactionData.current, serverResponse2.data.coins), classes));
+        console.log("Data type : " + serverResponse2.data.type);
       }
       else {
         // Error from server
