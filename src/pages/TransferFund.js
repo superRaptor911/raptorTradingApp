@@ -79,6 +79,7 @@ const TransferFund = () => {
   const [username, setUsername] = useState("");
   const [transactionType, setTransactionType] = useState(1);
   const [amount, setamount] = useState(0);
+  const [donation, setDonation] = useState(0);
   const [fee, setFee] = useState(0);
 
   const [usersList, setUsersList] = useState();
@@ -109,10 +110,10 @@ const TransferFund = () => {
         amount: amount,
         transtype: transactionType,
         fee: fee,
+        donation: donation,
         externalTransfer: 1,
         hash: getCookie("hash")
       }});
-      console.log("Login::ALL_OK, submitting data to server");
       setCurrentStatus("Loading ...");
     }
   }
@@ -199,6 +200,17 @@ const TransferFund = () => {
       />
 
       <TextField className={classes.field}
+        value={donation}
+        onChange={(e) => setDonation(e.target.value)}
+        label="Donation" 
+        variant="outlined" 
+        color="secondary" 
+        fullWidth
+        type="number"
+        required
+      />
+
+      <TextField className={classes.field}
         value={fee}
         onChange={(e) => setFee(e.target.value)}
         label="Fee" 
@@ -210,7 +222,7 @@ const TransferFund = () => {
       />
 
       <TextField className={classes.field}
-        value={amount - fee * (transactionType * 2 - 1)}
+        value={amount - donation - fee * (transactionType * 2 - 1)}
         label="Total" 
         variant="outlined" 
         color="secondary" 

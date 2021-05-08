@@ -183,18 +183,22 @@ const Company = () => {
   const [target, ] = useState({uri: `${serverAddress}/userCoins.php`, data: { type: 'count', }});
   const [target2, ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "prices"}});
   const [target3, ] = useState({uri:  `${serverAddress}/transction.php`, data: {type: "investmentNcoins"}});
+  const [target4, ] = useState({uri:  `${serverAddress}/donations.php`, data: {type: "list"}});
 
   const serverResponse = useFetch(target);
   const serverResponse2 = useFetch(target2);
   const serverResponse3 = useFetch(target3);
+  const serverResponse4 = useFetch(target4);
 
   const [currentStatus, setCurrentStatus] = useState("LOADING ...");
   const [currentStatus2, setCurrentStatus2] = useState("LOADING ...");
   const [currentStatus3, setCurrentStatus3] = useState("LOADING ...");
+  const [currentStatus4, setCurrentStatus4] = useState("LOADING ...");
 
   const [portfolio, setPortfolio] = useState(genPortfolioValue(null, null, classes));
   const [investmentPieChart, setInvestmentPieChart] = useState();
   const [coinInvestmentPieChart, setCoinInvestmentPieChart] = useState();
+  const [donationPieChart, setDonationPieChart] = useState();
 
   const coinCount = useRef();
   const coinPrices = useRef();
@@ -204,7 +208,7 @@ const Company = () => {
   useEffect(() => {
     if (serverResponse.error.error) {
       // Fetch request failed
-      setCurrentStatus(serverResponse2.error.msg);
+      setCurrentStatus(serverResponse.error.msg);
     }
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
@@ -214,7 +218,7 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus(serverResponse2.error.err);
+        setCurrentStatus(serverResponse.error.err);
       }
     }
   }, [serverResponse.error, serverResponse.data]);
@@ -258,6 +262,24 @@ const Company = () => {
       }
     }
   }, [serverResponse3.error, serverResponse3.data]);
+
+  // Get coins
+  useEffect(() => {
+    if (serverResponse4.error.error) {
+      // Fetch request failed
+      setCurrentStatus4(serverResponse4.error.msg);
+    }
+    else if (serverResponse4.data) {
+      if (serverResponse4.data.result) {
+        setCurrentStatus4("");
+      }
+      else {
+        // Error from server
+        setCurrentStatus4(serverResponse4.error.err);
+      }
+    }
+  }, [serverResponse4.error, serverResponse4.data]);
+
 
   return (
     <div className={classes.root}>

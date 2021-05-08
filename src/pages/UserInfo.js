@@ -327,7 +327,7 @@ const UserInfo = () => {
   }});
 
   const [target2, ] = useState({uri: `${serverAddress}/transction.php`, data: {
-    type: 'info',
+    type: 'list',
     username: userName,
   }});
 
