@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
   },
   papertext: {
-    display: 'block',
+    display: 'flex',
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: 20,
@@ -36,6 +36,12 @@ const useStyles = makeStyles({
     width: 'max-content',
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  paperItem : {
+    display: "block",
+  },
+  paperMargin: {
+    marginLeft: 40,
   },
   pieChart: {
     marginLeft: 'auto',
@@ -48,9 +54,10 @@ const useStyles = makeStyles({
 
 });
 
-function genPortfolioValue(investmentData, coinPricing, classes) {
+function genPortfolioValue(investmentData, coinPricing, donations, classes) {
   let total = 0;
   let totalInvestment = 0;
+  let totalDonation = 0;
   let inWallet = 0;
 
   if (investmentData) {
@@ -60,6 +67,12 @@ function genPortfolioValue(investmentData, coinPricing, classes) {
     }
   }
   
+  if (donations) {
+    for (let i of donations) {
+      totalInvestment += i.amount;
+    }
+  }
+
   inWallet = total;
 
   if (coinPricing && investmentData) {
@@ -80,15 +93,38 @@ function genPortfolioValue(investmentData, coinPricing, classes) {
 
   return (
     <Paper className={classes.papertext}>
-      <Typography variant="h5">
-        Estimated Portfolio : Rs {total}
+      <div className={classes.paperItem}>
+      <Typography variant="h6">
+        Estimated Portfolio
       </Typography>
-      <Typography variant="h5">
-        Total investment: Rs {totalInvestment}
+      <Typography variant="h6">
+        Total investment
       </Typography>
-      <Typography variant="h5">
-        In Wallet: Rs {inWallet}
+      <Typography variant="h6">
+        In Wallet
       </Typography>
+      <Typography variant="h6">
+        Donation received
+      </Typography>
+      </div>
+
+      <div className={classes.paperMargin}>
+      </div>
+
+      <div>
+      <Typography variant="h6">
+        ₹{total}
+      </Typography>
+      <Typography variant="h6">
+        ₹{totalInvestment}
+      </Typography>
+      <Typography variant="h6">
+        ₹{inWallet}
+      </Typography>
+      <Typography variant="h6">
+        ₹{totalDonation}
+      </Typography>
+      </div>
     </Paper>
   );
 
@@ -195,7 +231,7 @@ const Company = () => {
   const [currentStatus3, setCurrentStatus3] = useState("LOADING ...");
   const [currentStatus4, setCurrentStatus4] = useState("LOADING ...");
 
-  const [portfolio, setPortfolio] = useState(genPortfolioValue(null, null, classes));
+  const [portfolio, setPortfolio] = useState(genPortfolioValue(null, null, null, classes));
   const [investmentPieChart, setInvestmentPieChart] = useState();
   const [coinInvestmentPieChart, setCoinInvestmentPieChart] = useState();
   const [donationPieChart, setDonationPieChart] = useState();
@@ -233,7 +269,7 @@ const Company = () => {
       if (serverResponse2.data.result) {
         setCurrentStatus2("");
         coinPrices.current = serverResponse2.data.coins;
-        setPortfolio(genPortfolioValue(investments.current, serverResponse2.data.coins, classes))
+        setPortfolio(genPortfolioValue(investments.current, serverResponse2.data.coins, null,  classes))
         setCoinInvestmentPieChart(genCoinCountPieChart(coinCount.current, serverResponse2.data.coins, classes));
       }
       else {
@@ -253,7 +289,7 @@ const Company = () => {
       if (serverResponse3.data.result) {
         setCurrentStatus3("");
         investments.current = serverResponse3.data.data;
-        setPortfolio(genPortfolioValue(serverResponse3.data.data, coinPrices.current, classes))
+        setPortfolio(genPortfolioValue(serverResponse3.data.data, coinPrices.current, null, classes));
         setInvestmentPieChart(genInvestorPieChart(serverResponse3.data.data, classes));
       }
       else {
