@@ -174,6 +174,7 @@ const CoinTable = () => {
 
   const coinData = useRef([]);
   const transactionData = useRef([]);
+  const pricingData = useRef([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -192,7 +193,7 @@ const CoinTable = () => {
     }
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
-        setCoinList(generateCoinTable(serverResponse.data.coins, null, classes));
+        setCoinList(generateCoinTable(serverResponse.data.coins, pricingData.current, classes));
         coinData.current = serverResponse.data.coins;
       }
       else {
@@ -213,6 +214,7 @@ const CoinTable = () => {
       if (serverResponse2.data.result) {
         setCoinList(generateCoinTable(coinData.current, serverResponse2.data.coins , classes));
         setUserList(generateUserTable(getUserInfo(transactionData.current, serverResponse2.data.coins), classes));
+        pricingData.current = serverResponse2.data.coins;
         console.log("Data type : " + serverResponse2.data.type);
       }
       else {
@@ -231,7 +233,7 @@ const CoinTable = () => {
     }
     else if (serverResponse3.data) {
       if (serverResponse3.data.result) {
-        setUserList(generateUserTable(getUserInfo(serverResponse3.data.data, null), classes));
+        setUserList(generateUserTable(getUserInfo(serverResponse3.data.data, pricingData.current), classes));
         transactionData.current = serverResponse3.data.data;
       }
       else {
