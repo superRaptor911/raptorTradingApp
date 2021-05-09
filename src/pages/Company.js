@@ -178,7 +178,7 @@ function genInvestorPieChart(investmentData, classes) {
     investmentData.sort(sortBy("amount", "desc"));
   }
   for (let i of investmentData) {
-    data2.push([i.username, Math.max(parseFloat(i.investment), 0)]);
+    data2.push([i.username, Math.max(parseFloat(i.amount), 0)]);
   }
   return (
     <div>

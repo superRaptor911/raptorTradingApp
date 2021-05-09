@@ -374,7 +374,7 @@ const UserInfo = () => {
   const coinPricing = useRef(null);
   const history = useHistory();
 
-  // Check server response
+  // Get User info
   useEffect(() => {
     if (serverResponse.error.error) {
       setCurrentStatus(serverResponse.error.msg);
@@ -395,7 +395,7 @@ const UserInfo = () => {
   }, [serverResponse.error, serverResponse.data])
 
 
-  // Check server response
+  // Get Transactions History 
   useEffect(() => {
     if (serverResponse2.error.error) {
       setCurrentStatus2(serverResponse2.error.msg);
@@ -413,7 +413,7 @@ const UserInfo = () => {
   }, [serverResponse2.error, serverResponse2.data])
 
 
-  // Check server response
+  // Get Coins
   useEffect(() => {
     if (serverResponse3.error.error) {
       setCurrentStatus3(serverResponse3.error.msg);
@@ -424,14 +424,17 @@ const UserInfo = () => {
       }
       else {
         setCurrentStatus3("");
-        setUserCoinsTable(generateUserCoinsTable(serverResponse3.data.userCoins, classes));
+        // Update only if, pricing not set
+        if (!coinPricing.current) {
+          setUserCoinsTable(generateUserCoinsTable(serverResponse3.data.userCoins, classes));
+        }
         userCoins.current = serverResponse3.data.userCoins;
       }
     }
   }, [serverResponse3.error, serverResponse3.data])
 
 
-  // Check server response
+  // Get Wallet
   useEffect(() => {
     if (serverResponse4.error.error) {
       setCurrentStatus4(serverResponse4.error.msg);
@@ -448,7 +451,7 @@ const UserInfo = () => {
   }, [serverResponse4.error, serverResponse4.data])
 
 
-  // Check server response
+  // Get Fund transfer history
   useEffect(() => {
     if (serverResponse5.error.error) {
       setCurrentStatus5(serverResponse5.error.msg);
@@ -465,7 +468,7 @@ const UserInfo = () => {
   }, [serverResponse5.error, serverResponse5.data])
 
 
-  // Check server response
+  // Get Coin Pricing
   useEffect(() => {
     if (serverResponse6.error.error) {
     }
@@ -474,12 +477,14 @@ const UserInfo = () => {
       }
       else {
         let newUserCoins = [];
-        for (let i of userCoins.current) {
-          let profitDict = computeProfit(i.coinInfo.name, i.coin, transctionHistory.current, serverResponse6.data.coins);
-          i.profit = profitDict.profit;
-          i.percent = profitDict.percent;
-          i.investment = profitDict.investment;
-          newUserCoins.push(i);
+        if (userCoins.current) {
+          for (let i of userCoins.current) {
+            let profitDict = computeProfit(i.coinInfo.name, i.coin, transctionHistory.current, serverResponse6.data.coins);
+            i.profit = profitDict.profit;
+            i.percent = profitDict.percent;
+            i.investment = profitDict.investment;
+            newUserCoins.push(i);
+          }
         }
         setUserCoinsTable(generateUserCoinsTable(newUserCoins , classes));
         setPieChart(genPieChart(newUserCoins, classes));

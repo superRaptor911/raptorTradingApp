@@ -86,24 +86,32 @@ function getUserInfo(transctionList, pricing) {
     dict[t.username] = {
       name: t.username,
       avatar: t.userAvatar,
-      investment: t.investment,
-      amount: t.amount,
+      investment: parseFloat(t.investment).toFixed(2),
+      amount: parseFloat(t.amount).toFixed(2),
       value: parseFloat(t.amount),
       profit: 0,
       percent: 0
     };
-
+     let str = "0";
     dict[t.username].investment = Math.max(dict[t.username].investment, 0);
     if (pricing) {
       for (let i of t.coins) {
         let coin = pricing[i.coin];
         if (coin) {
           dict[t.username].value += coin.last * i.count;
+          str = str + " + " + coin.last * i.count;
         }
       }
 
-      dict[t.username].profit = dict[t.username].value - dict[t.username].investment ;
+      if (t.username === "Aditya Aravind") {
+        console.log("Value = " + dict[t.username].value + " , = " + str);
+        console.log("investment = " + dict[t.username].investment);
+      }
+      dict[t.username].profit = dict[t.username].value - dict[t.username].investment;
       dict[t.username].percent = (dict[t.username].value / dict[t.username].investment ) * 100 - 100;
+      dict[t.username].profit = dict[t.username].profit.toFixed(2);
+      dict[t.username].percent = dict[t.username].percent.toFixed(2);
+      dict[t.username].value = dict[t.username].value.toFixed(2);
     }
   }
 
@@ -146,10 +154,10 @@ const generateUserTable = (data, classes) => {
                 </Link>
               </TableCell>
 
-              <TableCell align="center">{parseFloat(row.investment).toFixed(2)}</TableCell>
-              <TableCell align="center">{(parseFloat(row.value)).toFixed(2)}</TableCell>
-              <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit.toFixed(2)}</TableCell>
-              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent.toFixed(2) + "%"}</TableCell>
+              <TableCell align="center">{row.investment}</TableCell>
+              <TableCell align="center">{row.value}</TableCell>
+              <TableCell align="center" className={(row.profit > 0) ? classes.green : classes.red}>{row.profit}</TableCell>
+              <TableCell align="center" className={(row.percent > 0) ? classes.green : classes.red}>{row.percent + "%"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
