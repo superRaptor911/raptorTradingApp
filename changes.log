@@ -1,0 +1,87 @@
+Rapor Trading App v1.1
+
+Changes:
+* App is now open source ( https://github.com/superRaptor911/raptorTradingApp )
+* Server code is now open source (https://github.com/superRaptor911/raptorTradingServer)
+* Slightly improved performance
+* Admin Menu
+* User Detail menu
+* Users Detail menu can be accessed by pressing their icon.
+* Added Transaction type (Deposit/Withdraw) in transaction list.
+* Automatic deployment script to generate site (build.sh)
+
+Source Code :  https://github.com/superRaptor911/raptorTradingApp
+Site : https://raptorinc.ga
+
+Please report bugs here:
+https://github.com/superRaptor911/raptorTradingApp/issues
+
+
+Raptor Trading App v1.2
+
+Changes:
+* Performance Improvements.
+* Added Side Drawer menu.
+* New Wallet system.
+* User info menu now displays total coins purchased by the user.
+* Wallet transaction history for users.
+* Ability to buy and sell coins.
+* Decimal precision is set to 2.
+* Shifted Coin transaction history to /transactionhistory from home page.
+* Transaction time is now registered.
+* Percentage sign is added to profit percentage.
+
+Source Code :  https://github.com/superRaptor911/raptorTradingApp
+Site : https://raptorinc.ga
+
+Please report bugs here:
+https://github.com/superRaptor911/raptorTradingApp/issues
+
+
+Raptor Trading App v1.3
+
+Changes:
+* Decimal Coin support
+* Coin Info Menu
+    * Coin Pricing Graph.
+    * 1 hr, 2 hr, 4 hr, 6hr, 12 hr, 1 day Graphs available.
+    * List of investors in Coin Info menu.
+* User Coin table now shows profit/percentage per coin. 
+
+
+Raptor Trading App v1.4
+
+Changes:
+* Fixed -ve investment bug
+* Title changed to "Raptor Trading"
+* Large values will be displayed in M or K (eg 100000 will be displayed as 100K).
+* Investment Breakdown Pie chart in User Info menu.
+* New side Drawer menu "Raptor Inc".
+    * Total Investment/Portfolio value bar.
+    * Coin Investment breakdown pie chart
+    * Investors breakdown pie chart.
+
+Source Code :  https://github.com/superRaptor911/raptorTradingApp
+Site : https://raptorinc.ga
+
+Please report bugs here:
+https://github.com/superRaptor911/raptorTradingApp/issues
+
+
+
+Raptor Trading App v1.5
+
+Changes:
+* Very fast coin price loading (Near Zero seconds loading time (refresh to view effect))
+* Donation system.
+    * Users can donate to raptorinc while fund transfer.
+    * Donation pie chart in Raptor INC menu.
+* -ve investment bug fix.
+* Re-designed Raptor Inc portfolio summary
+* Server optimisations
+
+Source Code :  https://github.com/superRaptor911/raptorTradingApp
+Site : https://raptorinc.ga
+
+Please report bugs here:
+https://github.com/superRaptor911/raptorTradingApp/issues
