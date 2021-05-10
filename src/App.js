@@ -17,6 +17,7 @@ import Policy from './pages/Policy';
 import TransactionHistory from './pages/TransactionHistory';
 import CoinInfo from './pages/CoinInfo';
 import Company from './pages/Company';
+import DatabaseQuery from './pages/DatabaseQuery';
 
 function App() {
   return (
@@ -85,6 +86,10 @@ function App() {
 
           <Route exact path="/company">
             <Company/>
+          </Route>
+
+          <Route exact path="/database">
+            <DatabaseQuery/>
           </Route>
 
         </Switch>

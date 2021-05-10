@@ -1,19 +1,9 @@
 import {useEffect , useRef, useState} from "react";
-import {useHistory} from "react-router";
 import useFetch from "../components/useFetch";
 import {serverAddress, sortBy} from '../components/Utility';
-import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core'
-import Avatar from '@material-ui/core/Avatar';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {Link} from "react-router-dom";
 import Chart from "react-google-charts";
 
 const useStyles = makeStyles({
