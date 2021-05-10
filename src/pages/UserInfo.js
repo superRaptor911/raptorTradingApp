@@ -88,7 +88,7 @@ const useStyles = makeStyles({
 })
 
 
-const generateTransactionTable = (data, classes) => {
+const genTransactionTable = (data, classes) => {
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -146,7 +146,7 @@ const generateTransactionTable = (data, classes) => {
   );
 }
 
-const generateUserCoinsTable = (data, classes) => {
+const genUserCoinsTable = (data, classes) => {
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -189,7 +189,7 @@ const generateUserCoinsTable = (data, classes) => {
 }
 
 
-const generateUserWalletTable = (data) => {
+const genUserWalletTable = (data) => {
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -210,7 +210,7 @@ const generateUserWalletTable = (data) => {
   );
 }
 
-const generateFundTransferHistoryTable = (data, classes) => {
+const genFundTransferHistoryTable = (data, classes) => {
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -259,7 +259,7 @@ function computeProfit(coinName, coinId, transctionHistory, pricing) {
   let profit = 0;
   let percent = 0;
 
-  if (pricing) {
+  if (pricing && transctionHistory) {
     for (let i of transctionHistory) {
       if (i.coin === coinName) {
         if (i.transType == 1) {
@@ -406,7 +406,7 @@ const UserInfo = () => {
       }
       else {
         setCurrentStatus2("");
-        setTransctionTable(generateTransactionTable(serverResponse2.data.trans, classes));
+        setTransctionTable(genTransactionTable(serverResponse2.data.trans, classes));
         transctionHistory.current = serverResponse2.data.trans;
       }
     }
@@ -424,10 +424,23 @@ const UserInfo = () => {
       }
       else {
         setCurrentStatus3("");
-        // Update only if, pricing not set
-        if (!coinPricing.current) {
-          setUserCoinsTable(generateUserCoinsTable(serverResponse3.data.userCoins, classes));
+
+        let newUserCoins = [];
+        if (coinPricing.current) {
+          for (let i of serverResponse3.data.userCoins) {
+            let profitDict = computeProfit(i.coinInfo.name, i.coin, transctionHistory.current, coinPricing.current);
+            i.profit = profitDict.profit;
+            i.percent = profitDict.percent;
+            i.investment = profitDict.investment;
+            newUserCoins.push(i);
+          }
+          setUserCoinsTable(genUserCoinsTable(newUserCoins , classes));
+          setPieChart(genPieChart(newUserCoins, classes));
         }
+        else {
+          setUserCoinsTable(genUserCoinsTable(serverResponse3.data.userCoins, classes));
+        }
+
         userCoins.current = serverResponse3.data.userCoins;
       }
     }
@@ -445,7 +458,7 @@ const UserInfo = () => {
       }
       else {
         setCurrentStatus4("");
-        setUserWalletTable(generateUserWalletTable(serverResponse4.data.wallet));
+        setUserWalletTable(genUserWalletTable(serverResponse4.data.wallet));
       }
     }
   }, [serverResponse4.error, serverResponse4.data])
@@ -462,7 +475,7 @@ const UserInfo = () => {
       }
       else {
         setCurrentStatus5("");
-        setFundTransferHistoryTable(generateFundTransferHistoryTable(serverResponse5.data.history, classes));
+        setFundTransferHistoryTable(genFundTransferHistoryTable(serverResponse5.data.history, classes));
       }
     }
   }, [serverResponse5.error, serverResponse5.data])
@@ -486,7 +499,7 @@ const UserInfo = () => {
             newUserCoins.push(i);
           }
         }
-        setUserCoinsTable(generateUserCoinsTable(newUserCoins , classes));
+        setUserCoinsTable(genUserCoinsTable(newUserCoins , classes));
         setPieChart(genPieChart(newUserCoins, classes));
         coinPricing.current = serverResponse6.data.coins;
       }
