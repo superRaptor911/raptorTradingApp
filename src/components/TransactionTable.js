@@ -1,4 +1,5 @@
-import {useEffect , useState} from "react";
+import {useEffect , useRef, useState} from "react";
+import TablePagination from '@material-ui/core/TablePagination';
 import useFetch from "../components/useFetch";
 import {serverAddress} from '../components/Utility';
 import Avatar from '@material-ui/core/Avatar';
@@ -39,103 +40,166 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const generateTransactionTable = (data, classes) => {
-  return (
-    <TableContainer component={Paper}>
-      <Table  aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell >Coin Name</TableCell>
-            <TableCell align="center">Coin Count</TableCell>
-            <TableCell align="center">Buying Price (INR)</TableCell>
-            <TableCell align="center">Total (INR)</TableCell>
-            <TableCell align="center">Type</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                <Link to={"/user/" + row.username}>
-                <div className={classes.iconContainer}>
-                  <Avatar
-                    alt={row.username}
-                    src={row.userAvatar}
-                    className={classes.icon}
-                  />
-                  <Typography className={classes.iconText}>
-                    {row.username}
-                  </Typography>
-                </div>
-                </Link>
-              </TableCell>
+const generateTransactionTable = (data, classes, constrains, constrainSetter) => {
+  let count = data.length;
+  let from = constrains.page * constrains.rowsPerPage;
+  let to = constrains.page * constrains.rowsPerPage + constrains.rowsPerPage;
 
-              <TableCell align="right">
-                <div className={classes.iconContainer}>
-                  <Avatar
-                    alt={row.coin}
-                    src={row.coinAvatar}
-                    className={classes.icon}
-                  />
-                  <Typography className={classes.iconText}>
-                    {row.coin}
-                  </Typography>
-                </div>
-              </TableCell>
-              <TableCell align="center">{row.coinCount}</TableCell>
-              <TableCell align="center">{parseFloat(row.cost).toFixed(2)}</TableCell>
-              <TableCell align="center">{(row.cost * row.coinCount).toFixed(2)}</TableCell>
-              <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
-                {(row.transType == 1) ? "BUY" : "SELL"}
-              </TableCell>
+  data = data.slice(from, to);
+  const handleChangePage = (event, newPage) => {
+    console.log(constrains);
+    constrainSetter({
+      rowsPerPage: constrains.rowsPerPage,
+      page: newPage
+    })
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    constrainSetter({
+      rowsPerPage: parseInt(event.target.value, 10),
+      page: 0
+    })
+  };
+
+  return (
+    <Paper>
+      <TableContainer >
+        <Table  aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell >Coin Name</TableCell>
+              <TableCell align="center">Coin Count</TableCell>
+              <TableCell align="center">Buying Price (INR)</TableCell>
+              <TableCell align="center">Total (INR)</TableCell>
+              <TableCell align="center">Type</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">
+                  <Link to={"/user/" + row.username}>
+                    <div className={classes.iconContainer}>
+                      <Avatar
+                        alt={row.username}
+                        src={row.userAvatar}
+                        className={classes.icon}
+                      />
+                      <Typography className={classes.iconText}>
+                        {row.username}
+                      </Typography>
+                    </div>
+                  </Link>
+                </TableCell>
+
+                <TableCell align="right">
+                  <div className={classes.iconContainer}>
+                    <Avatar
+                      alt={row.coin}
+                      src={row.coinAvatar}
+                      className={classes.icon}
+                    />
+                    <Typography className={classes.iconText}>
+                      {row.coin}
+                    </Typography>
+                  </div>
+                </TableCell>
+                <TableCell align="center">{row.coinCount}</TableCell>
+                <TableCell align="center">{parseFloat(row.cost).toFixed(2)}</TableCell>
+                <TableCell align="center">{(row.cost * row.coinCount).toFixed(2)}</TableCell>
+                <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
+                  {(row.transType == 1) ? "BUY" : "SELL"}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={count}
+        rowsPerPage={constrains.rowsPerPage}
+        page={constrains.page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 }
 
-const generateFundTransferHistoryTable = (data, classes) => {
+const generateFundTransferHistoryTable = (data, classes, constrains, constrainSetter) => {
+  let count = data.length;
+  let from = constrains.page * constrains.rowsPerPage;
+  let to = constrains.page * constrains.rowsPerPage + constrains.rowsPerPage;
+
+  data = data.slice(from, to);
+  const handleChangePage = (event, newPage) => {
+    console.log(constrains);
+    constrainSetter({
+      rowsPerPage: constrains.rowsPerPage,
+      page: newPage
+    })
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    constrainSetter({
+      rowsPerPage: parseInt(event.target.value, 10),
+      page: 0
+    })
+  };
+
   return (
-    <TableContainer component={Paper}>
-      <Table  aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="center">Amount</TableCell>
-            <TableCell align="center">Fee</TableCell>
-            <TableCell align="center">Type</TableCell>
-            <TableCell align="center">Time</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.time}>
-              <TableCell component="th" scope="row">
-                <div className={classes.iconContainer}>
-                  <Avatar
-                    alt={row.username}
-                    src={row.userAvatar}
-                    className={classes.icon}
-                  />
-                  <Typography className={classes.iconText}>
-                    {row.username}
-                  </Typography>
-                </div>
-              </TableCell>
-              <TableCell align="center">{parseFloat(row.amount).toFixed(2)}</TableCell>
-              <TableCell align="center">{parseFloat(row.fee).toFixed(2)}</TableCell>
-              <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
-                {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
-              </TableCell>
-              <TableCell align="center">{row.time}</TableCell>
+    <Paper>
+      <TableContainer>
+        <Table  aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Amount</TableCell>
+              <TableCell align="center">Fee</TableCell>
+              <TableCell align="center">Type</TableCell>
+              <TableCell align="center">Time</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow key={row.time}>
+                <TableCell component="th" scope="row">
+                  <div className={classes.iconContainer}>
+                    <Avatar
+                      alt={row.username}
+                      src={row.userAvatar}
+                      className={classes.icon}
+                    />
+                    <Typography className={classes.iconText}>
+                      {row.username}
+                    </Typography>
+                  </div>
+                </TableCell>
+                <TableCell align="center">{parseFloat(row.amount).toFixed(2)}</TableCell>
+                <TableCell align="center">{parseFloat(row.fee).toFixed(2)}</TableCell>
+                <TableCell align="center" className={(row.transType == 1) ? classes.green : classes.red}>
+                  {(row.transType == 1) ? "DEPOSIT" : "WITHDRAW"}
+                </TableCell>
+                <TableCell align="center">{row.time}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={count}
+        rowsPerPage={constrains.rowsPerPage}
+        page={constrains.page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 }
 
@@ -147,8 +211,20 @@ const TransactionTable = () => {
   const [currentStatus, setCurrentStatus] = useState("LOADING ...");
   const [currentStatus2, setCurrentStatus2] = useState("LOADING ...");
 
-  const [transctionList, setTransctionList] = useState();
-  const [fundTransferHistory, setFundTransferHistory] = useState();
+  const transactionData = useRef(null);
+  const fundTransferData = useRef(null);
+  const [transctionListTable, setTransctionListTable] = useState();
+  const [fundTransferHistoryTable, setFundTransferHistoryTable] = useState();
+
+  const [table1Constraints, setTable1Constraints] = useState({
+    rowsPerPage: 10,
+    page: 0
+  });
+  const [table2Constraints, setTable2Constraints] = useState({
+    rowsPerPage: 10,
+    page: 0
+  });
+
   const serverResponse = useFetch(target);
   const serverResponse2 = useFetch(target2);
 
@@ -161,7 +237,8 @@ const TransactionTable = () => {
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
         setCurrentStatus("");
-        setTransctionList(generateTransactionTable(serverResponse.data.trans, classes));
+        transactionData.current = serverResponse.data.trans;
+        setTransctionListTable(generateTransactionTable(serverResponse.data.trans, classes, table1Constraints, setTable1Constraints));
       }
       else {
         // Error from server
@@ -179,7 +256,8 @@ const TransactionTable = () => {
     else if (serverResponse2.data) {
       if (serverResponse2.data.result) {
         setCurrentStatus2("");
-        setFundTransferHistory(generateFundTransferHistoryTable(serverResponse2.data.history, classes));
+        fundTransferData.current = serverResponse2.data.history;
+        setFundTransferHistoryTable(generateFundTransferHistoryTable(serverResponse2.data.history, classes, table2Constraints, setTable2Constraints));
       }
       else {
         // Error from server
@@ -188,16 +266,35 @@ const TransactionTable = () => {
     }
   }, [serverResponse2.error, serverResponse2.data]);
 
+  // Apply Table Constrains
+  useEffect(() => {
+    if (transactionData.current) {
+      setTransctionListTable(generateTransactionTable(transactionData.current, classes,
+        table1Constraints,
+        setTable1Constraints
+      ));
+    }
+  }, [table1Constraints])
+
+  // Apply Table Constrains
+  useEffect(() => {
+    if (fundTransferData.current) {
+      setFundTransferHistoryTable(generateFundTransferHistoryTable(fundTransferData.current, classes,
+        table2Constraints,
+        setTable2Constraints
+      ));
+    }
+  }, [table2Constraints])
 
   return (
     <div>
       <Typography variant="h4">Coin Transactions</Typography> <br/>
-      {transctionList}
+      {transctionListTable}
       <br/>
       <br/>
       <br/>
       <Typography variant="h4">Fund Transfer History</Typography><br/>
-      {fundTransferHistory}
+      {fundTransferHistoryTable}
     </div>
   );
 }

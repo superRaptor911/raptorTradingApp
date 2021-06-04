@@ -1,4 +1,5 @@
 import './index.css';
+import { createMuiTheme, ThemeProvider  } from '@material-ui/core/styles';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'; 
 import MainPage from './pages/MainPage';
 import Login from './pages/Login';
@@ -19,81 +20,89 @@ import CoinInfo from './pages/CoinInfo';
 import Company from './pages/Company';
 import DatabaseQuery from './pages/DatabaseQuery';
 
+const themeLight = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+});
+
 function App() {
   return (
     <Router>
-      <Header/>
-      <div>
-        <Switch>
-          <Route exact path="/">
-            <MainPage/>
-          </Route>
+      <ThemeProvider theme={themeLight}>
+        <Header/>
+        <div>
+          <Switch>
+            <Route exact path="/">
+              <MainPage/>
+            </Route>
 
-          <Route exact path="/login">
-            <Login/>
-          </Route>
+            <Route exact path="/login">
+              <Login/>
+            </Route>
 
-          <Route exact path="/adminmenu">
-            <AdminMenu/>
-          </Route>
+            <Route exact path="/adminmenu">
+              <AdminMenu/>
+            </Route>
 
-          <Route exact path="/adduser">
-            <AddUser/>
-          </Route>
+            <Route exact path="/adduser">
+              <AddUser/>
+            </Route>
 
-          <Route exact path="/addcoin">
-            <AddCoin/>
-          </Route>
+            <Route exact path="/addcoin">
+              <AddCoin/>
+            </Route>
 
-          <Route exact path="/transferfund">
-            <TransferFund/>
-          </Route>
+            <Route exact path="/transferfund">
+              <TransferFund/>
+            </Route>
 
-          <Route exact path="/addtransaction">
-            <AddTransaction/>
-          </Route>
+            <Route exact path="/addtransaction">
+              <AddTransaction/>
+            </Route>
 
-          <Route exact path="/listusers">
-            <UserList/>
-          </Route>
+            <Route exact path="/listusers">
+              <UserList/>
+            </Route>
 
-          <Route exact path="/edituser/:username">
-            <EditUser/>
-          </Route>
+            <Route exact path="/edituser/:username">
+              <EditUser/>
+            </Route>
 
-          <Route exact path="/user/:userName">
-            <UserInfo/>
-          </Route>
-          <Route exact path="/adminlogin">
-            <AdminLogin/>
-          </Route>
+            <Route exact path="/user/:userName">
+              <UserInfo/>
+            </Route>
+            <Route exact path="/adminlogin">
+              <AdminLogin/>
+            </Route>
 
-          <Route exact path="/edittransactionmenu">
-            <EditTransactionMenu/>
-          </Route>
+            <Route exact path="/edittransactionmenu">
+              <EditTransactionMenu/>
+            </Route>
 
-          <Route exact path="/policy">
-            <Policy/>
-          </Route>
+            <Route exact path="/policy">
+              <Policy/>
+            </Route>
 
-          <Route exact path="/transactionhistory">
-            <TransactionHistory/>
-          </Route>
+            <Route exact path="/transactionhistory">
+              <TransactionHistory/>
+            </Route>
 
-          <Route exact path="/coininfo/:coin">
-            <CoinInfo/>
-          </Route>
+            <Route exact path="/coininfo/:coin">
+              <CoinInfo/>
+            </Route>
 
-          <Route exact path="/company">
-            <Company/>
-          </Route>
+            <Route exact path="/company">
+              <Company/>
+            </Route>
 
-          <Route exact path="/database">
-            <DatabaseQuery/>
-          </Route>
+            <Route exact path="/database">
+              <DatabaseQuery/>
+            </Route>
 
-        </Switch>
-      </div>
+          </Switch>
+        </div>
+      </ThemeProvider>
     </Router>
   );
 }

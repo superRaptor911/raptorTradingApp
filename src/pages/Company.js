@@ -22,7 +22,6 @@ const useStyles = makeStyles({
     marginRight: 'auto',
     marginTop: 20,
     padding: 15,
-    backgroundColor: 'lightblue',
     width: 'max-content',
     paddingLeft: 20,
     paddingRight: 20,
@@ -152,11 +151,13 @@ function genCoinCountPieChart(coins, pricing, classes) {
   ); 
 }
 
+
 function genInvestorPieChart(investmentData, classes) {
   let data = [];
   let data2 = [];
   data.push(['Users', 'investment']);
   data2.push(['Users', 'wallet']);
+
   if (investmentData) {
     investmentData.sort(sortBy("investment", "desc"));
   }
@@ -170,6 +171,7 @@ function genInvestorPieChart(investmentData, classes) {
   for (let i of investmentData) {
     data2.push([i.username, Math.max(parseFloat(i.amount), 0)]);
   }
+
   return (
     <div>
       <Chart
@@ -205,17 +207,34 @@ function genInvestorPieChart(investmentData, classes) {
   ); 
 }
 
-function genDonationPieChart(donations, classes) {
-  let data = [];
-
+// Funtion to convert donation data for Pie chart 
+function formatDonationData(donations) {
+  let donationDict = {};
   if (donations) {
     for (let i of donations) {
-      data.push([i.username, parseFloat(i.amount)]);
+      if (!donationDict[i.username]) {
+        donationDict[i.username] = [i.username, 0];
+      }
+
+      donationDict[i.username][1] += parseFloat(i.amount);
     }
   }
+  
+  let values = [];
 
+  for (let i in donationDict) {
+    values.push(donationDict[i]);
+  }
+  return values;
+}
+
+
+// Funtion to generate Donation Pie chart
+function genDonationPieChart(donations, classes) {
+  let data = formatDonationData(donations);
   data.sort(sortBy(1, "desc"));
   data.unshift(['User', 'Donation']);
+
   return (
     <Chart
       height={'46vw'}
@@ -264,7 +283,7 @@ const Company = () => {
 
   // Get coins
   useEffect(() => {
-    if (serverResponse.error.error) {
+    if (serverResponse.data.error) {
       // Fetch request failed
       setCurrentStatus(serverResponse.error.msg);
     }
@@ -276,14 +295,14 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus(serverResponse.error.err);
+        setCurrentStatus(serverResponse.data.err);
       }
     }
   }, [serverResponse.error, serverResponse.data]);
 
   // Get coins
   useEffect(() => {
-    if (serverResponse2.error.error) {
+    if (serverResponse2.data.error) {
       // Fetch request failed
       setCurrentStatus2(serverResponse2.error.msg);
     }
@@ -296,14 +315,14 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus2(serverResponse2.error.err);
+        setCurrentStatus2(serverResponse2.data.err);
       }
     }
   }, [serverResponse2.error, serverResponse2.data]);
 
   // Get coins
   useEffect(() => {
-    if (serverResponse3.error.error) {
+    if (serverResponse3.data.error) {
       // Fetch request failed
       setCurrentStatus3(serverResponse3.error.msg);
     }
@@ -316,14 +335,14 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus3(serverResponse3.error.err);
+        setCurrentStatus3(serverResponse3.data.err);
       }
     }
   }, [serverResponse3.error, serverResponse3.data]);
 
   // Get coins
   useEffect(() => {
-    if (serverResponse4.error.error) {
+    if (serverResponse4.data.error) {
       // Fetch request failed
       setCurrentStatus4(serverResponse4.error.msg);
     }
@@ -336,7 +355,7 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus4(serverResponse4.error.err);
+        setCurrentStatus4(serverResponse4.data.err);
       }
     }
   }, [serverResponse4.error, serverResponse4.data]);
