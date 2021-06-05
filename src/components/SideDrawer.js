@@ -36,6 +36,10 @@ const SideDrawer = () => {
       path: "/listusers"
     },
     {
+      name: "TRADING",
+      path: "/trading"
+    },
+    {
       name: "HISTORY",
       path: "/transactionhistory"
     },
@@ -46,13 +50,6 @@ const SideDrawer = () => {
     {
       name: "DATABASE",
       path: "/database"
-    },
-  ];
-
-  const personalList = [
-    {
-      name: "MY PROFILE",
-      path: "/profile/" + getCookie("username")
     },
   ];
 

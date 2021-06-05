@@ -1,5 +1,6 @@
 import {useEffect , useRef, useState} from "react";
 import useFetch from "../components/useFetch";
+import AllTheCoins from "../components/AllTheCoins";
 import {serverAddress, sortBy} from '../components/Utility';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core'
@@ -283,7 +284,7 @@ const Company = () => {
 
   // Get coins
   useEffect(() => {
-    if (serverResponse.data.error) {
+    if (serverResponse.error.error) {
       // Fetch request failed
       setCurrentStatus(serverResponse.error.msg);
     }
@@ -295,14 +296,14 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus(serverResponse.data.err);
+        setCurrentStatus(serverResponse.error.err);
       }
     }
   }, [serverResponse.error, serverResponse.data]);
 
   // Get coins
   useEffect(() => {
-    if (serverResponse2.data.error) {
+    if (serverResponse2.error.error) {
       // Fetch request failed
       setCurrentStatus2(serverResponse2.error.msg);
     }
@@ -315,14 +316,14 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus2(serverResponse2.data.err);
+        setCurrentStatus2(serverResponse2.error.err);
       }
     }
   }, [serverResponse2.error, serverResponse2.data]);
 
   // Get coins
   useEffect(() => {
-    if (serverResponse3.data.error) {
+    if (serverResponse3.error.error) {
       // Fetch request failed
       setCurrentStatus3(serverResponse3.error.msg);
     }
@@ -335,14 +336,14 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus3(serverResponse3.data.err);
+        setCurrentStatus3(serverResponse3.error.err);
       }
     }
   }, [serverResponse3.error, serverResponse3.data]);
 
   // Get coins
   useEffect(() => {
-    if (serverResponse4.data.error) {
+    if (serverResponse4.error.error) {
       // Fetch request failed
       setCurrentStatus4(serverResponse4.error.msg);
     }
@@ -355,7 +356,7 @@ const Company = () => {
       }
       else {
         // Error from server
-        setCurrentStatus4(serverResponse4.data.err);
+        setCurrentStatus4(serverResponse4.error.err);
       }
     }
   }, [serverResponse4.error, serverResponse4.data]);
@@ -372,6 +373,10 @@ const Company = () => {
       <Typography variant="button" color="error">
         {currentStatus2}
       </Typography>
+
+      <br/>
+      <br/>
+      <AllTheCoins data={serverResponse.data} />
 
       <Typography variant="h4" className={classes.item}>
         Investments
