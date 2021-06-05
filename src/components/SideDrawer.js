@@ -62,6 +62,10 @@ const SideDrawer = () => {
       name: "POLICY",
       path: "/policy"
     },
+    {
+      name: "ADMIN MENU",
+      path: "/adminmenu"
+    },
   ];
 
   return (

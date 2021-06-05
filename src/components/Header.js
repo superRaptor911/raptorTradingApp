@@ -9,6 +9,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Container from '@material-ui/core/Container';
 import logo from '../logo1.png';
 import SideDrawer from "./SideDrawer";
+import Switch from '@material-ui/core/Switch';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import {setCookie} from "./Utility";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,17 +32,29 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(6),
   },
   container: {
-    display: 'inline-block',
-    textAlign: 'right'
+    display: 'flex',
+    textAlign: 'right',
+    alignItems: 'center',
+    justifyContent: 'right',
   },
   emptyDiv: {
     margin: 0,
   }
 }));
 
-const Header = () => {
+const Header = ({isDarkTheme, setIsDarkTheme}) => {
   const classes = useStyles();
   const history = useHistory();
+  
+  const handleThemeChange = (event) => {
+    setIsDarkTheme(event.target.checked);
+    if (event.target.checked) {
+      setCookie("theme", "dark");
+    }
+    else {
+      setCookie("theme", "light");
+    }
+  }
 
   return (
     <div>
@@ -57,8 +72,13 @@ const Header = () => {
             Raptor Trading
           </Typography>
           <Container className={classes.container}>
-            <Button color="inherit" onClick={() => history.push('/')}>HOME</Button>
-            <Button color="inherit" onClick={() => history.push('/adminmenu')}>MENU</Button>
+            <Brightness4Icon fontSize="large"/>
+            <Switch
+              checked={isDarkTheme}
+              onChange={handleThemeChange}
+              name="checked"
+            />
+            {/* <Button color="inherit" onClick={() => history.push('/adminmenu')}>MENU</Button> */}
           </Container>
         </Toolbar>
       </AppBar>

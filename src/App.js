@@ -22,6 +22,8 @@ import CoinInfo from './pages/CoinInfo';
 import Company from './pages/Company';
 import DatabaseQuery from './pages/DatabaseQuery';
 import {useState} from 'react';
+import {getCookie, isSystemThemeDark} from './components/Utility';
+import {useThemeDetector} from './components/useThemeDetector';
 
 const createTheme = (darkMode) => {
   return createMuiTheme({
@@ -39,13 +41,18 @@ const createTheme = (darkMode) => {
 }
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  // const isDarkTheme = useThemeDetector();
+
+  const [isDarkTheme, setIsDarkTheme] = useState(!(getCookie("theme") === "light"));
 
   return (
     <Router>
-      <ThemeProvider theme={createTheme(darkMode)}>
+      <ThemeProvider theme={createTheme(isDarkTheme)}>
         <CssBaseline />
-        <Header/>
+        <Header
+          isDarkTheme={isDarkTheme}
+          setIsDarkTheme={setIsDarkTheme}
+        />
         <div>
           <Switch>
             <Route exact path="/">
