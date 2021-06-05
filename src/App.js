@@ -3,7 +3,6 @@ import { createMuiTheme, ThemeProvider  } from '@material-ui/core/styles';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'; 
 import MainPage from './pages/MainPage';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from '@material-ui/core/Paper';
 import Login from './pages/Login';
 import Header from './components/Header';
 import AdminMenu from './pages/AdminMenu';
@@ -21,9 +20,10 @@ import TransactionHistory from './pages/TransactionHistory';
 import CoinInfo from './pages/CoinInfo';
 import Company from './pages/Company';
 import DatabaseQuery from './pages/DatabaseQuery';
+import TradingMenuPage from './pages/TradingMenuPage';
 import {useState} from 'react';
-import {getCookie, isSystemThemeDark} from './components/Utility';
-import {useThemeDetector} from './components/useThemeDetector';
+import {getCookie} from './components/Utility';
+// import {useThemeDetector} from './components/useThemeDetector';
 
 const createTheme = (darkMode) => {
   return createMuiTheme({
@@ -120,6 +120,10 @@ function App() {
 
             <Route exact path="/database">
               <DatabaseQuery/>
+            </Route>
+
+            <Route exact path="/trading">
+              <TradingMenuPage/>
             </Route>
 
           </Switch>

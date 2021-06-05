@@ -103,10 +103,17 @@ https://github.com/superRaptor911/raptorTradingApp/issues
 Raptor Trading App v1.5.2
 
 Changes:
-* Fixed error handling bugs
+* Refactored server side code
+* Improved server side error handling
+* Improved fund transfer history
+* Added "Total coins" table
+* new theme
+* Improved contrast
+* Dark mode
 * Optimised performance
 
-Source Code :  https://github.com/superRaptor911/raptorTradingApp
+App Source Code :  https://github.com/superRaptor911/raptorTradingApp
+Server Source Code :  https://github.com/superRaptor911/raptorTradingApp
 Site : https://raptorinc.ga
 
 Please report bugs here:

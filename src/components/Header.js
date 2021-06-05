@@ -78,7 +78,6 @@ const Header = ({isDarkTheme, setIsDarkTheme}) => {
               onChange={handleThemeChange}
               name="checked"
             />
-            {/* <Button color="inherit" onClick={() => history.push('/adminmenu')}>MENU</Button> */}
           </Container>
         </Toolbar>
       </AppBar>
