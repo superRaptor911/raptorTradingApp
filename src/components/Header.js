@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginTop: 0,
-    top: 0,
-    position: 'fixed',
     marginBottom: 0,
   },
   menuButton: {
@@ -37,9 +35,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'right',
   },
-  emptyDiv: {
-    margin: 0,
-  }
+  offset: theme.mixins.toolbar,
 }));
 
 const Header = ({isDarkTheme, setIsDarkTheme}) => {
@@ -58,7 +54,7 @@ const Header = ({isDarkTheme, setIsDarkTheme}) => {
 
   return (
     <div>
-      <AppBar className={classes.root}>
+      <AppBar className={classes.root} position="fixed">
         <Toolbar>
           <SideDrawer/>
           <Button onClick={() => history.push('/')}>
@@ -81,7 +77,7 @@ const Header = ({isDarkTheme, setIsDarkTheme}) => {
           </Container>
         </Toolbar>
       </AppBar>
-      <div className={classes.emptyDiv}></div>
+    <div className={classes.offset} />
     </div>
   );
 }

@@ -9,16 +9,15 @@ endif
 set shortmess=aoO
 badd +126 App.js
 badd +20 pages/MainPage.js
-badd +62 pages/Login.js
-badd +65 components/Utility.js
-badd +46 components/Header.js
+badd +3 components/Utility.js
+badd +59 components/Header.js
 badd +85 pages/AdminMenu.js
 badd +179 pages/AddUser.js
 badd +77 pages/AddCoin.js
-badd +190 pages/AddTransaction.js
+badd +46 pages/AddTransaction.js
 badd +6 components/TransactionTable.js
 badd +102 components/CoinTable.js
-badd +56 pages/EditUser.js
+badd +62 pages/EditUser.js
 badd +1 pages/UserList.js
 badd +1 components/UserCard.js
 badd +334 pages/UserInfo.js
@@ -26,19 +25,18 @@ badd +32 pages/AdminLogin.js
 badd +100 pages/EditTransactionMenu.js
 badd +151 pages/TransferFund.js
 badd +13 components/SideDrawer.js
-badd +3 pages/Policy.js
 badd +19 pages/TransactionHistory.js
 badd +278 pages/CoinInfo.js
 badd +7 pages/Company.js
-badd +24 pages/DatabaseQuery.js
 badd +9 index.js
 badd +12 components/AllTheCoins.js
-badd +107 ~/program/react/cucek-trading/changes.log
-badd +5 components/useThemeDetector.js
-badd +29 pages/TradingMenuPage.js
+badd +103 ~/program/react/cucek-trading/changes.log
+badd +32 pages/TradingMenuPage.js
+badd +109 pages/trading/LoginUser.js
+badd +1 components/LoadingCircle.js
 argglobal
 %argdel
-edit ~/program/react/cucek-trading/changes.log
+edit pages/trading/LoginUser.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -48,12 +46,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 108 - ((32 * winheight(0) + 22) / 45)
+let s:l = 134 - ((27 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-108
-normal! 032|
+134
+normal! 05|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

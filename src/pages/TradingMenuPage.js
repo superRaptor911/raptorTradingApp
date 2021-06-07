@@ -1,6 +1,6 @@
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import TabBar from '../components/trading/TabBar';
+import LoginUser from './trading/LoginUser';
 
 const useStyles = makeStyles({
   root: {
@@ -24,12 +24,15 @@ const TradingMenuPage = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-    <Paper>
-      <Typography variant="h4" className={classes.title}>
-        Coming Soon
-      </Typography>
-    </Paper>
+    <div>
+      <TabBar titles={["1", "2", "3"]}>
+        <h1>GGWP</h1>
+        <h1>GGWP 2</h1>
+        <h1>GGWP 3</h1>
+      </TabBar>
+      <div className={classes.root}>
+        <LoginUser/>
+      </div>
     </div>
   );
 }
