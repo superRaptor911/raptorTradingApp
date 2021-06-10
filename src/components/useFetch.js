@@ -1,11 +1,10 @@
 import {useState, useEffect} from 'react';
 
 const useFetch = (target) => {
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState();
   const [error, setError] = useState({error: false, msg: ""});
 
-  useEffect(() =>{
+  useEffect(() => {
     const abortCont = new AbortController();
     if (target.uri !== "") {
       fetch(target.uri, {
@@ -25,7 +24,6 @@ const useFetch = (target) => {
         .then(data => {
           setError({error: false, msg:""});
           setData(data);
-          setLoading(false);
         })
         .catch(err => {
           if (err.name === 'AbortError') {
@@ -34,13 +32,12 @@ const useFetch = (target) => {
           } else {
             console.log("err.....");
             setError({error: true, msg: err.message});
-            setLoading(false);
           }
         });
     }
     return () => abortCont.abort();
   }, [target]);
-  return {data, isLoading, error};
+  return {data, error};
 }
 
 export default useFetch;

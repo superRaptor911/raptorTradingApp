@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import TabBar from '../components/trading/TabBar';
 import LoginUser from './trading/LoginUser';
+import Market from './trading/Market';
 
 const useStyles = makeStyles({
   root: {
@@ -25,14 +26,14 @@ const TradingMenuPage = () => {
 
   return (
     <div>
-      <TabBar titles={["1", "2", "3"]}>
-        <h1>GGWP</h1>
+      <TabBar titles={["Market", "2", "3"]}>
+        <Market/>
         <h1>GGWP 2</h1>
         <h1>GGWP 3</h1>
       </TabBar>
-      <div className={classes.root}>
-        <LoginUser/>
-      </div>
+      {/* <div className={classes.root}> */}
+      {/*   <LoginUser/> */}
+      {/* </div> */}
     </div>
   );
 }

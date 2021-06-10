@@ -63,3 +63,29 @@ export function sortBy(field, order = "asc") {
   };
 }
 
+
+export function isEqual(o1, o2) {
+  const val = JSON.stringify(o1) === JSON.stringify(o2);
+  if (val) {
+    console.log("Valuse same")
+  }
+  return val;
+}
+
+
+// Set session storage
+export function setSessionStorage(key, data) {
+  sessionStorage.setItem(key, JSON.stringify(data)); 
+}
+
+
+// Get session storage
+export function getSessionStorage(key) {
+  try {
+    console.log("Got lol")
+    return JSON.parse(sessionStorage.getItem(key)); 
+  }
+  catch (e) {
+    return null;
+  }
+}
