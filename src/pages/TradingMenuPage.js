@@ -5,12 +5,6 @@ import Market from './trading/Market';
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 100,
-    width: "90%",
-    maxWidth: 1000,
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto'
   },
   title: {
     textAlign: 'center',
@@ -25,8 +19,8 @@ const TradingMenuPage = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <TabBar titles={["Market", "2", "3"]}>
+    <div className={classes.root}>
+      <TabBar titles={["Market", "History", "Wallet"]}>
         <Market/>
         <h1>GGWP 2</h1>
         <h1>GGWP 3</h1>

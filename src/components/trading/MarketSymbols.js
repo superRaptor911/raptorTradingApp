@@ -1,24 +1,14 @@
 import React, {memo, useEffect , useMemo, useRef, useState} from "react";
 import Typography from '@material-ui/core/Typography';
-import {getSessionStorage, serverAddress, setSessionStorage} from "../Utility";
+import {getSessionStorage, readableValue, serverAddress, setSessionStorage} from "../Utility";
 import useFetch from "../useFetch";
 import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
 import AutoSizer from "react-virtualized-auto-sizer";
 
-function genList(data) {
-  return (
-    data && data.slice(0, 10).map((item, id) => (
-      <ListItem button key={id}>
-        <ListItemText primary={item.symbol}/>
-      </ListItem>
-    ))
-  );
-}
 
-const MarketSymbols = ({setSelectedSymbol}) => {
+const MarketSymbols = ({setSelectedSymbol, width, height}) => {
   const [target, setTarget] = useState({uri: `${serverAddress}/trading/market.php`, data: { type: 'ticker'}});
   const serverResponse = useFetch(target);
 
@@ -26,7 +16,6 @@ const MarketSymbols = ({setSelectedSymbol}) => {
 
   // Get coins
   useEffect(() => {
-
     if (serverResponse.error.error) {
       // Fetch request failed
     }
@@ -41,12 +30,14 @@ const MarketSymbols = ({setSelectedSymbol}) => {
     }
   }, [serverResponse.error, serverResponse.data]);
 
+
   const list = (symbolList == null) ? getSessionStorage("tradingSymbolList") : symbolList;
 
   const renderRow = ({index, style}) => {
    return (
      <ListItem button style={style} key={index} onClick={() => {setSelectedSymbol(list[index].symbol)}}>
       <ListItemText primary={list[index].symbol} />
+       {"$" + readableValue(list[index].price)}
     </ListItem>
   ); 
   }
@@ -54,7 +45,7 @@ const MarketSymbols = ({setSelectedSymbol}) => {
   console.log("Rendering List")
   return (
     <div>
-      <FixedSizeList height={600} width={300} itemSize={46} itemCount={list.length}>
+      <FixedSizeList height={height} width={Math.max(width, 200)} itemSize={46} itemCount={list.length}>
         {renderRow}
       </FixedSizeList>
     </div>
