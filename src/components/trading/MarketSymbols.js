@@ -1,6 +1,6 @@
 import React, {memo, useEffect , useMemo, useRef, useState} from "react";
 import Typography from '@material-ui/core/Typography';
-import {getSessionStorage, readableValue, serverAddress, setSessionStorage} from "../Utility";
+import {getCachedValueIfNull, getSessionStorage, readableValue, serverAddress, setSessionStorage} from "../Utility";
 import useFetch from "../useFetch";
 import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,8 +31,7 @@ const MarketSymbols = ({setSelectedSymbol, width, height}) => {
   }, [serverResponse.error, serverResponse.data]);
 
 
-  const list = (symbolList == null) ? getSessionStorage("tradingSymbolList") : symbolList;
-
+  const list = getCachedValueIfNull("tradingSymbolList", symbolList, []);
   const renderRow = ({index, style}) => {
    return (
      <ListItem button style={style} key={index} onClick={() => {setSelectedSymbol(list[index].symbol)}}>

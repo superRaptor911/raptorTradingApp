@@ -22,8 +22,8 @@ const TradingMenuPage = () => {
     <div className={classes.root}>
       <TabBar titles={["Market", "History", "Wallet"]}>
         <Market/>
-        <h1>GGWP 2</h1>
-        <h1>GGWP 3</h1>
+        <h1>Coming Soon</h1>
+        <h1>Cumming Soon</h1>
       </TabBar>
       {/* <div className={classes.root}> */}
       {/*   <LoginUser/> */}

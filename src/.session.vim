@@ -9,7 +9,7 @@ endif
 set shortmess=aoO
 badd +126 App.js
 badd +20 pages/MainPage.js
-badd +85 components/Utility.js
+badd +41 components/Utility.js
 badd +2 components/Header.js
 badd +85 pages/AdminMenu.js
 badd +179 pages/AddUser.js
@@ -26,22 +26,23 @@ badd +100 pages/EditTransactionMenu.js
 badd +151 pages/TransferFund.js
 badd +13 components/SideDrawer.js
 badd +19 pages/TransactionHistory.js
-badd +278 pages/CoinInfo.js
+badd +263 pages/CoinInfo.js
 badd +285 pages/Company.js
 badd +9 index.js
 badd +12 components/AllTheCoins.js
 badd +103 ~/program/react/cucek-trading/changes.log
-badd +28 pages/TradingMenuPage.js
+badd +17 pages/TradingMenuPage.js
 badd +134 pages/trading/LoginUser.js
 badd +1 components/LoadingCircle.js
-badd +61 components/trading/TabBar.js
-badd +17 pages/trading/Market.js
-badd +47 components/trading/MarketSymbols.js
+badd +49 components/trading/TabBar.js
+badd +15 pages/trading/Market.js
+badd +11 components/trading/MarketSymbols.js
 badd +4 components/useFetch.js
 badd +7 components/usePrevious.js
+badd +88 components/trading/SymbolHistory.js
 argglobal
 %argdel
-edit components/trading/MarketSymbols.js
+edit components/trading/SymbolHistory.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -51,11 +52,11 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 28 - ((11 * winheight(0) + 22) / 45)
+let s:l = 34 - ((32 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-28
+34
 normal! 0
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

@@ -82,10 +82,21 @@ export function setSessionStorage(key, data) {
 // Get session storage
 export function getSessionStorage(key) {
   try {
-    console.log("Got lol")
+    console.log("Using Cached value");
     return JSON.parse(sessionStorage.getItem(key)); 
   }
   catch (e) {
     return null;
   }
+}
+
+export function getCachedValueIfNull(key, variable, cacheMissReturn = null) {
+  if (!variable) {
+    const cached = getSessionStorage(key);
+    if (!cached) {
+      return cacheMissReturn;
+    }
+    return cached;
+  }
+  return variable;
 }
