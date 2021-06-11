@@ -1,9 +1,8 @@
 import { makeStyles } from '@material-ui/core'
-import TransactionTable from "../components/TransactionTable";
 import CoinTable from '../components/CoinTable';
 import UserTable from '../components/UserTable';
 import {useEffect, useState} from 'react';
-import {serverAddress} from '../components/Utility';
+import {getCachedValueIfNull, getSessionStorage, serverAddress, setSessionStorage} from '../components/Utility';
 import useFetch from '../components/useFetch';
 
 const useStyles = makeStyles({
@@ -20,7 +19,7 @@ const MainPage = () => {
   const classes = useStyles();
   const [target, setTarget ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "prices" , firstFetch: true}});
   const serverResponse = useFetch(target);
-  const [pricingData , setPricingData ] = useState([]);
+  const [pricingData , setPricingData ] = useState(null);
 
   const [timeoutCounter, setTimeoutCounter] = useState(0);
 
@@ -40,6 +39,7 @@ const MainPage = () => {
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
         setPricingData(serverResponse.data.coins);
+        setSessionStorage("pricingData", serverResponse.data.coins);
         console.log("Data type : " + serverResponse.data.type);
       }
       else {
@@ -48,11 +48,11 @@ const MainPage = () => {
     }
   }, [serverResponse.error, serverResponse.data]);
 
-  console.log("Rendering main")
+  const data = getCachedValueIfNull("pricingData", pricingData, []);
   return (
     <div className={classes.root}>
-      <CoinTable pricingData={pricingData}/>
-      <UserTable pricingData={pricingData}/>
+      <CoinTable pricingData={data}/>
+      <UserTable pricingData={data}/>
     </div>
   );
 }

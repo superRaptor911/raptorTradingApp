@@ -136,7 +136,6 @@ const UserTable = ({pricingData}) => {
 
   // Get investments
   useEffect(() => {
-    console.log("called xxxxxxxxxxxxxxx")
     if (serverResponse3.error.error) {
       console.log("Error::CoinTable::" + serverResponse3.error.msg);
     }
@@ -150,7 +149,7 @@ const UserTable = ({pricingData}) => {
         console.log("Error::CoinTable::" + serverResponse3.data.err);
       }
     }
-  }, [serverResponse3.error, serverResponse3.data ]);
+  }, [serverResponse3.error, serverResponse3.data]);
 
   useEffect(() => {
     setUserList(generateUserTable(getUserInfo(transactionData.current, pricingData), classes));

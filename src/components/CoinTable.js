@@ -1,6 +1,6 @@
 import {useEffect , useRef, useState} from "react";
 import useFetch from "../components/useFetch";
-import {readableValue, serverAddress} from '../components/Utility';
+import {getCachedValueIfNull, readableValue, serverAddress, setSessionStorage} from '../components/Utility';
 import Avatar from '@material-ui/core/Avatar';
 import Table from '@material-ui/core/Table';
 import Typography from '@material-ui/core/Typography';
@@ -84,7 +84,7 @@ const CoinTable = ({pricingData}) => {
 
   const serverResponse = useFetch(target);
 
-  const coinData = useRef([]);
+  const coinData = useRef();
 
   // Get coins
   useEffect(() => {
@@ -95,6 +95,7 @@ const CoinTable = ({pricingData}) => {
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
         setCoinList(generateCoinTable(serverResponse.data.coins, pricingData.current, classes));
+        setSessionStorage("coinData", serverResponse.data.coins);
         coinData.current = serverResponse.data.coins;
       }
       else {
@@ -104,8 +105,15 @@ const CoinTable = ({pricingData}) => {
     }
   }, [serverResponse.error, serverResponse.data ]);
 
+  // Use Cache to render
   useEffect(() => {
-    setCoinList(generateCoinTable(coinData.current, pricingData, classes));
+    const data = getCachedValueIfNull("coinData", coinData.current, []);
+    setCoinList(generateCoinTable(data, pricingData, classes));
+  }, [])
+
+  useEffect(() => {
+    const data = getCachedValueIfNull("coinData", coinData.current, []);
+    setCoinList(generateCoinTable(data, pricingData, classes));
   }, [pricingData]);
 
   return (

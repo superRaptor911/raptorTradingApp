@@ -80,21 +80,27 @@ export function setSessionStorage(key, data) {
 
 
 // Get session storage
-export function getSessionStorage(key) {
+export function getSessionStorage(key, defaultReturn = null) {
   try {
-    console.log("Using Cached value");
-    return JSON.parse(sessionStorage.getItem(key)); 
+    console.log(`Using ${key} Cache`);
+    const jsonString = sessionStorage.getItem(key);
+    if (jsonString === null) {
+      return defaultReturn;
+    }
+
+    return JSON.parse(jsonString); 
   }
   catch (e) {
-    return null;
+    console.log(key + " Cache not found");
+    return defaultReturn;
   }
 }
 
-export function getCachedValueIfNull(key, variable, cacheMissReturn = null) {
-  if (!variable) {
+export function getCachedValueIfNull(key, variable, elseReturn = null) {
+  if (!variable || variable === elseReturn) {
     const cached = getSessionStorage(key);
     if (!cached) {
-      return cacheMissReturn;
+      return elseReturn;
     }
     return cached;
   }
