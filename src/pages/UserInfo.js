@@ -1,7 +1,7 @@
 import {useEffect , useRef, useState} from "react";
 import {useHistory, useParams} from "react-router";
 import useFetch from "../components/useFetch";
-import {serverAddress} from '../components/Utility';
+import {serverAddress, setSessionStorage} from '../components/Utility';
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core'
@@ -356,6 +356,7 @@ const UserInfo = () => {
   const [currentStatus3, setCurrentStatus3] = useState("LOADING ...");
   const [currentStatus4, setCurrentStatus4] = useState("LOADING ...");
   const [currentStatus5, setCurrentStatus5] = useState("LOADING ...");
+
   const [transctionTable, setTransctionTable] = useState();
   const [userCoinsTable, setUserCoinsTable] = useState();
   const [userWalletTable, setUserWalletTable] = useState();
@@ -408,6 +409,7 @@ const UserInfo = () => {
         setCurrentStatus2("");
         setTransctionTable(genTransactionTable(serverResponse2.data.trans, classes));
         transctionHistory.current = serverResponse2.data.trans;
+        setSessionStorage("transctionHistory", serverResponse2.data.trans);
       }
     }
   }, [serverResponse2.error, serverResponse2.data])
@@ -436,9 +438,11 @@ const UserInfo = () => {
           }
           setUserCoinsTable(genUserCoinsTable(newUserCoins , classes));
           setPieChart(genPieChart(newUserCoins, classes));
+          setSessionStorage("userCoins", newUserCoins);
         }
         else {
           setUserCoinsTable(genUserCoinsTable(serverResponse3.data.userCoins, classes));
+          setSessionStorage("userCoins", serverResponse3.data.userCoins);
         }
 
         userCoins.current = serverResponse3.data.userCoins;
@@ -459,6 +463,7 @@ const UserInfo = () => {
       else {
         setCurrentStatus4("");
         setUserWalletTable(genUserWalletTable(serverResponse4.data.wallet));
+        setSessionStorage("userWallet", serverResponse4.data.wallet);
       }
     }
   }, [serverResponse4.error, serverResponse4.data])
@@ -476,6 +481,7 @@ const UserInfo = () => {
       else {
         setCurrentStatus5("");
         setFundTransferHistoryTable(genFundTransferHistoryTable(serverResponse5.data.history, classes));
+        setSessionStorage("userTransHistory", serverResponse5.data.history);
       }
     }
   }, [serverResponse5.error, serverResponse5.data])
@@ -502,10 +508,15 @@ const UserInfo = () => {
         setUserCoinsTable(genUserCoinsTable(newUserCoins , classes));
         setPieChart(genPieChart(newUserCoins, classes));
         coinPricing.current = serverResponse6.data.coins;
+        setSessionStorage("pricingData", serverResponse6.data.coins);
       }
     }
   }, [serverResponse6.error, serverResponse6.data])
 
+  // USE cache
+  useEffect(() => {
+
+  }, [])
 
   return (
     <Container className={classes.container}>

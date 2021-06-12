@@ -7,20 +7,20 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +126 App.js
-badd +20 pages/MainPage.js
-badd +41 components/Utility.js
+badd +23 App.js
+badd +42 pages/MainPage.js
+badd +100 components/Utility.js
 badd +2 components/Header.js
 badd +85 pages/AdminMenu.js
 badd +179 pages/AddUser.js
 badd +77 pages/AddCoin.js
 badd +46 pages/AddTransaction.js
 badd +6 components/TransactionTable.js
-badd +59 components/CoinTable.js
+badd +98 components/CoinTable.js
 badd +62 pages/EditUser.js
 badd +1 pages/UserList.js
 badd +1 components/UserCard.js
-badd +334 pages/UserInfo.js
+badd +341 pages/UserInfo.js
 badd +32 pages/AdminLogin.js
 badd +100 pages/EditTransactionMenu.js
 badd +151 pages/TransferFund.js
@@ -31,18 +31,19 @@ badd +285 pages/Company.js
 badd +9 index.js
 badd +12 components/AllTheCoins.js
 badd +103 ~/program/react/cucek-trading/changes.log
-badd +17 pages/TradingMenuPage.js
+badd +29 pages/TradingMenuPage.js
 badd +134 pages/trading/LoginUser.js
 badd +1 components/LoadingCircle.js
 badd +49 components/trading/TabBar.js
 badd +15 pages/trading/Market.js
-badd +11 components/trading/MarketSymbols.js
+badd +34 components/trading/MarketSymbols.js
 badd +4 components/useFetch.js
 badd +7 components/usePrevious.js
-badd +88 components/trading/SymbolHistory.js
+badd +34 components/trading/SymbolHistory.js
+badd +50 components/UserTable.js
 argglobal
 %argdel
-edit components/trading/SymbolHistory.js
+edit pages/UserInfo.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -52,12 +53,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 34 - ((32 * winheight(0) + 22) / 45)
+let s:l = 491 - ((24 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-34
-normal! 0
+491
+normal! 05|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

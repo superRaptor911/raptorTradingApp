@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {useEffect, useRef, useState} from 'react';
+import CoinTransaction from '../../components/trading/CoinTransaction';
 import MarketSymbols from '../../components/trading/MarketSymbols';
 import SymbolHistory from '../../components/trading/SymbolHistory';
 
 const useStyles = makeStyles({
   root: {
     display: 'flex',
-    overflowX: 'auto',
   },
 
   rootMobile: {
@@ -50,7 +50,8 @@ const Market = () => {
   return (
     <div className={classes.root} ref={divRef}>
       <MarketSymbols setSelectedSymbol={setSelectedSymbol} width={width * 0.2} height={height}/>
-      <SymbolHistory symbol={selectedSymbol} width={width * 0.7} height={height}/>
+      <SymbolHistory symbol={selectedSymbol} width={width * 0.5} height={height}/>
+      <CoinTransaction symbol={selectedSymbol}/>
     </div>
   );
 }

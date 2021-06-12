@@ -14,6 +14,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: 50,
+  },
   iconContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -156,7 +159,7 @@ const UserTable = ({pricingData}) => {
   }, [pricingData])
 
   return (
-    <div>
+    <div className={classes.root}>
       <Typography variant="h4">Users</Typography> <br/>
       {userList}
     </div>

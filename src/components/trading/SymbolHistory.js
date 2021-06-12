@@ -11,7 +11,6 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 1100,
     marginTop: 20,
     marginLeft: 20,
   },

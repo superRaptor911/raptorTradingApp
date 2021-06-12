@@ -6,6 +6,7 @@ import { FixedSizeList } from 'react-window';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import AutoSizer from "react-virtualized-auto-sizer";
+import Paper from '@material-ui/core/Paper';
 
 
 const MarketSymbols = ({setSelectedSymbol, width, height}) => {
@@ -43,11 +44,11 @@ const MarketSymbols = ({setSelectedSymbol, width, height}) => {
 
   console.log("Rendering List")
   return (
-    <div>
+    <Paper>
       <FixedSizeList height={height} width={Math.max(width, 200)} itemSize={46} itemCount={list.length}>
         {renderRow}
       </FixedSizeList>
-    </div>
+    </Paper>
   );
 }
 
