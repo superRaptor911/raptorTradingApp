@@ -96,9 +96,32 @@ export function getSessionStorage(key, defaultReturn = null) {
   }
 }
 
+// Set session storage
+export function setStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data)); 
+}
+
+
+// Get session storage
+export function getStorage(key, defaultReturn = null) {
+  try {
+    console.log(`Using ${key} Cache`);
+    const jsonString = localStorage.getItem(key);
+    if (jsonString === null) {
+      return defaultReturn;
+    }
+
+    return JSON.parse(jsonString); 
+  }
+  catch (e) {
+    console.log(key + " Cache not found");
+    return defaultReturn;
+  }
+}
+
 export function getCachedValueIfNull(key, variable, elseReturn = null) {
   if (!variable || variable === elseReturn) {
-    const cached = getSessionStorage(key);
+    const cached = getStorage(key);
     if (!cached) {
       return elseReturn;
     }

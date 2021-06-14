@@ -1,6 +1,6 @@
 import {useEffect , useRef, useState} from "react";
 import useFetch from "../components/useFetch";
-import {getCachedValueIfNull, readableValue, serverAddress, setSessionStorage} from '../components/Utility';
+import {getCachedValueIfNull, readableValue, serverAddress, setSessionStorage, setStorage} from '../components/Utility';
 import Avatar from '@material-ui/core/Avatar';
 import Table from '@material-ui/core/Table';
 import Typography from '@material-ui/core/Typography';
@@ -95,7 +95,7 @@ const CoinTable = ({pricingData}) => {
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
         setCoinList(generateCoinTable(serverResponse.data.coins, pricingData.current, classes));
-        setSessionStorage("coinData", serverResponse.data.coins);
+        setStorage("coinData", serverResponse.data.coins);
         coinData.current = serverResponse.data.coins;
       }
       else {

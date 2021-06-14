@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core'
 import CoinTable from '../components/CoinTable';
 import UserTable from '../components/UserTable';
 import {useEffect, useState} from 'react';
-import {getCachedValueIfNull, getSessionStorage, serverAddress, setSessionStorage} from '../components/Utility';
+import {getCachedValueIfNull, getSessionStorage, serverAddress, setSessionStorage, setStorage} from '../components/Utility';
 import useFetch from '../components/useFetch';
 
 const useStyles = makeStyles({
@@ -39,7 +39,7 @@ const MainPage = () => {
     else if (serverResponse.data) {
       if (serverResponse.data.result) {
         setPricingData(serverResponse.data.coins);
-        setSessionStorage("pricingData", serverResponse.data.coins);
+        setStorage("pricingData", serverResponse.data.coins);
         console.log("Data type : " + serverResponse.data.type);
       }
       else {
