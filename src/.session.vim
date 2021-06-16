@@ -8,7 +8,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +23 App.js
-badd +55 pages/MainPage.js
+badd +14 pages/MainPage.js
 badd +127 components/Utility.js
 badd +2 components/Header.js
 badd +85 pages/AdminMenu.js
@@ -37,14 +37,13 @@ badd +1 components/LoadingCircle.js
 badd +49 components/trading/TabBar.js
 badd +44 pages/trading/Market.js
 badd +40 components/trading/MarketSymbols.js
-badd +4 components/useFetch.js
-badd +7 components/usePrevious.js
 badd +14 components/trading/SymbolHistory.js
-badd +50 components/UserTable.js
+badd +127 components/UserTable.js
 badd +55 components/trading/CoinTransaction.js
+badd +4 components/hooks/usePricingData.js
 argglobal
 %argdel
-edit components/UserTable.js
+edit components/hooks/usePricingData.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -54,12 +53,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 148 - ((23 * winheight(0) + 22) / 45)
+let s:l = 4 - ((3 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-148
-normal! 019|
+4
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button';
 import {useEffect , useState} from "react";
-import useFetch from "../components/useFetch";
+import useFetch from "../components/hooks/useFetch";
 import {serverAddress} from '../components/Utility';
 import Avatar from '@material-ui/core/Avatar';
 import Table from '@material-ui/core/Table';

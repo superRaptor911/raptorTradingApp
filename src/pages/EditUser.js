@@ -1,6 +1,6 @@
 import {useEffect , useState} from "react";
 import {useHistory, useParams} from "react-router";
-import useFetch from "../components/useFetch";
+import useFetch from "../components/hooks/useFetch";
 import {getCookie, serverAddress} from '../components/Utility';
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography';

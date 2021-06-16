@@ -1,6 +1,4 @@
-import {useEffect , useRef, useState} from "react";
-import useFetch from "../components/useFetch";
-import {readableValue, serverAddress} from '../components/Utility';
+import {useState} from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Table from '@material-ui/core/Table';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
+import useInvestmentData from "./hooks/useInvestmentData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,52 +38,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
-
-function getUserInfo(transctionList, pricing) {
-  if (!transctionList) {
-    return [];
-  }
-  let dict = {};
-  for (let t of transctionList) {
-    dict[t.username] = {
-      name: t.username,
-      avatar: t.userAvatar,
-      investment: parseFloat(t.investment).toFixed(2),
-      amount: parseFloat(t.amount).toFixed(2),
-      value: parseFloat(t.amount),
-      profit: 0,
-      percent: 0
-    };
-     let str = "0";
-    dict[t.username].investment = Math.max(dict[t.username].investment, 0);
-    if (pricing) {
-      for (let i of t.coins) {
-        let coin = pricing[i.coin];
-        if (coin) {
-          dict[t.username].value += coin.last * i.count;
-          str = str + " + " + coin.last * i.count;
-        }
-      }
-
-      dict[t.username].profit = dict[t.username].value - dict[t.username].investment;
-      dict[t.username].percent = (dict[t.username].value / dict[t.username].investment ) * 100 - 100;
-      dict[t.username].profit = dict[t.username].profit.toFixed(2);
-      dict[t.username].percent = dict[t.username].percent.toFixed(2);
-      dict[t.username].value = dict[t.username].value.toFixed(2);
-    }
-  }
-
-  let arr = [];
-
-  for (let key in dict) {
-    arr.push(dict[key]);
-  }
-  return arr;
-}
-
 const generateUserTable = (data, classes) => {
+  if (!data) {
+    return;
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -130,33 +88,8 @@ const generateUserTable = (data, classes) => {
 
 const UserTable = ({pricingData}) => {
   const classes = useStyles();
-  const [target, ] = useState({uri:  `${serverAddress}/transction.php`, data: {type: "investmentNcoins"}});
-  const [userList, setUserList] = useState();
-
-  const serverResponse3 = useFetch(target);
-
-  const transactionData = useRef([]);
-
-  // Get investments
-  useEffect(() => {
-    if (serverResponse3.error.error) {
-      console.log("Error::CoinTable::" + serverResponse3.error.msg);
-    }
-    else if (serverResponse3.data) {
-      if (serverResponse3.data.result) {
-        setUserList(generateUserTable(getUserInfo(serverResponse3.data.data, pricingData), classes));
-        transactionData.current = serverResponse3.data.data;
-      }
-      else {
-        // Error from server
-        console.log("Error::CoinTable::" + serverResponse3.data.err);
-      }
-    }
-  }, [serverResponse3.error, serverResponse3.data]);
-
-  useEffect(() => {
-    setUserList(generateUserTable(getUserInfo(transactionData.current, pricingData), classes));
-  }, [pricingData])
+  const investmentData = useInvestmentData(pricingData);
+  const userList = generateUserTable(investmentData, classes);
 
   return (
     <div className={classes.root}>

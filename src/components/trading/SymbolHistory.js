@@ -1,7 +1,7 @@
 import Chart from "react-google-charts";
 import {useEffect , useState} from "react";
 import Typography from '@material-ui/core/Typography';
-import useFetch from "../useFetch";
+import useFetch from "../hooks/useFetch";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';

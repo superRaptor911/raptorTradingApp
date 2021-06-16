@@ -3,7 +3,6 @@ import { createMuiTheme, ThemeProvider  } from '@material-ui/core/styles';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'; 
 import MainPage from './pages/MainPage';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Login from './pages/Login';
 import Header from './components/Header';
 import AdminMenu from './pages/AdminMenu';
 import AddUser from './pages/AddUser';
@@ -13,14 +12,12 @@ import EditUser from './pages/EditUser';
 import UserList from './pages/UserList';
 import UserInfo from './pages/UserInfo';
 import AdminLogin from './pages/AdminLogin';
-import EditTransactionMenu from './pages/EditTransactionMenu';
 import TransferFund from './pages/TransferFund';
 import Policy from './pages/Policy';
 import TransactionHistory from './pages/TransactionHistory';
 import CoinInfo from './pages/CoinInfo';
 import Company from './pages/Company';
 import DatabaseQuery from './pages/DatabaseQuery';
-import TradingMenuPage from './pages/TradingMenuPage';
 import {useState} from 'react';
 import {getCookie} from './components/Utility';
 // import {useThemeDetector} from './components/useThemeDetector';
@@ -59,10 +56,6 @@ function App() {
               <MainPage/>
             </Route>
 
-            <Route exact path="/login">
-              <Login/>
-            </Route>
-
             <Route exact path="/adminmenu">
               <AdminMenu/>
             </Route>
@@ -94,13 +87,14 @@ function App() {
             <Route exact path="/user/:userName">
               <UserInfo/>
             </Route>
+
             <Route exact path="/adminlogin">
               <AdminLogin/>
             </Route>
 
-            <Route exact path="/edittransactionmenu">
-              <EditTransactionMenu/>
-            </Route>
+            {/* <Route exact path="/edittransactionmenu"> */}
+            {/*   <EditTransactionMenu/> */}
+            {/* </Route> */}
 
             <Route exact path="/policy">
               <Policy/>
@@ -122,9 +116,9 @@ function App() {
               <DatabaseQuery/>
             </Route>
 
-            <Route exact path="/trading">
-              <TradingMenuPage/>
-            </Route>
+            {/* <Route exact path="/trading"> */}
+            {/*   <TradingMenuPage/> */}
+            {/* </Route> */}
 
           </Switch>
         </div>

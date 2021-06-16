@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {useEffect, useState} from 'react';
 import {serverAddress} from '../../components/Utility';
-import useFetch from '../../components/useFetch';
+import useFetch from '../../components/hooks/useFetch';
 import LoadingCircle from '../../components/LoadingCircle';
 
 const useStyles = makeStyles({

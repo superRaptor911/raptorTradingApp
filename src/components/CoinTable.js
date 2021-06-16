@@ -1,6 +1,5 @@
-import {useEffect , useRef, useState} from "react";
-import useFetch from "../components/useFetch";
-import {getCachedValueIfNull, readableValue, serverAddress, setSessionStorage, setStorage} from '../components/Utility';
+import {useEffect , useState} from "react";
+import {getCachedValueIfNull, readableValue} from '../components/Utility';
 import Avatar from '@material-ui/core/Avatar';
 import Table from '@material-ui/core/Table';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
+import useCoinListData from "./hooks/useCoinListData";
 
 const useStyles = makeStyles((theme) => ({
   iconContainer: {
@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
 
 
 const generateCoinTable = (data, pricing, classes) => {
+  if (!data) {
+    return;
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table  aria-label="simple table">
@@ -79,42 +83,13 @@ const generateCoinTable = (data, pricing, classes) => {
 
 const CoinTable = ({pricingData}) => {
   const classes = useStyles();
-  const [target, ] = useState({uri:  `${serverAddress}/coin.php`, data: {type: "list"}});
   const [coinList, setCoinList] = useState();
+  const coinData = useCoinListData();
 
-  const serverResponse = useFetch(target);
-
-  const coinData = useRef();
-
-  // Get coins
   useEffect(() => {
-    if (serverResponse.error.error) {
-      // Fetch request failed
-      console.log("Error::CoinTable::" + serverResponse.error.msg);
-    }
-    else if (serverResponse.data) {
-      if (serverResponse.data.result) {
-        setCoinList(generateCoinTable(serverResponse.data.coins, pricingData.current, classes));
-        setStorage("coinData", serverResponse.data.coins);
-        coinData.current = serverResponse.data.coins;
-      }
-      else {
-        // Error from server
-        console.log("Error::CoinTable::" + serverResponse.data.err);
-      }
-    }
-  }, [serverResponse.error, serverResponse.data ]);
-
-  // Use Cache to render
-  useEffect(() => {
-    const data = getCachedValueIfNull("coinData", coinData.current, []);
+    const data = getCachedValueIfNull("coinData", coinData, []);
     setCoinList(generateCoinTable(data, pricingData, classes));
-  }, [])
-
-  useEffect(() => {
-    const data = getCachedValueIfNull("coinData", coinData.current, []);
-    setCoinList(generateCoinTable(data, pricingData, classes));
-  }, [pricingData]);
+  }, [pricingData, coinData]);
 
   return (
     <div>
