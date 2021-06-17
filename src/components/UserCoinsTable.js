@@ -1,4 +1,5 @@
 import Table from '@material-ui/core/Table';
+import Chart from "react-google-charts";
 import { makeStyles } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -91,19 +92,57 @@ const genUserCoinsTable = (data, classes) => {
 }
 
 
+function genPieChart(coinData, classes) {
+  if (coinData) {
+    let data = [];
+    data.push(['coin', 'investment']);
+    for (let i of coinData) {
+      data.push([i.coinInfo.name, parseFloat(i.investment) ]);
+    }
+    console.log(data);
+    return (
+      <Chart
+        height={350}
+        className={classes.pieChart}
+        chartType="PieChart"
+        loader={<div>Loading Chart</div>}
+        data={
+          data
+        }
+        options={{
+          title: 'Investments',
+          is3D: true,
+        }}
+        rootProps={{ 'data-testid': '2' }}
+      />
+    ); 
+  }
+
+  return (
+    <LoadingCircle/>
+  );
+}
+
 const UserCoinsTable = ({username, coinPricing, transctionHistory}) => {
   const classes = useStyles()
   const userCoinData = useUserCoinData(username, coinPricing, transctionHistory);
   const table = genUserCoinsTable(userCoinData, classes);
+  const chart = genPieChart(userCoinData, classes);
 
   return (
     <div className={classes.root}>
       <Typography variant="h4">
         Coins
       </Typography>
+      {chart}
+      <br/>
+      <Typography variant="h4">
+        Coins
+      </Typography>
       {table}
     </div>
   );
+
 }
 
 export default memo(UserCoinsTable)

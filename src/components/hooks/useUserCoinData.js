@@ -53,7 +53,7 @@ const useUserCoinData = (username, pricingData, transctionHistory) => {
   const [userCoinsWithCurrentPrice, setUserCoinsWithCurrentPrice] = useState();
 
   useEffect(() => {
-    if (pricingData && transctionHistory) {
+    if (userCoins && pricingData && transctionHistory) {
       setUserCoinsWithCurrentPrice(applyCoinPrice(userCoins, pricingData, transctionHistory));
     }
     else {

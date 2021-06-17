@@ -1,7 +1,6 @@
 import {useParams} from "react-router";
 import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core'
-import Chart from "react-google-charts";
 import UserDetails from "../components/UserDetails";
 import UserWalletTable from "../components/UserWalletTable";
 import UserCoinsTable from "../components/UserCoinsTable";
@@ -28,30 +27,6 @@ const useStyles = makeStyles({
   }
 })
 
-function genPieChart(coinData, classes) {
-  let data = [];
-  data.push(['coin', 'investment']);
-  for (let i of coinData) {
-    data.push([i.coinInfo.name, parseFloat(i.investment) ]);
-  }
-  console.log(data);
-  return (
-    <Chart
-      height={350}
-      className={classes.pieChart}
-      chartType="PieChart"
-      loader={<div>Loading Chart</div>}
-      data={
-        data
-      }
-      options={{
-        title: 'Investments',
-        is3D: true,
-      }}
-      rootProps={{ 'data-testid': '2' }}
-    />
-  ); 
-}
 
 
 const UserInfo = () => {
