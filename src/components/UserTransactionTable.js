@@ -13,6 +13,9 @@ import LoadingCircle from './LoadingCircle';
 import {memo} from 'react';
 
 const useStyles = makeStyles({
+  root: {
+    marginTop: 40,
+  },
   iconContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -110,7 +113,7 @@ const UserTransactionTable = ({transctionData}) => {
   const table = genTransactionTable(transctionData, classes);
 
   return (
-    <div>
+    <div className={classes.root}>
       <Typography variant="h4">
         Coin Transactions
       </Typography>

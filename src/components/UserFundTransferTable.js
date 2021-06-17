@@ -13,6 +13,9 @@ import LoadingCircle from "./LoadingCircle";
 
 
 const useStyles = makeStyles({
+  root: {
+    marginTop: 40,
+  },
   iconContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -91,7 +94,7 @@ const UserFundTransferTable = ({username}) => {
   const table = genFundTransferHistoryTable(fundTransferData, classes);
 
   return (
-    <div>
+    <div className={classes.root}>
       <Typography variant="h4">
         Fund Transfer History
       </Typography>

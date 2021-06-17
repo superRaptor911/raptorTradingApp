@@ -43,6 +43,7 @@ const UserWalletTable = ({username}) => {
 
   return (
     <div>
+      <br/>
       <Typography variant="h4">
         Wallet
       </Typography>
