@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
-import useCoinListData from "./hooks/useCoinListData";
+import useServerResponse from "./hooks/useServerResponse";
 
 const useStyles = makeStyles((theme) => ({
   iconContainer: {
@@ -84,7 +84,7 @@ const generateCoinTable = (data, pricing, classes) => {
 const CoinTable = ({pricingData}) => {
   const classes = useStyles();
   const [coinList, setCoinList] = useState();
-  const coinData = useCoinListData();
+  const coinData = useServerResponse('coin.php', {type: "list"}, 'coins');
 
   useEffect(() => {
     const data = getCachedValueIfNull("coinData", coinData, []);

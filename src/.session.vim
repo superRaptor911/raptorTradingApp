@@ -7,43 +7,36 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +23 App.js
-badd +14 pages/MainPage.js
+badd +53 App.js
+badd +19 pages/MainPage.js
 badd +127 components/Utility.js
 badd +2 components/Header.js
-badd +85 pages/AdminMenu.js
-badd +179 pages/AddUser.js
-badd +77 pages/AddCoin.js
-badd +278 pages/AddTransaction.js
-badd +6 components/TransactionTable.js
-badd +101 components/CoinTable.js
-badd +62 pages/EditUser.js
-badd +1 pages/UserList.js
+badd +90 components/CoinTable.js
+badd +3 pages/UserList.js
 badd +1 components/UserCard.js
-badd +171 pages/UserInfo.js
-badd +32 pages/AdminLogin.js
-badd +100 pages/EditTransactionMenu.js
-badd +151 pages/TransferFund.js
+badd +18 pages/UserInfo.js
+badd +3 pages/EditTransactionMenu.js
 badd +13 components/SideDrawer.js
-badd +19 pages/TransactionHistory.js
-badd +263 pages/CoinInfo.js
-badd +285 pages/Company.js
+badd +7 pages/CoinInfo.js
+badd +2 pages/Company.js
 badd +9 index.js
 badd +12 components/AllTheCoins.js
 badd +103 ~/program/react/cucek-trading/changes.log
 badd +25 pages/TradingMenuPage.js
-badd +134 pages/trading/LoginUser.js
 badd +1 components/LoadingCircle.js
-badd +49 components/trading/TabBar.js
-badd +44 pages/trading/Market.js
-badd +40 components/trading/MarketSymbols.js
-badd +14 components/trading/SymbolHistory.js
-badd +127 components/UserTable.js
-badd +55 components/trading/CoinTransaction.js
-badd +4 components/hooks/usePricingData.js
+badd +91 components/UserTable.js
+badd +1 components/hooks/useFetch.js
+badd +49 components/hooks/useInvestmentData.js
+badd +1 components/UserDetails.js
+badd +122 components/UserTransactionTable.js
+badd +100 components/UserCoinsTable.js
+badd +67 components/hooks/useUserCoinData.js
+badd +7 components/hooks/useServerResponse.js
+badd +54 components/UserWalletTable.js
+badd +3 components/UserFundTransferTable.js
 argglobal
 %argdel
-edit components/hooks/usePricingData.js
+edit pages/UserInfo.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -53,12 +46,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 4 - ((3 * winheight(0) + 22) / 45)
+let s:l = 18 - ((17 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-4
-normal! 0
+18
+normal! 017|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

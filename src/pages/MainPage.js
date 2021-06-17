@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core'
 import CoinTable from '../components/CoinTable';
 import UserTable from '../components/UserTable';
 import {getCachedValueIfNull} from '../components/Utility';
-import usePricingData from '../components/hooks/usePricingData';
+import useServerResponse from '../components/hooks/useServerResponse';
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const MainPage = () => {
   const classes = useStyles();
-  const pricingData = usePricingData();
+  const pricingData = useServerResponse('coin.php', {type: "prices" , firstFetch: true}, 'coins');
 
   // const [timeoutCounter, setTimeoutCounter] = useState(0);
 
