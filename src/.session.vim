@@ -14,7 +14,7 @@ badd +2 components/Header.js
 badd +90 components/CoinTable.js
 badd +3 pages/UserList.js
 badd +1 components/UserCard.js
-badd +18 pages/UserInfo.js
+badd +4 pages/UserInfo.js
 badd +3 pages/EditTransactionMenu.js
 badd +13 components/SideDrawer.js
 badd +7 pages/CoinInfo.js
@@ -28,15 +28,15 @@ badd +91 components/UserTable.js
 badd +1 components/hooks/useFetch.js
 badd +49 components/hooks/useInvestmentData.js
 badd +1 components/UserDetails.js
-badd +122 components/UserTransactionTable.js
-badd +100 components/UserCoinsTable.js
+badd +116 components/UserTransactionTable.js
+badd +138 components/UserCoinsTable.js
 badd +67 components/hooks/useUserCoinData.js
 badd +7 components/hooks/useServerResponse.js
-badd +54 components/UserWalletTable.js
-badd +3 components/UserFundTransferTable.js
+badd +46 components/UserWalletTable.js
+badd +98 components/UserFundTransferTable.js
 argglobal
 %argdel
-edit pages/UserInfo.js
+edit components/hooks/useUserCoinData.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -46,12 +46,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 18 - ((17 * winheight(0) + 22) / 45)
+let s:l = 56 - ((33 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-18
-normal! 017|
+56
+normal! 021|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

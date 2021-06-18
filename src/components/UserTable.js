@@ -91,6 +91,7 @@ const UserTable = ({pricingData}) => {
   const investmentData = useInvestmentData(pricingData);
   const userList = generateUserTable(investmentData, classes);
 
+  // console.log("Rendering users")
   return (
     <div className={classes.root}>
       <Typography variant="h4">Users</Typography> <br/>

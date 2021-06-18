@@ -87,10 +87,11 @@ const CoinTable = ({pricingData}) => {
   const coinData = useServerResponse('coin.php', {type: "list"}, 'coins');
 
   useEffect(() => {
-    const data = getCachedValueIfNull("coinData", coinData, []);
+    const data = coinData;
     setCoinList(generateCoinTable(data, pricingData, classes));
   }, [pricingData, coinData]);
 
+  // console.log("Rendering Coins")
   return (
     <div>
       <Typography variant="h4">Coins</Typography> <br/>

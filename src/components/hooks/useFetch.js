@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react';
 
 const useFetch = (target) => {
-  const [data, setData] = useState();
-  const [error, setError] = useState({error: false, msg: ""});
+  const [response, setResponse] = useState({data: null, error: {error: false, msg: ""}});
 
   useEffect(() => {
     const abortCont = new AbortController();
@@ -22,22 +21,21 @@ const useFetch = (target) => {
           return res.json();
         })
         .then(data => {
-          setError({error: false, msg:""});
-          setData(data);
+          setResponse({data: data, error: {error: false, msg:""}})
         })
         .catch(err => {
           if (err.name === 'AbortError') {
             console.log("Aborting.....");
-            setError({error: true, msg: err.message});
+            setResponse({data: null, error: {error: true, msg: err.message}})
           } else {
             console.log("err.....");
-            setError({error: true, msg: err.message});
+            setResponse({data: null, error: {error: true, msg: err.message}})
           }
         });
     }
     return () => abortCont.abort();
   }, [target]);
-  return {data, error};
+  return  response;
 }
 
 export default useFetch;
