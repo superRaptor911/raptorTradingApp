@@ -11,7 +11,7 @@ badd +53 App.js
 badd +19 pages/MainPage.js
 badd +127 components/Utility.js
 badd +2 components/Header.js
-badd +90 components/CoinTable.js
+badd +94 components/CoinTable.js
 badd +3 pages/UserList.js
 badd +1 components/UserCard.js
 badd +4 pages/UserInfo.js
@@ -25,18 +25,19 @@ badd +103 ~/program/react/cucek-trading/changes.log
 badd +25 pages/TradingMenuPage.js
 badd +1 components/LoadingCircle.js
 badd +91 components/UserTable.js
-badd +1 components/hooks/useFetch.js
+badd +18 components/hooks/useFetch.js
 badd +49 components/hooks/useInvestmentData.js
 badd +1 components/UserDetails.js
 badd +116 components/UserTransactionTable.js
 badd +138 components/UserCoinsTable.js
-badd +67 components/hooks/useUserCoinData.js
-badd +7 components/hooks/useServerResponse.js
+badd +56 components/hooks/useUserCoinData.js
+badd +10 components/hooks/useServerResponse.js
 badd +46 components/UserWalletTable.js
 badd +98 components/UserFundTransferTable.js
+badd +17 components/hooks/useCoinPriceData.js
 argglobal
 %argdel
-edit components/hooks/useUserCoinData.js
+edit components/hooks/useCoinPriceData.js
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -46,12 +47,12 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-let s:l = 56 - ((33 * winheight(0) + 22) / 45)
+let s:l = 12 - ((11 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-56
-normal! 021|
+12
+normal! 019|
 tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
