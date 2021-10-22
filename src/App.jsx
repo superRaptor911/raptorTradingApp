@@ -4,7 +4,7 @@ import UserList from './components/UserList';
 
 function App() {
   return (
-    <div className="App">
+    <div style={{width: '100vw'}}>
       <CoinList />
       <UserList />
     </div>

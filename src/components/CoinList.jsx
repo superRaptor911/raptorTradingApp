@@ -41,48 +41,46 @@ const CoinList = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        margin: 'auto',
-        marginTop: 30,
+    <TableContainer
+      component={Paper}
+      sx={{
         width: 'max-content',
-        maxWidth: '90vw',
+        margin: 'auto',
+        marginTop: 10,
       }}>
-      <TableContainer component={Paper} sx={{width: 'max-content'}}>
-        <Table sx={{minWidth: 650}} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Coin ID</TableCell>
-              <TableCell align="right">Current Value</TableCell>
-            </TableRow>
-          </TableHead>
+      <Table sx={{minWidth: 650}} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Coin ID</TableCell>
+            <TableCell align="right">Current Value</TableCell>
+          </TableRow>
+        </TableHead>
 
-          <TableBody>
-            {coins &&
-              coins.map((row, id) => (
-                <TableRow key={id}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    sx={{display: 'flex', alignItems: 'center'}}>
-                    <Avatar
-                      src={row.avatar}
-                      alt={row.name}
-                      sx={{marginRight: 2}}
-                    />
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.id}</TableCell>
-                  <TableCell align="right">
-                    {getCoinPrice(coinPrices, row.id)}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+        <TableBody>
+          {coins &&
+            coins.map((row, id) => (
+              <TableRow key={id}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{display: 'flex', alignItems: 'center'}}>
+                  <Avatar
+                    src={row.avatar}
+                    alt={row.name}
+                    sx={{marginRight: 2}}
+                  />
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.id}</TableCell>
+                <TableCell align="right">
+                  {getCoinPrice(coinPrices, row.id)}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

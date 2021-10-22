@@ -55,48 +55,46 @@ const UserList = () => {
 
   console.log('Rendering');
   return (
-    <div
-      style={{
-        margin: 'auto',
-        marginTop: 30,
+    <TableContainer
+      component={Paper}
+      sx={{
         width: 'max-content',
-        maxWidth: '90vw',
+        margin: 'auto',
+        marginTop: 10,
       }}>
-      <TableContainer component={Paper} sx={{width: 'max-content'}}>
-        <Table sx={{minWidth: 650}} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Investment</TableCell>
-              <TableCell align="right">Current Value</TableCell>
-            </TableRow>
-          </TableHead>
+      <Table sx={{minWidth: 650}} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Investment</TableCell>
+            <TableCell align="right">Current Value</TableCell>
+          </TableRow>
+        </TableHead>
 
-          <TableBody>
-            {users &&
-              users.map(processUser).map((row, id) => (
-                <TableRow key={id}>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    sx={{display: 'flex', alignItems: 'center'}}>
-                    <Avatar
-                      src={row.avatar}
-                      alt={row.name}
-                      sx={{marginRight: 2}}
-                    />
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.wallet.investment}</TableCell>
-                  <TableCell align="right">
-                    {calculateCurrentValue(row.wallet.coins, coinPrices, coins)}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+        <TableBody>
+          {users &&
+            users.map(processUser).map((row, id) => (
+              <TableRow key={id}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{display: 'flex', alignItems: 'center'}}>
+                  <Avatar
+                    src={row.avatar}
+                    alt={row.name}
+                    sx={{marginRight: 2}}
+                  />
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.wallet.investment}</TableCell>
+                <TableCell align="right">
+                  {calculateCurrentValue(row.wallet.coins, coinPrices, coins)}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
