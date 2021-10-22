@@ -17,9 +17,38 @@ const processUser = user => {
   return user;
 };
 
+const getCoinId = (coins, coinName) => {
+  for (const i of coins) {
+    if (i.name == coinName) {
+      return i.id;
+    }
+  }
+
+  return '';
+};
+
+const calculateCurrentValue = (userCoins, prices, coins) => {
+  let total = 0;
+
+  if (prices) {
+    for (const i in userCoins) {
+      const count = parseFloat(userCoins[i].count);
+      const value = parseFloat(prices[getCoinId(coins, i)].last);
+
+      total += count * value;
+    }
+  }
+
+  return total.toFixed(2);
+};
+
 const UserList = () => {
   const users = useStore(state => state.users);
   const loadUsers = useStore(state => state.loadUsers);
+
+  const coinPrices = useStore(state => state.coinPrices);
+  const coins = useStore(state => state.coins);
+
   useEffect(() => {
     loadUsers();
   }, []);
@@ -53,7 +82,9 @@ const UserList = () => {
                     {row.name}
                   </TableCell>
                   <TableCell align="right">{row.wallet.investment}</TableCell>
-                  <TableCell align="right">{row.wallet.balance}</TableCell>
+                  <TableCell align="right">
+                    {calculateCurrentValue(row.wallet.coins, coinPrices, coins)}
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
