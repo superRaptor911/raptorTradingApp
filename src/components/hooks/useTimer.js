@@ -1,8 +1,11 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 const useTimer = (updateDelay = 2000, callbackFn) => {
   useEffect(() => {
-    const timer = setTimeout(callbackFn);
+    const timer = setInterval(() => {
+      callbackFn();
+    }, updateDelay);
+
     return () => clearTimeout(timer);
   }, [updateDelay]);
 };

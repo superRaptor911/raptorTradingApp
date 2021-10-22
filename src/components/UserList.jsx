@@ -55,7 +55,13 @@ const UserList = () => {
 
   console.log('Rendering');
   return (
-    <div style={{margin: 'auto', marginTop: 30, width: 'max-content'}}>
+    <div
+      style={{
+        margin: 'auto',
+        marginTop: 30,
+        width: 'max-content',
+        maxWidth: '90vw',
+      }}>
       <TableContainer component={Paper} sx={{width: 'max-content'}}>
         <Table sx={{minWidth: 650}} aria-label="simple table">
           <TableHead>

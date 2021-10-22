@@ -32,7 +32,7 @@ const CoinList = () => {
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
   const cl = useTimer(2000, () => {
-    console.log('timmer called');
+    loadCoinPrices();
   });
 
   useEffect(() => {
@@ -41,7 +41,13 @@ const CoinList = () => {
   }, []);
 
   return (
-    <div style={{margin: 'auto', marginTop: 30, width: 'max-content'}}>
+    <div
+      style={{
+        margin: 'auto',
+        marginTop: 30,
+        width: 'max-content',
+        maxWidth: '90vw',
+      }}>
       <TableContainer component={Paper} sx={{width: 'max-content'}}>
         <Table sx={{minWidth: 650}} aria-label="simple table">
           <TableHead>
