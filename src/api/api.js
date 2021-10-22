@@ -10,3 +10,11 @@ export async function getUsers() {
 
   return null;
 }
+
+export async function getCoinPrices() {
+  const response = await getRequest(url + 'coins/prices');
+  if (response && response.status) {
+    return response.data;
+  }
+  return null;
+}

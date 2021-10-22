@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useStore} from '../../store';
+import {useStore} from '../store';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
