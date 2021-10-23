@@ -6,14 +6,16 @@ import {ROUTES} from './routes';
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route exact path={ROUTES.home}>
-          <Home />
-        </Route>
-      </Switch>
-    </Router>
+    <div style={{overflowX: 'hidden'}}>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path={ROUTES.home}>
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 }
 

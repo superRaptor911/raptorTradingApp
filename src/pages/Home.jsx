@@ -4,7 +4,7 @@ import UserList from '../components/UserList';
 
 function Home() {
   return (
-    <div>
+    <div style={{overflowX: 'auto'}}>
       <CoinList />
       <UserList />
     </div>
