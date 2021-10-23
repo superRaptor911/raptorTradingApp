@@ -1,13 +1,17 @@
 import React from 'react';
-import CoinList from './components/CoinList';
-import UserList from './components/UserList';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Home from './pages/Home';
+import {ROUTES} from './routes';
 
 function App() {
   return (
-    <div style={{width: '100vw'}}>
-      <CoinList />
-      <UserList />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path={ROUTES.home}>
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

@@ -8,20 +8,25 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +4 App.jsx
-badd +15 store.js
-badd +19 api/api.js
+badd +8 App.jsx
+badd +17 store.js
+badd +25 api/api.js
 badd +6 index.css
+badd +63 components/UserList.jsx
+badd +51 components/CoinList.jsx
+badd +13 api/request.js
+badd +3 components/hooks/useTimer.js
 argglobal
 %argdel
-edit store.js
+edit components/CoinList.jsx
 argglobal
-let s:l = 15 - ((14 * winheight(0) + 22) / 45)
+balt components/UserList.jsx
+let s:l = 49 - ((20 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 15
-normal! 026|
+keepjumps 49
+normal! 020|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -34,7 +39,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

@@ -48,10 +48,10 @@ const CoinList = () => {
         margin: 'auto',
         marginTop: 10,
       }}>
-      <Table sx={{minWidth: 650}} aria-label="simple table">
+      <Table sx={{minWidth: '50vw'}} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
+            <TableCell>Coin</TableCell>
             <TableCell align="right">Coin ID</TableCell>
             <TableCell align="right">Current Value</TableCell>
           </TableRow>
