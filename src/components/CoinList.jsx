@@ -24,6 +24,16 @@ const getCoinPrice = (prices, coinId) => {
   return coinPrice;
 };
 
+const get24hrChange = (prices, coinId) => {
+  let coinPrice = prices ? prices[coinId].last : 0;
+  coinPrice = parseFloat(coinPrice);
+
+  let oldPrice = prices ? prices[coinId].open : 0;
+  oldPrice = parseFloat(oldPrice);
+
+  return ((100 * (coinPrice - oldPrice)) / oldPrice).toFixed(2);
+};
+
 const CoinList = () => {
   const coins = useStore(state => state.coins);
   const coinPrices = useStore(state => state.coinPrices);
@@ -31,7 +41,7 @@ const CoinList = () => {
   const loadCoins = useStore(state => state.loadCoins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
-  const cl = useTimer(2000, () => {
+  useTimer(2000, () => {
     loadCoinPrices();
   });
 
@@ -54,6 +64,7 @@ const CoinList = () => {
             <TableCell>Coin</TableCell>
             <TableCell align="right">Coin ID</TableCell>
             <TableCell align="right">Current Value</TableCell>
+            <TableCell align="right">Change 24hr</TableCell>
           </TableRow>
         </TableHead>
 
@@ -75,6 +86,14 @@ const CoinList = () => {
                 <TableCell align="right">{row.id}</TableCell>
                 <TableCell align="right">
                   {getCoinPrice(coinPrices, row.id)}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    color:
+                      get24hrChange(coinPrices, row.id) < 0 ? 'red' : 'green',
+                  }}>
+                  {get24hrChange(coinPrices, row.id)}%
                 </TableCell>
               </TableRow>
             ))}

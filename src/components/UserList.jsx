@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+/* eslint-disable react/prop-types */
+import React, {Fragment, useEffect, useState} from 'react';
 import {useStore} from '../store';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,29 +18,39 @@ const processUser = user => {
   return user;
 };
 
-const getCoinId = (coins, coinName) => {
-  for (const i of coins) {
-    if (i.name == coinName) {
-      return i.id;
-    }
-  }
-
-  return '';
-};
-
-const calculateCurrentValue = (userCoins, prices, coins) => {
+const calculateCurrentValue = (userCoins, prices, coinIds) => {
   let total = 0;
 
-  if (prices) {
+  if (prices && coinIds) {
     for (const i in userCoins) {
       const count = parseFloat(userCoins[i].count);
-      const value = parseFloat(prices[getCoinId(coins, i)].last);
+      const value = parseFloat(prices[coinIds[i]].last);
 
       total += count * value;
     }
   }
 
   return total.toFixed(2);
+};
+
+const UserStats = ({investment, userCoins, coinPrices, coinIds}) => {
+  const curVal = calculateCurrentValue(userCoins, coinPrices, coinIds);
+  const profit = (curVal - investment).toFixed(2);
+  const profitPercent = ((100 * profit) / investment).toFixed(2);
+
+  return (
+    <Fragment>
+      <TableCell align="right">{investment}</TableCell>
+      <TableCell align="right">{curVal}</TableCell>
+
+      <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
+        {profit}
+      </TableCell>
+      <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
+        {profitPercent}%
+      </TableCell>
+    </Fragment>
+  );
 };
 
 const UserList = () => {
@@ -49,9 +60,22 @@ const UserList = () => {
   const coinPrices = useStore(state => state.coinPrices);
   const coins = useStore(state => state.coins);
 
+  const [coinIds, setCoinIds] = useState();
+
   useEffect(() => {
     loadUsers();
   }, []);
+
+  useEffect(() => {
+    if (coins) {
+      let cids = {};
+      coins.forEach(item => {
+        cids[item.name] = item.id;
+      });
+
+      setCoinIds(cids);
+    }
+  }, [coins]);
 
   console.log('Rendering');
   return (
@@ -68,6 +92,8 @@ const UserList = () => {
             <TableCell>Name</TableCell>
             <TableCell align="right">Investment</TableCell>
             <TableCell align="right">Current Value</TableCell>
+            <TableCell align="right">Profit</TableCell>
+            <TableCell align="right">Profit %</TableCell>
           </TableRow>
         </TableHead>
 
@@ -86,10 +112,13 @@ const UserList = () => {
                   />
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.wallet.investment}</TableCell>
-                <TableCell align="right">
-                  {calculateCurrentValue(row.wallet.coins, coinPrices, coins)}
-                </TableCell>
+
+                <UserStats
+                  investment={row.wallet.investment}
+                  coinPrices={coinPrices}
+                  userCoins={row.wallet.coins}
+                  coinIds={coinIds}
+                />
               </TableRow>
             ))}
         </TableBody>
