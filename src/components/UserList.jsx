@@ -18,7 +18,7 @@ const processUser = user => {
   return user;
 };
 
-const calculateCurrentValue = (userCoins, prices, coinIds) => {
+const calculateCurrentValue = (userCoins, prices, coinIds, balance) => {
   let total = 0;
 
   if (prices && coinIds) {
@@ -30,11 +30,11 @@ const calculateCurrentValue = (userCoins, prices, coinIds) => {
     }
   }
 
-  return total.toFixed(2);
+  return (total + balance).toFixed(2);
 };
 
-const UserStats = ({investment, userCoins, coinPrices, coinIds}) => {
-  const curVal = calculateCurrentValue(userCoins, coinPrices, coinIds);
+const UserStats = ({investment, userCoins, coinPrices, coinIds, balance}) => {
+  const curVal = calculateCurrentValue(userCoins, coinPrices, coinIds, balance);
   const profit = (curVal - investment).toFixed(2);
   const profitPercent = ((100 * profit) / investment).toFixed(2);
 
@@ -118,6 +118,7 @@ const UserList = () => {
                   coinPrices={coinPrices}
                   userCoins={row.wallet.coins}
                   coinIds={coinIds}
+                  balance={parseFloat(row.wallet.balance)}
                 />
               </TableRow>
             ))}
