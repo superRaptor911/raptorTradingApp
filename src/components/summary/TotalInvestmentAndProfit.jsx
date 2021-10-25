@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {humanReadableValue} from '../../utility';
 
 const TotalInvestmentAndProfit = () => {
   const users = useStore(state => state.users);
@@ -38,6 +39,7 @@ const TotalInvestmentAndProfit = () => {
     }
   }
 
+  const profit = curVal - totalInvestment;
   return (
     <TableContainer
       component={Paper}
@@ -50,22 +52,24 @@ const TotalInvestmentAndProfit = () => {
         <TableHead>
           <TableRow>
             <TableCell>Total Investment</TableCell>
-            <TableCell align="right">Current value</TableCell>
-            <TableCell align="right">Profit</TableCell>
-            <TableCell align="right">Profit %</TableCell>
+            <TableCell>Current value</TableCell>
+            <TableCell>Profit</TableCell>
+            <TableCell>Profit %</TableCell>
           </TableRow>
         </TableHead>
 
         <TableBody>
           <TableRow>
-            <TableCell>{totalInvestment}</TableCell>
+            <TableCell>{humanReadableValue(totalInvestment)}</TableCell>
 
-            <TableCell>{curVal}</TableCell>
+            <TableCell>{humanReadableValue(curVal)}</TableCell>
 
-            <TableCell>{curVal - totalInvestment}</TableCell>
+            <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
+              {humanReadableValue(profit)}
+            </TableCell>
 
-            <TableCell>
-              {(100 * (curVal - totalInvestment)) / totalInvestment}%
+            <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
+              {((100 * profit) / totalInvestment).toFixed(2)}%
             </TableCell>
           </TableRow>
         </TableBody>

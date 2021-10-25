@@ -18,20 +18,21 @@ badd +13 api/request.js
 badd +3 components/hooks/useTimer.js
 badd +3 routes.js
 badd +8 pages/Home.jsx
-badd +11 components/Header.jsx
-badd +7 ~/program/react/vite/raptorTradingApp/src/pages/Summary.jsx
-badd +77 components/summary/TotalInvestmentAndProfit.jsx
+badd +27 components/Header.jsx
+badd +7 pages/Summary.jsx
+badd +32 components/summary/TotalInvestmentAndProfit.jsx
+badd +15 components/header/DrawerMenu.jsx
 argglobal
 %argdel
-edit components/summary/TotalInvestmentAndProfit.jsx
+edit components/Header.jsx
 argglobal
-balt ~/program/react/vite/raptorTradingApp/src/pages/Summary.jsx
-let s:l = 2 - ((1 * winheight(0) + 22) / 45)
+balt components/header/DrawerMenu.jsx
+let s:l = 15 - ((14 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 2
-normal! 030|
+keepjumps 15
+normal! 023|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
