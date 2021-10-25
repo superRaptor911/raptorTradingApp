@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Summary from './pages/Summary';
+import User from './pages/User';
 import {ROUTES} from './routes';
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
 
           <Route exact path={ROUTES.summary}>
             <Summary />
+          </Route>
+
+          <Route exact path={ROUTES.user}>
+            <User />
           </Route>
         </Switch>
       </Router>

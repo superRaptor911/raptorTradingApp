@@ -9,6 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import {useHistory} from 'react-router-dom';
+import {ROUTES} from '../routes';
 
 const processUser = user => {
   const inv = parseFloat(user.wallet.investment);
@@ -61,6 +63,7 @@ const UserList = () => {
   const coins = useStore(state => state.coins);
 
   const [coinIds, setCoinIds] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     loadUsers();
@@ -77,7 +80,6 @@ const UserList = () => {
     }
   }, [coins]);
 
-  console.log('Rendering');
   return (
     <TableContainer
       component={Paper}
@@ -104,6 +106,9 @@ const UserList = () => {
                 <TableCell
                   component="th"
                   scope="row"
+                  onClick={() => {
+                    history.push('/user/' + row.name);
+                  }}
                   sx={{display: 'flex', alignItems: 'center'}}>
                   <Avatar
                     src={row.avatar}
