@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import {useHistory} from 'react-router-dom';
 import useDeviceType from './hooks/useDeviceType';
 import Visibility from './Visibility';
+import {humanReadableValue} from '../utility';
 
 const processUser = user => {
   const inv = parseFloat(user.wallet.investment);
@@ -52,9 +53,7 @@ const UserStats = ({
     <Fragment>
       <TableCell>{investment}</TableCell>
 
-      <Visibility hide={isMobile}>
-        <TableCell>{curVal}</TableCell>
-      </Visibility>
+      <TableCell>{isMobile ? humanReadableValue(curVal) : curVal}</TableCell>
 
       <Visibility hide={isMobile}>
         <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
@@ -108,9 +107,7 @@ const UserList = () => {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Investment</TableCell>
-            <Visibility hide={isMobile}>
-              <TableCell>Current Value</TableCell>
-            </Visibility>
+            <TableCell>Value</TableCell>
             <Visibility hide={isMobile}>
               <TableCell>Profit</TableCell>
             </Visibility>
