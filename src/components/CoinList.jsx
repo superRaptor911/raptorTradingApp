@@ -9,6 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import useTimer from './hooks/useTimer';
+import useDeviceType from './hooks/useDeviceType';
+import Visibility from './Visibility';
 
 const getCoinPrice = (prices, coinId) => {
   let coinPrice = prices ? prices[coinId].last : 0;
@@ -41,6 +43,8 @@ const CoinList = () => {
   const loadCoins = useStore(state => state.loadCoins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
+  const isMobile = 'mobile' === useDeviceType();
+
   useTimer(2000, () => {
     loadCoinPrices();
   });
@@ -62,9 +66,11 @@ const CoinList = () => {
         <TableHead>
           <TableRow>
             <TableCell>Coin</TableCell>
-            <TableCell align="right">Coin ID</TableCell>
-            <TableCell align="right">Current Value</TableCell>
-            <TableCell align="right">Change 24hr</TableCell>
+            <Visibility hide={isMobile}>
+              <TableCell>Coin ID</TableCell>
+            </Visibility>
+            <TableCell align="center">Current Value</TableCell>
+            <TableCell align="right">Delta</TableCell>
           </TableRow>
         </TableHead>
 
@@ -81,12 +87,15 @@ const CoinList = () => {
                     alt={row.name}
                     sx={{marginRight: 2}}
                   />
-                  {row.name}
+                  <Visibility hide={isMobile}>{row.name}</Visibility>
                 </TableCell>
-                <TableCell align="right">{row.id}</TableCell>
-                <TableCell align="right">
+                <Visibility hide={isMobile}>
+                  <TableCell>{row.id}</TableCell>
+                </Visibility>
+                <TableCell align="center">
                   {getCoinPrice(coinPrices, row.id)}
                 </TableCell>
+
                 <TableCell
                   align="right"
                   sx={{

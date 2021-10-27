@@ -10,7 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import {useHistory} from 'react-router-dom';
-import {ROUTES} from '../routes';
+import useDeviceType from './hooks/useDeviceType';
+import Visibility from './Visibility';
 
 const processUser = user => {
   const inv = parseFloat(user.wallet.investment);
@@ -35,19 +36,31 @@ const calculateCurrentValue = (userCoins, prices, coinIds, balance) => {
   return (total + balance).toFixed(2);
 };
 
-const UserStats = ({investment, userCoins, coinPrices, coinIds, balance}) => {
+const UserStats = ({
+  investment,
+  userCoins,
+  coinPrices,
+  coinIds,
+  balance,
+  isMobile,
+}) => {
   const curVal = calculateCurrentValue(userCoins, coinPrices, coinIds, balance);
   const profit = (curVal - investment).toFixed(2);
   const profitPercent = ((100 * profit) / investment).toFixed(2);
 
   return (
     <Fragment>
-      <TableCell align="right">{investment}</TableCell>
-      <TableCell align="right">{curVal}</TableCell>
+      <TableCell>{investment}</TableCell>
 
-      <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
-        {profit}
-      </TableCell>
+      <Visibility hide={isMobile}>
+        <TableCell>{curVal}</TableCell>
+      </Visibility>
+
+      <Visibility hide={isMobile}>
+        <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
+          {profit}
+        </TableCell>
+      </Visibility>
       <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
         {profitPercent}%
       </TableCell>
@@ -64,6 +77,8 @@ const UserList = () => {
 
   const [coinIds, setCoinIds] = useState();
   const history = useHistory();
+
+  const isMobile = 'mobile' === useDeviceType();
 
   useEffect(() => {
     loadUsers();
@@ -92,9 +107,13 @@ const UserList = () => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Investment</TableCell>
-            <TableCell align="right">Current Value</TableCell>
-            <TableCell align="right">Profit</TableCell>
+            <TableCell>Investment</TableCell>
+            <Visibility hide={isMobile}>
+              <TableCell>Current Value</TableCell>
+            </Visibility>
+            <Visibility hide={isMobile}>
+              <TableCell>Profit</TableCell>
+            </Visibility>
             <TableCell align="right">Profit %</TableCell>
           </TableRow>
         </TableHead>
@@ -115,7 +134,7 @@ const UserList = () => {
                     alt={row.name}
                     sx={{marginRight: 2}}
                   />
-                  {row.name}
+                  <Visibility hide={isMobile}>{row.name}</Visibility>
                 </TableCell>
 
                 <UserStats
@@ -124,6 +143,7 @@ const UserList = () => {
                   userCoins={row.wallet.coins}
                   coinIds={coinIds}
                   balance={parseFloat(row.wallet.balance)}
+                  isMobile={isMobile}
                 />
               </TableRow>
             ))}
