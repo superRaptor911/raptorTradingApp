@@ -98,7 +98,8 @@ const UserList = () => {
     <TableContainer
       component={Paper}
       sx={{
-        width: 'max-content',
+        width: '90vw',
+        maxWidth: 1000,
         margin: 'auto',
         marginTop: 10,
       }}>
