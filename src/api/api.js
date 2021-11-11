@@ -26,3 +26,11 @@ export async function getCoinPrices() {
   }
   return null;
 }
+
+export async function getTransactions() {
+  const response = await getRequest(url + 'transaction');
+  if (response && response.status) {
+    return response.data;
+  }
+  return null;
+}

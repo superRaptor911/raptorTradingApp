@@ -1,6 +1,6 @@
 import create from 'zustand';
 import {persist} from 'zustand/middleware';
-import {getCoinPrices, getCoins, getUsers} from './api/api';
+import {getCoinPrices, getCoins, getTransactions, getUsers} from './api/api';
 
 let store = set => ({
   count: 0,
@@ -21,6 +21,12 @@ let store = set => ({
   loadCoinPrices: async () => {
     const data = await getCoinPrices();
     return set({coinPrices: data});
+  },
+
+  transactions: null,
+  loadTransactions: async () => {
+    const data = await getTransactions();
+    return set({transactions: data});
   },
 });
 

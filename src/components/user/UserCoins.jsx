@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import {useStore} from '../../store';
 import {humanReadableValue} from '../../utility';
+import useDeviceType from '../hooks/useDeviceType';
+import Visibility from '../Visibility';
 
 const getCoinList = wallet => {
   let coinList = [];
@@ -32,13 +34,27 @@ const getCoinAvatar = (coins, coinName) => {
   return avatar;
 };
 
-const UserCoinStats = ({coinName, count, prices}) => {
+const UserCoinStats = ({coinName, count, prices, coinInvestment, isMobile}) => {
   if (prices) {
     const value = prices[coinName] * count;
+    const investment = Math.max(
+      0,
+      coinInvestment ? coinInvestment[coinName] : 0,
+    );
+    const profit = value - investment;
+    const profitPercent = (100 * profit) / investment;
+
     return (
       <Fragment>
-        <TableCell align="right">{humanReadableValue(count)}</TableCell>
-        <TableCell align="right">{humanReadableValue(value)}</TableCell>
+        <TableCell align="center">{humanReadableValue(count)}</TableCell>
+        <TableCell align="center">{humanReadableValue(investment)}</TableCell>
+        <TableCell align="center">{humanReadableValue(value)}</TableCell>
+        <TableCell align="center" sx={{color: profit < 0 ? 'red' : 'green'}}>
+          {humanReadableValue(profit)}
+        </TableCell>
+        <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
+          {humanReadableValue(profitPercent)}%
+        </TableCell>
       </Fragment>
     );
   }
@@ -46,10 +62,13 @@ const UserCoinStats = ({coinName, count, prices}) => {
   return null;
 };
 
-const UserCoins = ({user}) => {
+const UserCoins = ({user, transactions}) => {
   const coinPrices = useStore(state => state.coinPrices);
   const coins = useStore(state => state.coins);
   const [prices, setPrices] = useState();
+  const [coinInvestment, setCoinInvestment] = useState();
+
+  const isMobile = 'mobile' === useDeviceType();
 
   useEffect(() => {
     if (coins && coinPrices) {
@@ -62,7 +81,25 @@ const UserCoins = ({user}) => {
     }
   }, [coins, coinPrices]);
 
-  console.log(coins);
+  useEffect(() => {
+    if (transactions) {
+      let cids = {};
+      coins.forEach(item => {
+        cids[item.name] = 0;
+      });
+
+      transactions.forEach(item => {
+        if (item.transType == 'BUY') {
+          cids[item.coin] += item.coinCount * item.cost + parseFloat(item.fee);
+        } else {
+          cids[item.coin] -= item.coinCount * item.cost - parseFloat(item.fee);
+        }
+      });
+
+      setCoinInvestment(cids);
+    }
+  }, [transactions]);
+
   return (
     <TableContainer
       component={Paper}
@@ -70,15 +107,17 @@ const UserCoins = ({user}) => {
         width: 'max-content',
         margin: 'auto',
         marginTop: 10,
+        marginBottom: 10,
       }}>
       <Table sx={{minWidth: '50vw'}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Coin</TableCell>
-            <TableCell align="right">Count</TableCell>
-            <TableCell align="right">Current Value</TableCell>
-            {/* <TableCell align="right">Profit</TableCell> */}
-            {/* <TableCell align="right">Profit %</TableCell> */}
+            <TableCell align="center">Count</TableCell>
+            <TableCell align="center">Investment</TableCell>
+            <TableCell align="center">Current Value</TableCell>
+            <TableCell align="center">Profit</TableCell>
+            <TableCell align="right">Profit %</TableCell>
           </TableRow>
         </TableHead>
 
@@ -96,12 +135,14 @@ const UserCoins = ({user}) => {
                     alt={row.name}
                     sx={{marginRight: 2}}
                   />
-                  {row.name}
+                  <Visibility hide={isMobile}>{row.name}</Visibility>
                 </TableCell>
                 <UserCoinStats
                   coinName={row.name}
                   prices={prices}
                   count={row.count}
+                  coinInvestment={coinInvestment}
+                  isMobile={isMobile}
                 />
               </TableRow>
             ))}
