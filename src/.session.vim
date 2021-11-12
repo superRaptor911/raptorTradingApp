@@ -8,36 +8,37 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +22 App.jsx
-badd +29 store.js
+badd +29 App.jsx
+badd +13 store.js
 badd +18 api/api.js
-badd +6 index.css
 badd +101 components/UserList.jsx
 badd +104 components/CoinList.jsx
 badd +13 api/request.js
 badd +3 components/hooks/useTimer.js
-badd +4 routes.js
+badd +6 routes.js
 badd +8 pages/Home.jsx
 badd +29 components/Header.jsx
 badd +7 pages/Summary.jsx
 badd +33 components/summary/TotalInvestmentAndProfit.jsx
-badd +44 components/header/DrawerMenu.jsx
+badd +26 components/header/DrawerMenu.jsx
 badd +1 utility.js
 badd +61 pages/User.jsx
-badd +140 components/user/UserCoins.jsx
+badd +62 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
+badd +1 pages/AddTransations.jsx
+badd +39 pages/FundTransfer.jsx
 argglobal
 %argdel
-edit components/user/UserCoins.jsx
+edit api/api.js
 argglobal
-balt components/Visibility.jsx
-let s:l = 155 - ((43 * winheight(0) + 22) / 45)
+balt api/request.js
+let s:l = 4 - ((3 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 155
-normal! 025|
+keepjumps 4
+normal! 035|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

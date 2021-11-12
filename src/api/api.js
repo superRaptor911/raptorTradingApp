@@ -1,6 +1,7 @@
 import {getRequest} from './request';
 
-const url = 'https://raptor-trading.herokuapp.com/';
+// const url = 'https://raptor-trading.herokuapp.com/';
+const url = 'http://localhost:8080/';
 
 export async function getUsers() {
   const response = await getRequest(url + 'users');

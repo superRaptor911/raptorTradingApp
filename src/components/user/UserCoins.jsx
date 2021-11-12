@@ -46,7 +46,9 @@ const UserCoinStats = ({coinName, count, prices, coinInvestment, isMobile}) => {
 
     return (
       <Fragment>
-        <TableCell align="center">{humanReadableValue(count)}</TableCell>
+        <TableCell align="center">
+          {isMobile ? humanReadableValue(count) : count}
+        </TableCell>
         <TableCell align="center">{humanReadableValue(investment)}</TableCell>
         <TableCell align="center">{humanReadableValue(value)}</TableCell>
         <TableCell align="center" sx={{color: profit < 0 ? 'red' : 'green'}}>
