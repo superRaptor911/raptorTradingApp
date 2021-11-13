@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {useStore} from '../store';
+import {addFundTransfer} from '../api/api';
 
 const FundTransfer = () => {
   const [name, setName] = useState('');
@@ -14,7 +15,20 @@ const FundTransfer = () => {
   const [fee, setFee] = useState(0);
 
   const users = useStore(state => state.users);
+  const handleSubmit = async () => {
+    const result = await addFundTransfer(
+      name,
+      transType,
+      amount,
+      fee,
+      donation,
+      new Date(),
+    );
 
+    if (result) {
+      console.log('Success');
+    }
+  };
   return (
     <Paper
       sx={{
@@ -85,6 +99,7 @@ const FundTransfer = () => {
       <div style={{display: 'flex', marginTop: 20}}>
         <Button
           variant="contained"
+          onClick={handleSubmit}
           sx={{
             margin: 'auto',
           }}>

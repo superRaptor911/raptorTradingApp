@@ -4,8 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {useStore} from '../store';
+import {addTransaction} from '../api/api';
+import Snackbar from '@mui/material/Snackbar';
 
 const AddTransations = () => {
+  const [showMsg, setShowMsg] = useState(false);
   const [name, setName] = useState('');
   const [coin, setCoin] = useState('');
   const [transType, setTransType] = useState('SELL');
@@ -20,6 +23,23 @@ const AddTransations = () => {
   useEffect(() => {
     setFee(count * price * 0.002);
   }, [count, price]);
+
+  const onSubmit = async () => {
+    const result = await addTransaction(
+      name,
+      transType,
+      coin,
+      count,
+      price,
+      fee,
+      new Date(),
+    );
+    if (result) {
+      setShowMsg(result.message);
+    } else {
+      setShowMsg('Error');
+    }
+  };
 
   return (
     <Paper
@@ -108,12 +128,22 @@ const AddTransations = () => {
       <div style={{display: 'flex', marginTop: 20}}>
         <Button
           variant="contained"
+          onClick={onSubmit}
           sx={{
             margin: 'auto',
           }}>
           Submit
         </Button>
       </div>
+
+      <Snackbar
+        open={showMsg}
+        autoHideDuration={2000}
+        onClose={() => {
+          setShowMsg(null);
+        }}
+        message={showMsg}
+      />
     </Paper>
   );
 };

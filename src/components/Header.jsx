@@ -31,7 +31,7 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             Raptor Trading
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">Admin</Button>
         </Toolbar>
       </AppBar>
     </Box>

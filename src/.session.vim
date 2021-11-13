@@ -10,7 +10,7 @@ endif
 set shortmess=aoO
 badd +29 App.jsx
 badd +13 store.js
-badd +18 api/api.js
+badd +76 api/api.js
 badd +101 components/UserList.jsx
 badd +104 components/CoinList.jsx
 badd +13 api/request.js
@@ -26,19 +26,19 @@ badd +61 pages/User.jsx
 badd +62 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
-badd +1 pages/AddTransations.jsx
-badd +39 pages/FundTransfer.jsx
+badd +28 pages/AddTransations.jsx
+badd +102 pages/FundTransfer.jsx
 argglobal
 %argdel
-edit api/api.js
+edit pages/AddTransations.jsx
 argglobal
-balt api/request.js
-let s:l = 4 - ((3 * winheight(0) + 22) / 45)
+balt api/api.js
+let s:l = 39 - ((33 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
-normal! 035|
+keepjumps 39
+normal! 028|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0&& getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

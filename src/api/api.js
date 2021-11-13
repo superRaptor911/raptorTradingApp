@@ -1,4 +1,4 @@
-import {getRequest} from './request';
+import {getRequest, postRequest} from './request';
 
 // const url = 'https://raptor-trading.herokuapp.com/';
 const url = 'http://localhost:8080/';
@@ -34,4 +34,44 @@ export async function getTransactions() {
     return response.data;
   }
   return null;
+}
+
+export async function addTransaction(
+  username,
+  transType,
+  coin,
+  coinCount,
+  price,
+  fee,
+  time,
+) {
+  const response = await postRequest(url + 'transaction/add', {
+    username: username,
+    transType: transType,
+    coin: coin,
+    coinCount: coinCount,
+    price: price,
+    fee: fee,
+    time: time,
+  });
+  return response;
+}
+
+export async function addFundTransfer(
+  username,
+  transType,
+  amount,
+  fee,
+  donation,
+  time,
+) {
+  const response = await postRequest(url + 'fund/add', {
+    username: username,
+    transType: transType,
+    amount: amount,
+    donation: donation,
+    fee: fee,
+    time: time,
+  });
+  return response;
 }
