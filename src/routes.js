@@ -4,4 +4,6 @@ export const ROUTES = {
   user: '/user/:username',
   addTrans: '/addtransaction',
   fundTransfer: '/fundtransfer',
+  adminMenu: '/adminmenu',
+  adminLogin: '/adminlogin',
 };

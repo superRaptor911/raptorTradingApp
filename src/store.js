@@ -5,6 +5,10 @@ import {getCoinPrices, getCoins, getTransactions, getUsers} from './api/api';
 let store = set => ({
   count: 0,
   addCount: () => set(state => ({count: state.count + 1})),
+
+  password: null,
+  setPassword: pass => set({password: pass}),
+
   users: null,
   loadUsers: async () => {
     const data = await getUsers();

@@ -1,3 +1,4 @@
+import {useStore} from '../store';
 import {getRequest, postRequest} from './request';
 
 // const url = 'https://raptor-trading.herokuapp.com/';
@@ -45,6 +46,7 @@ export async function addTransaction(
   fee,
   time,
 ) {
+  const password = useStore.getState().password;
   const response = await postRequest(url + 'transaction/add', {
     username: username,
     transType: transType,
@@ -53,6 +55,7 @@ export async function addTransaction(
     price: price,
     fee: fee,
     time: time,
+    password: password,
   });
   return response;
 }
@@ -65,6 +68,7 @@ export async function addFundTransfer(
   donation,
   time,
 ) {
+  const password = useStore.getState().password;
   const response = await postRequest(url + 'fund/add', {
     username: username,
     transType: transType,
@@ -72,6 +76,7 @@ export async function addFundTransfer(
     donation: donation,
     fee: fee,
     time: time,
+    password: password,
   });
   return response;
 }

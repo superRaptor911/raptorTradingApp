@@ -8,12 +8,16 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import DrawerMenu from './header/DrawerMenu';
+import {useHistory} from 'react-router-dom';
+import {ROUTES} from '../routes';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  const history = useHistory();
   return (
     <Box sx={{flexGrow: 1}}>
       <AppBar position="static">
@@ -31,7 +35,11 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             Raptor Trading
           </Typography>
-          <Button color="inherit">Admin</Button>
+          <Button
+            color="inherit"
+            onClick={() => history.push(ROUTES.adminMenu)}>
+            Admin
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
