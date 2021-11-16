@@ -69,7 +69,7 @@ export async function addFundTransfer(
   time,
 ) {
   const password = useStore.getState().password;
-  const response = await postRequest(url + 'fund/add', {
+  const response = await postRequest(url + 'fund/transfer', {
     username: username,
     transType: transType,
     amount: amount,

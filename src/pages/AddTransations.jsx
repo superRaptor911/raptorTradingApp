@@ -36,6 +36,10 @@ const AddTransations = () => {
     );
     if (result) {
       setShowMsg(result.message);
+      if (result.status) {
+        setName('');
+        setCoin('');
+      }
     } else {
       setShowMsg('Error');
     }

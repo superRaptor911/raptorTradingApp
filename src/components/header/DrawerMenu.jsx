@@ -18,12 +18,8 @@ const Menus = [
     link: ROUTES.summary,
   },
   {
-    name: 'Add Transaction',
-    link: ROUTES.addTrans,
-  },
-  {
-    name: 'Fund Transfer',
-    link: ROUTES.fundTransfer,
+    name: 'Transactions',
+    link: ROUTES.transactions,
   },
 ];
 

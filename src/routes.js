@@ -6,4 +6,5 @@ export const ROUTES = {
   fundTransfer: '/fundtransfer',
   adminMenu: '/adminmenu',
   adminLogin: '/adminlogin',
+  transactions: '/transactions',
 };

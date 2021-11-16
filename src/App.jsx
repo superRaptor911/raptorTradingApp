@@ -10,6 +10,7 @@ const FundTransfer = lazy(() => import('./pages/FundTransfer'));
 const AdminMenu = lazy(() => import('./pages/AdminMenu'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AddTransations = lazy(() => import('./pages/AddTransations'));
+const Transactions = lazy(() => import('./pages/Transactions'));
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route exact path={ROUTES.fundTransfer} component={FundTransfer} />
             <Route exact path={ROUTES.adminMenu} component={AdminMenu} />
             <Route exact path={ROUTES.adminLogin} component={AdminLogin} />
+            <Route exact path={ROUTES.transactions} component={Transactions} />
           </Suspense>
         </Switch>
       </Router>

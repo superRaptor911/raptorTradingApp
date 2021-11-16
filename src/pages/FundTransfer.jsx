@@ -1,4 +1,4 @@
-import {Button, Paper, TextField} from '@mui/material';
+import {Button, Paper, Snackbar, TextField} from '@mui/material';
 import React, {useState} from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,6 +7,7 @@ import {useStore} from '../store';
 import {addFundTransfer} from '../api/api';
 
 const FundTransfer = () => {
+  const [showMsg, setShowMsg] = useState();
   const [name, setName] = useState('');
   const [transType, setTransType] = useState('DEPOSIT');
 
@@ -26,7 +27,13 @@ const FundTransfer = () => {
     );
 
     if (result) {
-      console.log('Success');
+      setShowMsg(result.message);
+      if (result.status) {
+        setName('');
+        setAmount(0);
+      }
+    } else {
+      setShowMsg('Error');
     }
   };
   return (
@@ -106,6 +113,15 @@ const FundTransfer = () => {
           Submit
         </Button>
       </div>
+
+      <Snackbar
+        open={showMsg}
+        autoHideDuration={2000}
+        onClose={() => {
+          setShowMsg(null);
+        }}
+        message={showMsg}
+      />
     </Paper>
   );
 };
