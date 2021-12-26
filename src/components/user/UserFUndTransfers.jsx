@@ -18,6 +18,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import {humanReadableValue} from '../../utility';
 import {TableHead} from '@mui/material';
 import useDeviceType from '../hooks/useDeviceType';
+import {useStore} from '../../store';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -77,19 +78,20 @@ function TablePaginationActions(props) {
   );
 }
 
-export default function UserTransaction({user, allTransactions}) {
+export default function UserFundTransferList({user}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [transactions, setTransactions] = useState([]);
+  const fundTransfers = useStore(state => state.fundTransfers);
 
   useEffect(() => {
-    if (allTransactions) {
+    if (fundTransfers) {
       setTransactions(
-        allTransactions.filter(item => item.username === user.name).reverse(),
+        fundTransfers.filter(item => item.username === user.name).reverse(),
       );
     }
-  }, [allTransactions]);
+  }, [fundTransfers]);
 
   const isMobile = 'mobile' === useDeviceType();
   const itemCount = transactions ? transactions.length : 0;
@@ -108,15 +110,14 @@ export default function UserTransaction({user, allTransactions}) {
   return (
     <TableContainer
       component={Paper}
-      sx={{maxWidth: '95%', margin: 'auto', marginTop: 10, marginBottom: 10}}>
+      sx={{maxWidth: '95%', margin: 'auto', marginTop: 10, marginBottom: 20}}>
       <Table sx={{minWidth: 500}} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell>Coin</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell align="center">Coin Count</TableCell>
-            <TableCell align="center">Coin Price</TableCell>
+            <TableCell align="center">Amount</TableCell>
             <TableCell align="center">Fee</TableCell>
+            <TableCell align="center">Donation</TableCell>
             <TableCell align="center">Total</TableCell>
           </TableRow>
         </TableHead>
@@ -130,24 +131,26 @@ export default function UserTransaction({user, allTransactions}) {
               : transactions
             ).map(row => (
               <TableRow key={row.name}>
-                <TableCell>{row.coin}</TableCell>
-
                 <TableCell
-                  style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>
+                  style={{
+                    color: row.transType === 'DEPOSIT' ? 'green' : 'red',
+                  }}>
                   {isMobile ? row.transType[0] : row.transType}
                 </TableCell>
                 <TableCell align="center">
-                  {isMobile ? humanReadableValue(row.coinCount) : row.coinCount}
-                </TableCell>
-                <TableCell align="center">
-                  {isMobile ? humanReadableValue(row.cost) : row.cost}
+                  {isMobile ? humanReadableValue(row.amount) : row.amount}
                 </TableCell>
                 <TableCell align="center">
                   {humanReadableValue(row.fee)}
                 </TableCell>
                 <TableCell align="center">
+                  {isMobile ? humanReadableValue(row.donation) : row.donation}
+                </TableCell>
+                <TableCell align="center">
                   {humanReadableValue(
-                    row.cost * row.coinCount + parseFloat(row.fee),
+                    parseFloat(row.amount) +
+                      parseFloat(row.donation) +
+                      parseFloat(row.fee),
                   )}
                 </TableCell>
               </TableRow>

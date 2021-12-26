@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import UserCoins from '../components/user/UserCoins';
 import UserStats from '../components/user/UserStats';
 import UserTransaction from '../components/user/UserTransactions';
+import UserFundTransferList from '../components/user/UserFUndTransfers';
 
 const getUser = (username, users) => {
   let user = null;
@@ -76,6 +77,7 @@ const User = () => {
       </Paper>
 
       <UserTransaction user={user} allTransactions={userTransactions} />
+      <UserFundTransferList user={user} />
     </div>
   );
 };
