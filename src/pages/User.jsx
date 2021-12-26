@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import UserCoins from '../components/user/UserCoins';
 import UserStats from '../components/user/UserStats';
+import UserTransaction from '../components/user/UserTransactions';
 
 const getUser = (username, users) => {
   let user = null;
@@ -56,7 +57,7 @@ const User = () => {
         marginTop: 80,
         maxWidth: '100vw',
       }}>
-      <Paper sx={{paddingTop: 10, maxWidth: '95vw'}}>
+      <Paper sx={{paddingTop: 10, maxWidth: '95vw', margin: 'auto'}}>
         {user ? (
           <Fragment>
             <Avatar
@@ -73,6 +74,8 @@ const User = () => {
           <CircularProgress />
         )}
       </Paper>
+
+      <UserTransaction user={user} allTransactions={userTransactions} />
     </div>
   );
 };
