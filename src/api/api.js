@@ -60,6 +60,14 @@ export async function addTransaction(
   return response;
 }
 
+export async function getFundTransfers() {
+  const response = await getRequest(url + 'fund/list');
+  if (response && response.status) {
+    return response.data;
+  }
+  return null;
+}
+
 export async function addFundTransfer(
   username,
   transType,

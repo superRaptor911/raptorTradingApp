@@ -7,6 +7,7 @@ import {useStore} from '../store';
 import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import UserCoins from '../components/user/UserCoins';
+import UserStats from '../components/user/UserStats';
 
 const getUser = (username, users) => {
   let user = null;
@@ -64,6 +65,8 @@ const User = () => {
               sx={{width: 128, height: 128, margin: 'auto'}}
             />
             <Typography sx={{textAlign: 'center'}}>{user.name}</Typography>
+
+            <UserStats user={user} transactions={userTransactions} />
             <UserCoins user={user} transactions={userTransactions} />
           </Fragment>
         ) : (
