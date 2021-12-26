@@ -69,7 +69,7 @@ const UserStats = ({user}) => {
     <TableContainer
       component={Paper}
       sx={{
-        width: 'max-content',
+        width: '100%',
         maxWidth: '100%',
         margin: 'auto',
         marginTop: 10,

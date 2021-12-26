@@ -20,7 +20,7 @@ const Header = () => {
   const history = useHistory();
   return (
     <Box sx={{flexGrow: 1}}>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             size="large"
@@ -32,7 +32,11 @@ const Header = () => {
             <MenuIcon />
             <DrawerMenu showDrawer={showMenu} toggleDrawer={toggleMenu} />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{flexGrow: 1}}
+            onClick={() => history.push(ROUTES.home)}>
             Raptor Trading
           </Typography>
           <Button
