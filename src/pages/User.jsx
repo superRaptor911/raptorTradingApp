@@ -48,8 +48,14 @@ const User = () => {
   }, [transactions]);
 
   return (
-    <div style={{width: 'max-content', margin: 'auto', marginTop: 80}}>
-      <Paper sx={{paddingTop: 10}}>
+    <div
+      style={{
+        width: 'max-content',
+        margin: 'auto',
+        marginTop: 80,
+        maxWidth: '100vw',
+      }}>
+      <Paper sx={{paddingTop: 10, maxWidth: '95vw'}}>
         {user ? (
           <Fragment>
             <Avatar

@@ -107,6 +107,7 @@ const UserCoins = ({user, transactions}) => {
       component={Paper}
       sx={{
         width: 'max-content',
+        maxWidth: '100%',
         margin: 'auto',
         marginTop: 10,
         marginBottom: 10,

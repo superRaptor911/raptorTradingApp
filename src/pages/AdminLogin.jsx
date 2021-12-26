@@ -1,14 +1,17 @@
 import {Button, TextField} from '@mui/material';
 import React, {useRef} from 'react';
+import {useHistory} from 'react-router-dom';
 import {useStore} from '../store';
 
 const AdminLogin = () => {
+  const history = useHistory();
   const passRef = useRef();
   const setPassword = useStore(state => state.setPassword);
 
   const handleSubmit = () => {
     const password = passRef.current.value;
     setPassword(password);
+    history.push('/');
   };
 
   return (
