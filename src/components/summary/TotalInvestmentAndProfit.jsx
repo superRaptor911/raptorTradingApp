@@ -50,7 +50,7 @@ const TotalInvestmentAndProfit = () => {
     <TableContainer
       component={Paper}
       sx={{
-        width: 'maxWidth',
+        width: 'max-content',
         maxWidth: '95vw',
         margin: 'auto',
         marginTop: 10,

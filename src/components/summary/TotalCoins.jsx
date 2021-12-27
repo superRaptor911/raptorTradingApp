@@ -41,11 +41,14 @@ const TotalCoins = () => {
       component={Paper}
       sx={{
         width: 'max-content',
+        maxWidth: '95vw',
         margin: 'auto',
         marginTop: 10,
         marginBottom: 10,
       }}>
-      <Table sx={{minWidth: '50vw'}} aria-label="simple table">
+      <Table
+        sx={{minWidth: isMobile ? '95vw' : '50vw'}}
+        aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Coin</TableCell>
