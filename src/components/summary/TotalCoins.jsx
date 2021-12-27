@@ -53,7 +53,7 @@ const TotalCoins = () => {
         <TableHead>
           <TableRow>
             <TableCell>Coin</TableCell>
-            <TableCell>Count</TableCell>
+            <TableCell align="center">Count</TableCell>
           </TableRow>
         </TableHead>
 
@@ -61,18 +61,21 @@ const TotalCoins = () => {
           {coins &&
             coins.map(item => (
               <TableRow key={item.name}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  sx={{display: 'flex', alignItems: 'center'}}>
-                  <Avatar
-                    src={item.avatar}
-                    alt={item.name}
-                    sx={{marginRight: 2}}
-                  />
-                  {item.name}
-                </TableCell>
                 <TableCell>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}>
+                    <Avatar
+                      src={item.avatar}
+                      alt={item.name}
+                      sx={{marginRight: 2}}
+                    />
+                    {item.name}
+                  </div>
+                </TableCell>
+                <TableCell align="center">
                   {isMobile
                     ? humanReadableValue(coinsList[item.name])
                     : coinsList[item.name]}
