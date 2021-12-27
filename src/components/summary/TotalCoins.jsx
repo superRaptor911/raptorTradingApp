@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useStore} from '../../store';
 import Table from '@mui/material/Table';
+import Avatar from '@mui/material/Avatar';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -60,7 +61,17 @@ const TotalCoins = () => {
           {coins &&
             coins.map(item => (
               <TableRow key={item.name}>
-                <TableCell>{item.name}</TableCell>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{display: 'flex', alignItems: 'center'}}>
+                  <Avatar
+                    src={item.avatar}
+                    alt={item.name}
+                    sx={{marginRight: 2}}
+                  />
+                  {item.name}
+                </TableCell>
                 <TableCell>
                   {isMobile
                     ? humanReadableValue(coinsList[item.name])
