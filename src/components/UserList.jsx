@@ -52,7 +52,6 @@ const UserStats = ({
   return (
     <Fragment>
       <TableCell>{investment}</TableCell>
-
       <TableCell>{isMobile ? humanReadableValue(curVal) : curVal}</TableCell>
 
       <Visibility hide={isMobile}>
@@ -102,6 +101,7 @@ const UserList = () => {
         maxWidth: 1000,
         margin: 'auto',
         marginTop: 10,
+        marginBottom: 10,
       }}>
       <Table sx={{minWidth: '50vw'}} aria-label="simple table">
         <TableHead>

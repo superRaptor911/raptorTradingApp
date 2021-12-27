@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {humanReadableValue} from '../../utility';
+import useDeviceType from '../hooks/useDeviceType';
+import Visibility from '../Visibility';
 
 const TotalInvestmentAndProfit = () => {
   const users = useStore(state => state.users);
@@ -16,10 +18,14 @@ const TotalInvestmentAndProfit = () => {
 
   let totalInvestment = 0;
   let curVal = 0;
+  let wallet = 0;
+
+  const isMobile = 'mobile' === useDeviceType();
 
   if (users) {
     users.forEach(user => {
       totalInvestment += parseFloat(user.wallet.investment);
+      wallet += parseFloat(user.wallet.balance);
     });
 
     if (coinPrices && coins) {
@@ -44,7 +50,8 @@ const TotalInvestmentAndProfit = () => {
     <TableContainer
       component={Paper}
       sx={{
-        width: 'max-content',
+        width: 'maxWidth',
+        maxWidth: '95vw',
         margin: 'auto',
         marginTop: 10,
       }}>
@@ -52,8 +59,11 @@ const TotalInvestmentAndProfit = () => {
         <TableHead>
           <TableRow>
             <TableCell>Total Investment</TableCell>
+            <TableCell>Wallet</TableCell>
             <TableCell>Current value</TableCell>
-            <TableCell>Profit</TableCell>
+            <Visibility hide={isMobile}>
+              <TableCell>Profit</TableCell>
+            </Visibility>
             <TableCell>Profit %</TableCell>
           </TableRow>
         </TableHead>
@@ -62,11 +72,14 @@ const TotalInvestmentAndProfit = () => {
           <TableRow>
             <TableCell>{humanReadableValue(totalInvestment)}</TableCell>
 
+            <TableCell>{humanReadableValue(wallet)}</TableCell>
             <TableCell>{humanReadableValue(curVal)}</TableCell>
 
-            <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
-              {humanReadableValue(profit)}
-            </TableCell>
+            <Visibility hide={isMobile}>
+              <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
+                {humanReadableValue(profit)}
+              </TableCell>
+            </Visibility>
 
             <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
               {((100 * profit) / totalInvestment).toFixed(2)}%
