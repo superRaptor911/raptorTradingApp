@@ -21,6 +21,10 @@ const Menus = [
     name: 'Transactions',
     link: ROUTES.transactions,
   },
+  {
+    name: 'Admin Menu',
+    link: ROUTES.adminMenu,
+  },
 ];
 
 const DrawerMenu = ({showDrawer, toggleDrawer}) => {

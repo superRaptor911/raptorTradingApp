@@ -8,4 +8,5 @@ export const ROUTES = {
   adminLogin: '/adminlogin',
   transactions: '/transactions',
   addUser: '/addUser',
+  loginUser: '/loginuser',
 };

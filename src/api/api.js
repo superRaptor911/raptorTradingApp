@@ -15,6 +15,14 @@ export async function addUser(username, email, avatar) {
   return response;
 }
 
+export async function loginUser(email, password) {
+  const response = await postRequest(url + 'users/login', {
+    email: email,
+    password: password,
+  });
+  return response;
+}
+
 export async function getUsers() {
   const response = await getRequest(url + 'users');
   if (response && response.status) {

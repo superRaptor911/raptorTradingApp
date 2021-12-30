@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,11 +7,32 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import DrawerMenu from './header/DrawerMenu';
+import Avatar from '@mui/material/Avatar';
 import {useHistory} from 'react-router-dom';
 import {ROUTES} from '../routes';
+import {useStore} from '../store';
+import {loginUser} from '../api/api';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [user, setUser] = useState();
+  const userCred = useStore(state => state.userCred);
+  const users = useStore(state => state.users);
+
+  useEffect(() => {
+    if (userCred && userCred.email && userCred.password && users) {
+      loginUser(userCred.email, userCred.password).then(response => {
+        if (response && response.status) {
+          for (const i of users) {
+            if (i.email === userCred.email) {
+              setUser(i);
+            }
+          }
+        }
+      });
+    }
+  }, [userCred, users]);
+
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -39,11 +59,16 @@ const Header = () => {
             onClick={() => history.push(ROUTES.home)}>
             Raptor Trading
           </Typography>
-          <Button
-            color="inherit"
-            onClick={() => history.push(ROUTES.adminMenu)}>
-            Admin
-          </Button>
+
+          {user ? (
+            <Avatar src={user.avatar} alt={user.name} />
+          ) : (
+            <Button
+              color="inherit"
+              onClick={() => history.push(ROUTES.loginUser)}>
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

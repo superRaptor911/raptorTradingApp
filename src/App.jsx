@@ -12,6 +12,7 @@ const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AddTransations = lazy(() => import('./pages/AddTransations'));
 const Transactions = lazy(() => import('./pages/Transactions'));
 const AddUser = lazy(() => import('./pages/AddUser'));
+const UserLogin = lazy(() => import('./pages/UserLogin'));
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route exact path={ROUTES.adminLogin} component={AdminLogin} />
             <Route exact path={ROUTES.transactions} component={Transactions} />
             <Route exact path={ROUTES.addUser} component={AddUser} />
+            <Route exact path={ROUTES.loginUser} component={UserLogin} />
           </Suspense>
         </Switch>
       </Router>

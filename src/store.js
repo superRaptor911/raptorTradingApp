@@ -15,6 +15,9 @@ let store = set => ({
   password: null,
   setPassword: pass => set({password: pass}),
 
+  userCred: null,
+  setUserCred: cred => set({userCred: cred}),
+
   users: null,
   loadUsers: async () => {
     const data = await getUsers();
