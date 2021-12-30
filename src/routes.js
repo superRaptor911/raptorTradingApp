@@ -7,4 +7,5 @@ export const ROUTES = {
   adminMenu: '/adminmenu',
   adminLogin: '/adminlogin',
   transactions: '/transactions',
+  addUser: '/addUser',
 };

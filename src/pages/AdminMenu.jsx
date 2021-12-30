@@ -5,6 +5,7 @@ import {ROUTES} from '../routes';
 
 const AdminMenu = () => {
   const history = useHistory();
+
   return (
     <div
       style={{
@@ -14,9 +15,19 @@ const AdminMenu = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 200,
+        height: 250,
         marginTop: '10%',
       }}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => history.push(ROUTES.addUser)}
+        sx={{
+          width: '100%',
+        }}>
+        Add User
+      </Button>
+
       <Button
         variant="contained"
         color="secondary"
