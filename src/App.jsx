@@ -13,6 +13,7 @@ const AddTransations = lazy(() => import('./pages/AddTransations'));
 const Transactions = lazy(() => import('./pages/Transactions'));
 const AddUser = lazy(() => import('./pages/AddUser'));
 const UserLogin = lazy(() => import('./pages/UserLogin'));
+const WazirxDashboard = lazy(() => import('./pages/wazirx/WazirxDashboard'));
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
             <Route exact path={ROUTES.transactions} component={Transactions} />
             <Route exact path={ROUTES.addUser} component={AddUser} />
             <Route exact path={ROUTES.loginUser} component={UserLogin} />
+            <Route
+              exact
+              path={ROUTES.tradingMenu}
+              component={WazirxDashboard}
+            />
           </Suspense>
         </Switch>
       </Router>

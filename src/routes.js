@@ -9,4 +9,5 @@ export const ROUTES = {
   transactions: '/transactions',
   addUser: '/addUser',
   loginUser: '/loginuser',
+  tradingMenu: '/trading',
 };
