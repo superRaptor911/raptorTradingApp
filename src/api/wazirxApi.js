@@ -1,8 +1,8 @@
 import {useStore} from '../store';
 import {getRequest, postRequest} from './request';
 
-// const url = 'https://raptor-trading.herokuapp.com/';
-const url = 'http://localhost:8080/';
+const url = 'https://raptor-trading.herokuapp.com/';
+// const url = 'http://localhost:8080/';
 
 const getUsername = email => {
   const users = useStore.getState().users;
