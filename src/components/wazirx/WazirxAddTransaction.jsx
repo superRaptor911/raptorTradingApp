@@ -4,6 +4,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import {useStore} from '../../store';
 import {WazirxPlaceOrder} from '../../api/wazirxApi';
 
@@ -18,6 +20,7 @@ const getCoinId = (coins, coinName) => {
 
 const WazirxAddTransaction = () => {
   const [showMsg, setShowMsg] = useState(false);
+  const [priceLoading, setPriceLoading] = useState(false);
   const [coin, setCoin] = useState('');
   const [transType, setTransType] = useState('SELL');
 
@@ -37,10 +40,12 @@ const WazirxAddTransaction = () => {
     if (coin != '') {
       const coinId = getCoinId(coins, coin);
       setPrice(coinPrices[coinId].last);
+      setPriceLoading(false);
     }
   }, [coin, coinPrices]);
 
   const updatePrices = () => {
+    setPriceLoading(true);
     loadCoinPrices();
   };
 
@@ -64,6 +69,12 @@ const WazirxAddTransaction = () => {
         margin: 'auto',
         marginTop: 10,
       }}>
+      <Stack sx={{width: '100%'}} spacing={2}>
+        {priceLoading && (
+          <Alert severity="warning">Loading latest coin price</Alert>
+        )}
+      </Stack>
+
       <div style={{display: 'flex', alignItems: 'center'}}>
         <InputLabel id="name-label">Coin</InputLabel>
         <Select

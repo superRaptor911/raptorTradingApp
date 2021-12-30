@@ -37,3 +37,14 @@ export async function wazirxGetTransactions() {
   }
   return null;
 }
+
+export async function WazirxCancelOrder(coinId, orderId) {
+  const userCred = useStore.getState().userCred;
+  const response = await postRequest(url + 'wazirx/cancel', {
+    username: getUsername(userCred.email),
+    password: userCred.password,
+    coinId: coinId,
+    orderId: orderId,
+  });
+  return response;
+}

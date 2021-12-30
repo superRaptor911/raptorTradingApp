@@ -8,9 +8,9 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {TableHead} from '@mui/material';
+import {Button, TableHead} from '@mui/material';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import {wazirxGetTransactions} from '../../api/wazirxApi';
+import {WazirxCancelOrder, wazirxGetTransactions} from '../../api/wazirxApi';
 
 const WazirxTransactions = () => {
   const [page, setPage] = useState(0);
@@ -50,6 +50,10 @@ const WazirxTransactions = () => {
     return transactions.map((e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
   };
 
+  const cancelOrder = (coinId, orderId) => {
+    WazirxCancelOrder(coinId, orderId);
+  };
+
   return (
     <TableContainer
       component={Paper}
@@ -62,6 +66,7 @@ const WazirxTransactions = () => {
             <TableCell>Coin Price</TableCell>
             <TableCell>Type</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Control</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -78,6 +83,16 @@ const WazirxTransactions = () => {
                   {row.receipt.side}
                 </TableCell>
                 <TableCell>{row.receipt.status}</TableCell>
+                <TableCell>
+                  <Button
+                    onClick={() => {
+                      cancelOrder(row.receipt.symbol, row.id);
+                    }}
+                    disabled={row.status !== 'PENDING'}
+                    sx={{marginLeft: 'auto', color: 'red'}}>
+                    Cancel
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           {emptyRows > 0 && (
