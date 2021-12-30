@@ -22,6 +22,10 @@ const Menus = [
     link: ROUTES.transactions,
   },
   {
+    name: 'Trading',
+    link: ROUTES.tradingMenu,
+  },
+  {
     name: 'Admin Menu',
     link: ROUTES.adminMenu,
   },

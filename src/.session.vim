@@ -10,19 +10,21 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit pages/AddUser.jsx
+edit components/wazirx/WazirxAddTransaction.jsx
 argglobal
-balt components/summary/TotalCoins.jsx
-let s:l = 16 - ((13 * winheight(0) + 22) / 45)
+balt api/wazirxApi.js
+let s:l = 44 - ((26 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 16
-normal! 033|
+keepjumps 44
+normal! 020|
 tabnext 1
+badd +16 pages/AddUser.jsx
+badd +70 components/summary/TotalCoins.jsx
 badd +9 pages/Summary.jsx
 badd +65 components/UserList.jsx
-badd +111 components/user/UserTransactions.jsx
+badd +51 components/user/UserTransactions.jsx
 badd +79 pages/User.jsx
 badd +34 App.jsx
 badd +44 store.js
@@ -43,11 +45,15 @@ badd +1 pages/AddTransations.jsx
 badd +31 pages/FundTransfer.jsx
 badd +18 pages/AdminMenu.jsx
 badd +18 pages/AdminLogin.jsx
-badd +1 pages/Transactions.jsx
-badd +25 components/user/UserStats.jsx
+badd +111 pages/Transactions.jsx
+badd +1 components/user/UserStats.jsx
 badd +106 components/user/UserFUndTransfers.jsx
-badd +70 components/summary/TotalCoins.jsx
-badd +36 pages/AddUser.jsx
+badd +11 components/TablePaginationAction.jsx
+badd +72 components/wazirx/WazirxTransactions.jsx
+badd +16 api/wazirxApi.js
+badd +18 pages/wazirx/WazirxDashboard.jsx
+badd +6 components/wazirx/WazirxAddTransaction.jsx
+badd +24 pages/UserLogin.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

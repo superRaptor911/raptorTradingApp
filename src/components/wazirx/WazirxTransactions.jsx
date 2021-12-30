@@ -21,7 +21,7 @@ const WazirxTransactions = () => {
   useEffect(() => {
     wazirxGetTransactions().then(response => {
       if (response && response.status) {
-        setTransactions(response);
+        setTransactions(response.data);
       }
     });
   }, []);
@@ -40,6 +40,16 @@ const WazirxTransactions = () => {
     setPage(0);
   };
 
+  const getFilteredTransaction = () => {
+    if (rowsPerPage > 0) {
+      return transactions
+        .map((e, i, a) => a[a.length - 1 - i]) // Non inplace reverse
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    }
+
+    return transactions.map((e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
+  };
+
   return (
     <TableContainer
       component={Paper}
@@ -56,19 +66,15 @@ const WazirxTransactions = () => {
         </TableHead>
         <TableBody>
           {transactions &&
-            (rowsPerPage > 0
-              ? transactions.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage,
-                )
-              : transactions
-            ).map(row => (
+            getFilteredTransaction().map(row => (
               <TableRow key={row.id}>
                 <TableCell>{row.receipt.symbol}</TableCell>
                 <TableCell>{row.receipt.origQty}</TableCell>
                 <TableCell>{row.receipt.price}</TableCell>
                 <TableCell
-                  style={{color: row.receipt.side === 'buy' ? 'green' : 'red'}}>
+                  style={{
+                    color: row.receipt.side === 'buy' ? 'green' : 'red',
+                  }}>
                   {row.receipt.side}
                 </TableCell>
                 <TableCell>{row.receipt.status}</TableCell>

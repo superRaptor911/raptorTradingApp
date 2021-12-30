@@ -4,6 +4,7 @@ import CoinList from '../../components/CoinList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import WazirxTransactions from '../../components/wazirx/WazirxTransactions';
+import WazirxAddTransaction from '../../components/wazirx/WazirxAddTransaction';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -32,7 +33,7 @@ const WazirxDashboard = () => {
         <CoinList />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item 2
+        <WazirxAddTransaction />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <WazirxTransactions />
