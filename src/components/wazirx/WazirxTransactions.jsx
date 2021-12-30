@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
-import {useStore} from '../store';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,22 +8,23 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {humanReadableValue} from '../utility';
 import {TableHead} from '@mui/material';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import {wazirxGetTransactions} from '../../api/wazirxApi';
 
-export default function WazirxTransactions() {
+const WazirxTransactions = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const transactions = useStore(state => state.transactions);
-  const loadTransactions = useStore(state => state.loadTransactions);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    if (loadTransactions) {
-      loadTransactions();
-    }
-  }, [loadTransactions]);
+    wazirxGetTransactions().then(response => {
+      if (response && response.status) {
+        setTransactions(response);
+      }
+    });
+  }, []);
 
   const itemCount = transactions ? transactions.length : 0;
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -47,13 +47,11 @@ export default function WazirxTransactions() {
       <Table sx={{minWidth: 500}} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
             <TableCell>Coin</TableCell>
+            <TableCell>Coin Count</TableCell>
+            <TableCell>Coin Price</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell align="right">Coin Count</TableCell>
-            <TableCell align="right">Coin Price</TableCell>
-            <TableCell align="right">Fee</TableCell>
-            <TableCell align="right">Total</TableCell>
+            <TableCell>Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -65,27 +63,17 @@ export default function WazirxTransactions() {
                 )
               : transactions
             ).map(row => (
-              <TableRow key={row.name}>
-                <TableCell>{row.username}</TableCell>
-                <TableCell>{row.coin}</TableCell>
-
+              <TableRow key={row.id}>
+                <TableCell>{row.receipt.symbol}</TableCell>
+                <TableCell>{row.receipt.origQty}</TableCell>
+                <TableCell>{row.receipt.price}</TableCell>
                 <TableCell
-                  style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>
-                  {row.transType}
+                  style={{color: row.receipt.side === 'buy' ? 'green' : 'red'}}>
+                  {row.receipt.side}
                 </TableCell>
-                <TableCell align="right">{row.coinCount}</TableCell>
-                <TableCell align="right">{row.cost}</TableCell>
-                <TableCell align="right">
-                  {humanReadableValue(row.fee)}
-                </TableCell>
-                <TableCell align="right">
-                  {humanReadableValue(
-                    row.cost * row.coinCount + parseFloat(row.fee),
-                  )}
-                </TableCell>
+                <TableCell>{row.receipt.status}</TableCell>
               </TableRow>
             ))}
-
           {emptyRows > 0 && (
             <TableRow style={{height: 53 * emptyRows}}>
               <TableCell colSpan={6} />
@@ -115,4 +103,6 @@ export default function WazirxTransactions() {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default WazirxTransactions;

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import CoinList from '../../components/CoinList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import WazirxTransactions from '../../components/wazirx/WazirxTransactions';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -31,10 +32,10 @@ const WazirxDashboard = () => {
         <CoinList />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        Item 2
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <WazirxTransactions />
       </TabPanel>
     </div>
   );
