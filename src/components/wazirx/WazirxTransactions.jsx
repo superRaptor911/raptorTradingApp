@@ -9,6 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {Button, TableHead} from '@mui/material';
+import useTimer from '../hooks/useTimer';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import {WazirxCancelOrder, wazirxGetTransactions} from '../../api/wazirxApi';
 
@@ -17,6 +18,14 @@ const WazirxTransactions = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [transactions, setTransactions] = useState([]);
+
+  useTimer(1500, () => {
+    wazirxGetTransactions().then(response => {
+      if (response && response.status) {
+        setTransactions(response.data);
+      }
+    });
+  });
 
   useEffect(() => {
     wazirxGetTransactions().then(response => {

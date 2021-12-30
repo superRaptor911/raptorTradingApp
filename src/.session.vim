@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/WazirxAddTransaction.jsx
+edit components/wazirx/WazirxTransactions.jsx
 argglobal
-balt api/wazirxApi.js
-let s:l = 44 - ((26 * winheight(0) + 22) / 45)
+balt components/hooks/useTimer.js
+let s:l = 27 - ((26 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 44
-normal! 020|
+keepjumps 27
+normal! 05|
 tabnext 1
+badd +1 components/wazirx/WazirxAddTransaction.jsx
+badd +33 api/wazirxApi.js
 badd +16 pages/AddUser.jsx
 badd +70 components/summary/TotalCoins.jsx
 badd +9 pages/Summary.jsx
@@ -29,16 +31,16 @@ badd +79 pages/User.jsx
 badd +34 App.jsx
 badd +44 store.js
 badd +1 api/api.js
-badd +83 components/CoinList.jsx
+badd +48 components/CoinList.jsx
 badd +17 api/request.js
-badd +3 components/hooks/useTimer.js
+badd +1 components/hooks/useTimer.js
 badd +10 routes.js
 badd +14 pages/Home.jsx
 badd +38 components/Header.jsx
 badd +53 components/summary/TotalInvestmentAndProfit.jsx
 badd +43 components/header/DrawerMenu.jsx
 badd +5 utility.js
-badd +158 components/user/UserCoins.jsx
+badd +10 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
 badd +1 pages/AddTransations.jsx
@@ -49,11 +51,9 @@ badd +111 pages/Transactions.jsx
 badd +1 components/user/UserStats.jsx
 badd +106 components/user/UserFUndTransfers.jsx
 badd +11 components/TablePaginationAction.jsx
-badd +72 components/wazirx/WazirxTransactions.jsx
-badd +16 api/wazirxApi.js
-badd +18 pages/wazirx/WazirxDashboard.jsx
-badd +6 components/wazirx/WazirxAddTransaction.jsx
-badd +24 pages/UserLogin.jsx
+badd +21 components/wazirx/WazirxTransactions.jsx
+badd +1 pages/wazirx/WazirxDashboard.jsx
+badd +1 pages/UserLogin.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -65,7 +65,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

@@ -39,7 +39,9 @@ const WazirxAddTransaction = () => {
   useEffect(() => {
     if (coin != '') {
       const coinId = getCoinId(coins, coin);
-      setPrice(coinPrices[coinId].last);
+      setPrice(
+        transType === 'SELL' ? coinPrices[coinId].buy : coinPrices[coinId].sell,
+      );
       setPriceLoading(false);
     }
   }, [coin, coinPrices]);

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 
 const useTimer = (updateDelay = 2000, callbackFn) => {
   useEffect(() => {
