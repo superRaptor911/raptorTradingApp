@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Button, Paper, TextField} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,10 +19,9 @@ const getCoinId = (coins, coinName) => {
   return null;
 };
 
-const WazirxAddTransaction = () => {
+const WazirxAddTransaction = ({coin}) => {
   const [showMsg, setShowMsg] = useState(false);
   const [priceLoading, setPriceLoading] = useState(false);
-  const [coin, setCoin] = useState('');
   const [transType, setTransType] = useState('SELL');
 
   const [count, setCount] = useState(0);
@@ -37,7 +37,7 @@ const WazirxAddTransaction = () => {
   }, [count, price]);
 
   useEffect(() => {
-    if (coin != '') {
+    if (coin && coin != '') {
       const coinId = getCoinId(coins, coin);
       setPrice(
         transType === 'SELL' ? coinPrices[coinId].buy : coinPrices[coinId].sell,
@@ -56,7 +56,7 @@ const WazirxAddTransaction = () => {
     if (result) {
       setShowMsg(result.message);
       if (result.status) {
-        setCoin('');
+        // setCoin('');
       }
     } else {
       setShowMsg('Error');
@@ -66,10 +66,10 @@ const WazirxAddTransaction = () => {
   return (
     <Paper
       sx={{
-        width: 800,
+        width: 400,
         padding: 2,
-        margin: 'auto',
         marginTop: 10,
+        height: 'max-content',
       }}>
       <Stack sx={{width: '100%'}} spacing={2}>
         {priceLoading && (
@@ -78,42 +78,16 @@ const WazirxAddTransaction = () => {
       </Stack>
 
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <InputLabel id="name-label">Coin</InputLabel>
-        <Select
-          labelId="name-label"
-          value={coin}
-          label="Coin"
-          onChange={e => setCoin(e.target.value)}
-          sx={{width: '80%', margin: 1, marginLeft: 'auto', marginRight: 6}}>
-          {coins &&
-            coins.map(item => (
-              <MenuItem value={item.name} key={item._id}>
-                {item.name}
-              </MenuItem>
-            ))}
-        </Select>
-      </div>
-
-      <div style={{display: 'flex', alignItems: 'center'}}>
-        <InputLabel id="name-label">Type</InputLabel>
         <Select
           labelId="name-label"
           value={transType}
           label="Type"
           onChange={e => setTransType(e.target.value)}
-          sx={{width: '80%', margin: 1, marginLeft: 'auto', marginRight: 6}}>
+          sx={{margin: 1}}>
           <MenuItem value={'SELL'}>Sell</MenuItem>
           <MenuItem value={'BUY'}>Buy</MenuItem>
         </Select>
-      </div>
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '80%',
-          margin: 'auto',
-        }}>
         <TextField
           label="Coin Count"
           variant="outlined"
@@ -122,34 +96,36 @@ const WazirxAddTransaction = () => {
           onChange={e => setCount(e.target.value)}
           sx={{margin: 1}}
         />
+      </div>
 
-        <div style={{display: 'flex'}}>
-          <TextField
-            label="Coin Price"
-            variant="outlined"
-            type="number"
-            value={price}
-            onChange={e => setPrice(e.target.value)}
-            sx={{margin: 1}}
-          />
-
-          <Button
-            color="secondary"
-            onClick={updatePrices}
-            style={{marginLeft: 'auto'}}>
-            Latest
-          </Button>
-        </div>
-
+      <div style={{display: 'flex'}}>
         <TextField
-          label="Total"
+          label="Coin Price"
           variant="outlined"
           type="number"
-          value={total}
-          onChange={e => setTotal(e.target.value)}
+          value={price}
+          onChange={e => setPrice(e.target.value)}
           sx={{margin: 1}}
         />
+
+        <Button
+          color="secondary"
+          onClick={updatePrices}
+          style={{marginLeft: 'auto'}}>
+          Latest
+        </Button>
       </div>
+
+      <TextField
+        label="Total"
+        variant="outlined"
+        type="number"
+        value={total}
+        onChange={e => setTotal(e.target.value)}
+        sx={{margin: 1}}
+        disabled
+      />
+
       <div style={{display: 'flex', marginTop: 20}}>
         <Button
           variant="contained"
@@ -162,7 +138,7 @@ const WazirxAddTransaction = () => {
       </div>
 
       <Snackbar
-        open={showMsg}
+        open={Boolean(showMsg)}
         autoHideDuration={2000}
         onClose={() => {
           setShowMsg(null);

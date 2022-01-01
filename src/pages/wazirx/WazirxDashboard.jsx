@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, {useState} from 'react';
-import CoinList from '../../components/CoinList';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import WazirxTransactions from '../../components/wazirx/WazirxTransactions';
 import WazirxAddTransaction from '../../components/wazirx/WazirxAddTransaction';
+import WazirxCoinList from '../../components/wazirx/tradingMenu/WazirxCoinList';
+import TradingMenu from '../../components/wazirx/tradingMenu/TradingMenu';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -30,7 +31,7 @@ const WazirxDashboard = () => {
         <Tab label="Transactions" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <CoinList />
+        <TradingMenu />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <WazirxAddTransaction />
