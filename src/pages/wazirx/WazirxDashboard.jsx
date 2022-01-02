@@ -27,16 +27,12 @@ const WazirxDashboard = () => {
     <div style={{overflowX: 'auto'}}>
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Market" />
-        <Tab label="Buy/Sell" />
         <Tab label="Transactions" />
       </Tabs>
       <TabPanel value={value} index={0}>
         <TradingMenu />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <WazirxAddTransaction />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
         <WazirxTransactions />
       </TabPanel>
     </div>

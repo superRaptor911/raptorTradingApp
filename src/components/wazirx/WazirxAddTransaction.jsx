@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import {Button, Paper, TextField} from '@mui/material';
 import React, {useEffect, useState} from 'react';
-import InputLabel from '@mui/material/InputLabel';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
@@ -67,9 +68,8 @@ const WazirxAddTransaction = ({coin}) => {
     <Paper
       sx={{
         width: 400,
-        padding: 2,
-        marginTop: 10,
         height: 'max-content',
+        marginBottom: 2,
       }}>
       <Stack sx={{width: '100%'}} spacing={2}>
         {priceLoading && (
@@ -105,15 +105,12 @@ const WazirxAddTransaction = ({coin}) => {
           type="number"
           value={price}
           onChange={e => setPrice(e.target.value)}
-          sx={{margin: 1}}
+          sx={{margin: 1, width: '80%'}}
         />
 
-        <Button
-          color="secondary"
-          onClick={updatePrices}
-          style={{marginLeft: 'auto'}}>
-          Latest
-        </Button>
+        <IconButton color="secondary" onClick={updatePrices} style={{}}>
+          <RefreshIcon />
+        </IconButton>
       </div>
 
       <TextField
@@ -122,7 +119,7 @@ const WazirxAddTransaction = ({coin}) => {
         type="number"
         value={total}
         onChange={e => setTotal(e.target.value)}
-        sx={{margin: 1}}
+        sx={{margin: 1, width: '95%'}}
         disabled
       />
 
