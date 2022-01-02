@@ -61,7 +61,11 @@ const Header = () => {
           </Typography>
 
           {user ? (
-            <Avatar src={user.avatar} alt={user.name} />
+            <Avatar
+              src={user.avatar}
+              alt={user.name}
+              onClick={() => history.push(ROUTES.userPath + user.name)}
+            />
           ) : (
             <Button
               color="inherit"

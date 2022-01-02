@@ -10,21 +10,22 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenu/Transactions.jsx
+edit components/wazirx/WazirxAddTransaction.jsx
 argglobal
-balt components/wazirx/WazirxTransactions.jsx
-let s:l = 15 - ((14 * winheight(0) + 20) / 41)
+balt components/wazirx/tradingMenu/TradingMenu.jsx
+let s:l = 122 - ((33 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 15
-normal! 0
+keepjumps 122
+normal! 034|
 tabnext 1
+badd +46 components/wazirx/tradingMenu/Transactions.jsx
+badd +1 components/wazirx/WazirxTransactions.jsx
 badd +40 api/wazirxApi.js
 badd +4 api/api.js
-badd +1 components/wazirx/WazirxTransactions.jsx
 badd +3 components/hooks/useTimer.js
-badd +75 components/wazirx/WazirxAddTransaction.jsx
+badd +122 components/wazirx/WazirxAddTransaction.jsx
 badd +16 pages/AddUser.jsx
 badd +70 components/summary/TotalCoins.jsx
 badd +9 pages/Summary.jsx
@@ -52,11 +53,10 @@ badd +111 pages/Transactions.jsx
 badd +1 components/user/UserStats.jsx
 badd +106 components/user/UserFUndTransfers.jsx
 badd +11 components/TablePaginationAction.jsx
-badd +34 pages/wazirx/WazirxDashboard.jsx
+badd +33 pages/wazirx/WazirxDashboard.jsx
 badd +1 pages/UserLogin.jsx
 badd +37 components/wazirx/tradingMenu/WazirxCoinList.jsx
 badd +12 components/wazirx/tradingMenu/TradingMenu.jsx
-badd +12 components/wazirx/tradingMenu/Transactions.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
