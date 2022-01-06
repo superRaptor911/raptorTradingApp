@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import WazirxAddTransaction from '../WazirxAddTransaction';
+import MarketGraph from './MarketGraph';
 import Transactions from './Transactions';
 import WazirxCoinList from './WazirxCoinList';
 
@@ -8,6 +9,7 @@ const TradingMenu = () => {
   return (
     <div style={{display: 'flex', justifyContent: 'space-between', margin: 5}}>
       <WazirxCoinList setSelectedCoin={setCoin} />
+      <MarketGraph />
       <div>
         <WazirxAddTransaction coin={coin} />
         <Transactions />

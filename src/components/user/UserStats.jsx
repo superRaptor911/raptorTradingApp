@@ -47,10 +47,7 @@ const UserStats = ({user}) => {
       fundTransfers.map(item => {
         if (item.username === user.name) {
           if (item.transType === 'DEPOSIT') {
-            total +=
-              parseFloat(item.amount) +
-              parseFloat(item.fee) +
-              parseFloat(item.donation);
+            total += parseFloat(item.amount);
           } else {
             withdrawl +=
               parseFloat(item.amount) -

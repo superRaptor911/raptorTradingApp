@@ -130,7 +130,7 @@ const WazirxAddTransaction = ({coin}) => {
           sx={{
             margin: 'auto',
           }}>
-          Submit
+          {transType}
         </Button>
       </div>
 
