@@ -66,7 +66,7 @@ export default function UserTransaction({user, allTransactions}) {
               : transactions
             ).map(row => (
               <TableRow key={row.name}>
-                <TableCell>{row.coin}</TableCell>
+                <TableCell>{row.coinId}</TableCell>
 
                 <TableCell
                   style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>

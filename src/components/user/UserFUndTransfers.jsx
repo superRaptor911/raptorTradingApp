@@ -148,8 +148,8 @@ export default function UserFundTransferList({user}) {
                 </TableCell>
                 <TableCell align="center">
                   {humanReadableValue(
-                    parseFloat(row.amount) +
-                      parseFloat(row.donation) +
+                    parseFloat(row.amount) -
+                      parseFloat(row.donation) -
                       parseFloat(row.fee),
                   )}
                 </TableCell>
