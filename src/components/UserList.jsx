@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useStore} from '../store';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,6 +14,7 @@ import useDeviceType from './hooks/useDeviceType';
 import Visibility from './Visibility';
 import {humanReadableValue} from '../utility';
 
+// Pre-process user
 const processUser = user => {
   const inv = parseFloat(user.wallet.investment);
   const bal = parseFloat(user.wallet.balance).toFixed(2);
@@ -22,13 +23,13 @@ const processUser = user => {
   return user;
 };
 
-const calculateCurrentValue = (userCoins, prices, coinIds, balance) => {
+// Calculate current portfolio of user
+const calculateCurrentValue = (userCoins, prices, balance) => {
   let total = 0;
-
-  if (prices && coinIds) {
+  if (prices) {
     for (const i in userCoins) {
-      const count = parseFloat(userCoins[i].count);
-      const value = parseFloat(prices[coinIds[i]].last);
+      const count = parseFloat(userCoins[i]);
+      const value = parseFloat(prices[i].last);
 
       total += count * value;
     }
@@ -37,15 +38,8 @@ const calculateCurrentValue = (userCoins, prices, coinIds, balance) => {
   return (total + balance).toFixed(2);
 };
 
-const UserStats = ({
-  investment,
-  userCoins,
-  coinPrices,
-  coinIds,
-  balance,
-  isMobile,
-}) => {
-  const curVal = calculateCurrentValue(userCoins, coinPrices, coinIds, balance);
+const UserStats = ({investment, userCoins, coinPrices, balance, isMobile}) => {
+  const curVal = calculateCurrentValue(userCoins, coinPrices, balance);
   const profit = (curVal - investment).toFixed(2);
   const profitPercent = ((100 * profit) / investment).toFixed(2);
 
@@ -71,9 +65,6 @@ const UserList = () => {
   const loadUsers = useStore(state => state.loadUsers);
 
   const coinPrices = useStore(state => state.coinPrices);
-  const coins = useStore(state => state.coins);
-
-  const [coinIds, setCoinIds] = useState();
   const history = useHistory();
 
   const isMobile = 'mobile' === useDeviceType();
@@ -81,17 +72,6 @@ const UserList = () => {
   useEffect(() => {
     loadUsers();
   }, []);
-
-  useEffect(() => {
-    if (coins) {
-      let cids = {};
-      coins.forEach(item => {
-        cids[item.name] = item.id;
-      });
-
-      setCoinIds(cids);
-    }
-  }, [coins]);
 
   return (
     <TableContainer
@@ -139,7 +119,6 @@ const UserList = () => {
                   investment={row.wallet.investment}
                   coinPrices={coinPrices}
                   userCoins={row.wallet.coins}
-                  coinIds={coinIds}
                   balance={parseFloat(row.wallet.balance)}
                   isMobile={isMobile}
                 />

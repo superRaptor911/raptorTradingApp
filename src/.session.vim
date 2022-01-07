@@ -10,18 +10,20 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenu/TradingMenu.jsx
+edit components/UserList.jsx
 argglobal
-balt pages/wazirx/WazirxDashboard.jsx
-let s:l = 10 - ((9 * winheight(0) + 22) / 45)
+balt components/header/DrawerMenu.jsx
+let s:l = 84 - ((15 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 10
-normal! 010|
+keepjumps 84
+normal! 0
 tabnext 1
+badd +1 components/header/DrawerMenu.jsx
+badd +58 components/wazirx/tradingMenu/WazirxCoinList.jsx
 badd +12 components/wazirx/tradingMenu/MarketGraph.jsx
-badd +12 components/wazirx/tradingMenu/TradingMenu.jsx
+badd +10 components/wazirx/tradingMenu/TradingMenu.jsx
 badd +68 components/wazirx/WazirxAddTransaction.jsx
 badd +68 components/Header.jsx
 badd +5 routes.js
@@ -33,7 +35,7 @@ badd +3 components/hooks/useTimer.js
 badd +16 pages/AddUser.jsx
 badd +70 components/summary/TotalCoins.jsx
 badd +9 pages/Summary.jsx
-badd +65 components/UserList.jsx
+badd +2 components/UserList.jsx
 badd +51 components/user/UserTransactions.jsx
 badd +79 pages/User.jsx
 badd +34 App.jsx
@@ -42,7 +44,6 @@ badd +86 components/CoinList.jsx
 badd +20 api/request.js
 badd +14 pages/Home.jsx
 badd +53 components/summary/TotalInvestmentAndProfit.jsx
-badd +43 components/header/DrawerMenu.jsx
 badd +5 utility.js
 badd +10 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
@@ -57,7 +58,6 @@ badd +106 components/user/UserFUndTransfers.jsx
 badd +11 components/TablePaginationAction.jsx
 badd +33 pages/wazirx/WazirxDashboard.jsx
 badd +1 pages/UserLogin.jsx
-badd +58 components/wazirx/tradingMenu/WazirxCoinList.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

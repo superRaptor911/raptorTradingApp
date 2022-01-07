@@ -16,31 +16,28 @@ import Visibility from '../Visibility';
 const getCoinList = wallet => {
   let coinList = [];
   for (const i in wallet.coins) {
-    const count = wallet.coins[i].count;
+    const count = wallet.coins[i];
     if (count > 0) {
-      coinList.push({name: i, count: count});
+      coinList.push({id: i, count: count});
     }
   }
   return coinList;
 };
 
-const getCoinAvatar = (coins, coinName) => {
+const getCoinAvatar = (coins, coinId) => {
   let avatar = '';
   coins.forEach(item => {
-    if (item.name === coinName) {
+    if (item.id === coinId) {
       avatar = item.avatar;
     }
   });
   return avatar;
 };
 
-const UserCoinStats = ({coinName, count, prices, coinInvestment, isMobile}) => {
+const UserCoinStats = ({coinId, count, prices, coinInvestment, isMobile}) => {
   if (prices) {
-    const value = prices[coinName] * count;
-    const investment = Math.max(
-      0,
-      coinInvestment ? coinInvestment[coinName] : 0,
-    );
+    const value = prices[coinId].last * count;
+    const investment = Math.max(0, coinInvestment ? coinInvestment[coinId] : 0);
     const profit = value - investment;
     const profitPercent = (100 * profit) / investment;
 
@@ -67,37 +64,27 @@ const UserCoinStats = ({coinName, count, prices, coinInvestment, isMobile}) => {
 const UserCoins = ({user, transactions}) => {
   const coinPrices = useStore(state => state.coinPrices);
   const coins = useStore(state => state.coins);
-  const [prices, setPrices] = useState();
+  console.log(coinPrices);
   const [coinInvestment, setCoinInvestment] = useState();
 
   const isMobile = 'mobile' === useDeviceType();
 
   useEffect(() => {
-    if (coins && coinPrices) {
-      let cids = {};
-      coins.forEach(item => {
-        cids[item.name] = coinPrices[item.id].last;
-      });
-
-      setPrices(cids);
-    }
-  }, [coins, coinPrices]);
-
-  useEffect(() => {
     if (transactions) {
       let cids = {};
       coins.forEach(item => {
-        cids[item.name] = 0;
+        cids[item.id] = 0;
       });
 
       transactions.forEach(item => {
         if (item.transType == 'BUY') {
-          cids[item.coin] += item.coinCount * item.cost + parseFloat(item.fee);
+          cids[item.coinId] +=
+            item.coinCount * item.cost + parseFloat(item.fee);
         } else {
-          cids[item.coin] -= item.coinCount * item.cost - parseFloat(item.fee);
+          cids[item.coinId] -=
+            item.coinCount * item.cost - parseFloat(item.fee);
         }
       });
-
       setCoinInvestment(cids);
     }
   }, [transactions]);
@@ -134,15 +121,15 @@ const UserCoins = ({user, transactions}) => {
                   scope="row"
                   sx={{display: 'flex', alignItems: 'center'}}>
                   <Avatar
-                    src={getCoinAvatar(coins, row.name)}
-                    alt={row.name}
+                    src={getCoinAvatar(coins, row.id)}
+                    alt={row.id}
                     sx={{marginRight: 2}}
                   />
-                  <Visibility hide={isMobile}>{row.name}</Visibility>
+                  <Visibility hide={isMobile}>{row.id}</Visibility>
                 </TableCell>
                 <UserCoinStats
-                  coinName={row.name}
-                  prices={prices}
+                  coinId={row.id}
+                  prices={coinPrices}
                   count={row.count}
                   coinInvestment={coinInvestment}
                   isMobile={isMobile}
