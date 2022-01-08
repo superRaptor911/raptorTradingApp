@@ -11,16 +11,7 @@ import Stack from '@mui/material/Stack';
 import {useStore} from '../../store';
 import {WazirxPlaceOrder} from '../../api/wazirxApi';
 
-const getCoinId = (coins, coinName) => {
-  for (const i of coins) {
-    if (i.name === coinName) {
-      return i.id;
-    }
-  }
-  return null;
-};
-
-const WazirxAddTransaction = ({coin}) => {
+const WazirxAddTransaction = ({coinId}) => {
   const [showMsg, setShowMsg] = useState(false);
   const [priceLoading, setPriceLoading] = useState(false);
   const [transType, setTransType] = useState('SELL');
@@ -29,7 +20,6 @@ const WazirxAddTransaction = ({coin}) => {
   const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const coins = useStore(state => state.coins);
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
@@ -38,14 +28,13 @@ const WazirxAddTransaction = ({coin}) => {
   }, [count, price]);
 
   useEffect(() => {
-    if (coin && coin != '') {
-      const coinId = getCoinId(coins, coin);
+    if (coinId) {
       setPrice(
         transType === 'SELL' ? coinPrices[coinId].buy : coinPrices[coinId].sell,
       );
       setPriceLoading(false);
     }
-  }, [coin, coinPrices]);
+  }, [coinId, coinPrices]);
 
   const updatePrices = () => {
     setPriceLoading(true);
@@ -53,7 +42,7 @@ const WazirxAddTransaction = ({coin}) => {
   };
 
   const onSubmit = async () => {
-    const result = await WazirxPlaceOrder(coin, transType, count, price);
+    const result = await WazirxPlaceOrder(coinId, transType, count, price);
     if (result) {
       setShowMsg(result.message);
       if (result.status) {

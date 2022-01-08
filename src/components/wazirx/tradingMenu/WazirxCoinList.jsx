@@ -58,7 +58,7 @@ const WazirxCoinList = ({setSelectedCoin}) => {
         {coins &&
           coins.map(item => (
             <ListItem disablePadding key={item.id}>
-              <ListItemButton onClick={() => setSelectedCoin(item.name)}>
+              <ListItemButton onClick={() => setSelectedCoin(item.id)}>
                 <ListItemIcon>
                   <Avatar
                     src={item.avatar}

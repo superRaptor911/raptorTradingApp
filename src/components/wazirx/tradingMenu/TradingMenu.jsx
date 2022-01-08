@@ -5,14 +5,14 @@ import Transactions from './Transactions';
 import WazirxCoinList from './WazirxCoinList';
 
 const TradingMenu = () => {
-  const [coin, setCoin] = useState();
+  const [coinId, setCoinId] = useState();
 
   return (
     <div style={{display: 'flex', justifyContent: 'space-between', margin: 5}}>
-      <WazirxCoinList setSelectedCoin={setCoin} />
-      <MarketGraph />
+      <WazirxCoinList setSelectedCoin={setCoinId} />
+      <MarketGraph coinId={coinId} />
       <div>
-        <WazirxAddTransaction coin={coin} />
+        <WazirxAddTransaction coinId={coinId} />
         <Transactions />
       </div>
     </div>

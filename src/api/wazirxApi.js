@@ -13,12 +13,12 @@ const getUsername = email => {
   }
 };
 
-export async function WazirxPlaceOrder(coin, transType, coinCount, price) {
+export async function WazirxPlaceOrder(coinId, transType, coinCount, price) {
   const userCred = useStore.getState().userCred;
   const response = await postRequest(url + 'wazirx/add', {
     username: getUsername(userCred.email),
     password: userCred.password,
-    coin: coin,
+    coinId: coinId,
     coinCount: coinCount,
     price: price,
     transType: transType,
@@ -49,8 +49,9 @@ export async function WazirxCancelOrder(coinId, orderId) {
   return response;
 }
 
-export async function WazirxGetCoinHistory(coinId, period = 60, limit = 500) {
-  const addr = `https://x.wazirx.com/api/v2/k?market=${coinId}&period=${period}&limit=${limit}&timestamp=1640387147`;
+export async function WazirxGetCoinHistory(coinId, period = 60, limit = 50) {
+  const timestamp = parseInt(new Date().getTime() / 1000) - 500;
+  const addr = `https://x.wazirx.com/api/v2/k?market=${coinId}&period=${period}&limit=${limit}`;
   const response = await getRequest(addr);
   return response;
 }
