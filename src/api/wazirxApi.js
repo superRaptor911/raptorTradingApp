@@ -49,7 +49,7 @@ export async function WazirxCancelOrder(coinId, orderId) {
   return response;
 }
 
-export async function WazirxGetCoinHistory(coinId, period = 60, limit = 200) {
+export async function WazirxGetCoinHistory(coinId, period = 60, limit = 50) {
   const timestamp = parseInt(new Date().getTime() / 1000) - 100;
   const addr = `https://x.wazirx.com/api/v2/k?market=${coinId}&period=${period}&limit=${limit}`;
   const response = await getRequest(addr);

@@ -2,15 +2,19 @@ import React, {useState} from 'react';
 import WazirxAddTransaction from '../WazirxAddTransaction';
 import MarketGraph from './MarketGraph';
 import Transactions from './Transactions';
+import Wallet from './Wallet';
 import WazirxCoinList from './WazirxCoinList';
 
 const TradingMenu = () => {
-  const [coinId, setCoinId] = useState();
+  const [coinId, setCoinId] = useState('dogeinr');
 
   return (
     <div style={{display: 'flex', justifyContent: 'space-between', margin: 5}}>
       <WazirxCoinList setSelectedCoin={setCoinId} />
-      <MarketGraph coinId={coinId} />
+      <div>
+        <MarketGraph coinId={coinId} />
+        <Wallet coinId={coinId} />
+      </div>
       <div>
         <WazirxAddTransaction coinId={coinId} />
         <Transactions />
