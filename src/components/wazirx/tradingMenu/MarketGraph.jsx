@@ -14,12 +14,15 @@ import {WazirxGetCoinHistory} from '../../../api/wazirxApi';
 
 const MarketGraph = ({coinId}) => {
   const [data, setData] = useState([]);
+  const [domain, setDomain] = useState({});
 
   useEffect(() => {
     WazirxGetCoinHistory(coinId).then(result => {
       const newData = [];
       result.forEach(item => {
-        newData.push({name: '', uv: item[4]});
+        const time = new Date(item[0] * 1000);
+        const timeStr = `${time.getHours()}:${time.getMinutes()}`;
+        newData.push({name: timeStr, price: item[4]});
       });
       setData(newData);
     });
@@ -33,10 +36,10 @@ const MarketGraph = ({coinId}) => {
       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
-      <YAxis />
+      <YAxis domain={['dataMin', 'dataMax']} />
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+      <Line type="monotone" dataKey="price" stroke="#82ca9d" />
     </LineChart>
   );
 };
