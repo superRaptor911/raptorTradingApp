@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,12 +13,36 @@ import {useHistory} from 'react-router-dom';
 import {ROUTES} from '../routes';
 import {useStore} from '../store';
 import {loginUser} from '../api/api';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState();
   const userCred = useStore(state => state.userCred);
+  const setUserCred = useStore(state => state.setUserCred);
   const users = useStore(state => state.users);
+  const [anchorEl, setAnchorEl] = useState();
+  const open = Boolean(anchorEl);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMyAccount = () => {
+    history.push(ROUTES.userPath + user.name);
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    setUserCred(null);
+    setUser(null);
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     if (userCred && userCred.email && userCred.password && users) {
@@ -61,11 +86,7 @@ const Header = () => {
           </Typography>
 
           {user ? (
-            <Avatar
-              src={user.avatar}
-              alt={user.name}
-              onClick={() => history.push(ROUTES.userPath + user.name)}
-            />
+            <Avatar src={user.avatar} alt={user.name} onClick={handleClick} />
           ) : (
             <Button
               color="inherit"
@@ -73,6 +94,18 @@ const Header = () => {
               Login
             </Button>
           )}
+
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}>
+            <MenuItem onClick={handleMyAccount}>My account</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Box>

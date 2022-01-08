@@ -10,23 +10,24 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit pages/wazirx/WazirxDashboard.jsx
+edit components/summary/TotalInvestmentAndProfit.jsx
 argglobal
-balt components/wazirx/tradingMenu/TradingMenu.jsx
-let s:l = 42 - ((40 * winheight(0) + 20) / 41)
+balt api/wazirxApi.js
+let s:l = 70 - ((21 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 42
-normal! 0
+keepjumps 70
+normal! 031|
 tabnext 1
-badd +53 api/wazirxApi.js
+badd +33 pages/wazirx/WazirxDashboard.jsx
+badd +9 components/wazirx/tradingMenu/TradingMenu.jsx
+badd +52 api/wazirxApi.js
 badd +1 components/user/UserFUndTransfers.jsx
 badd +90 components/user/UserTransactions.jsx
 badd +84 components/UserList.jsx
 badd +52 components/header/DrawerMenu.jsx
 badd +42 components/wazirx/tradingMenu/WazirxCoinList.jsx
-badd +13 components/wazirx/tradingMenu/TradingMenu.jsx
 badd +14 components/wazirx/WazirxAddTransaction.jsx
 badd +68 components/Header.jsx
 badd +5 routes.js
@@ -39,13 +40,13 @@ badd +70 components/summary/TotalCoins.jsx
 badd +9 pages/Summary.jsx
 badd +79 pages/User.jsx
 badd +34 App.jsx
-badd +44 store.js
+badd +19 store.js
 badd +86 components/CoinList.jsx
 badd +20 api/request.js
 badd +14 pages/Home.jsx
-badd +53 components/summary/TotalInvestmentAndProfit.jsx
+badd +40 components/summary/TotalInvestmentAndProfit.jsx
 badd +5 utility.js
-badd +39 components/user/UserCoins.jsx
+badd +123 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
 badd +1 pages/AddTransations.jsx
@@ -55,9 +56,9 @@ badd +18 pages/AdminLogin.jsx
 badd +111 pages/Transactions.jsx
 badd +93 components/user/UserStats.jsx
 badd +11 components/TablePaginationAction.jsx
-badd +42 pages/wazirx/WazirxDashboard.jsx
 badd +1 pages/UserLogin.jsx
-badd +16 components/wazirx/tradingMenu/MarketGraph.jsx
+badd +20 components/wazirx/tradingMenu/MarketGraph.jsx
+badd +43 components/wazirx/tradingMenu/Wallet.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

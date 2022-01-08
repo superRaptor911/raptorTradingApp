@@ -32,7 +32,7 @@ const Wallet = ({coinId}) => {
     }
   }, [coinId, coins]);
 
-  let count = wallet && wallet.coins[coinId];
+  let count = wallet && wallet.coins && wallet.coins[coinId];
   count = count ? count : 0;
   return (
     <Paper sx={{padding: 2}}>

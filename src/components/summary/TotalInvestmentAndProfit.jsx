@@ -29,15 +29,10 @@ const TotalInvestmentAndProfit = () => {
     });
 
     if (coinPrices && coins) {
-      let cids = {};
-      coins.forEach(item => {
-        cids[item.name] = item.id;
-      });
-
       users.forEach(user => {
         for (const i in user.wallet.coins) {
-          const count = parseFloat(user.wallet.coins[i].count);
-          const value = parseFloat(coinPrices[cids[i]].last);
+          const count = parseFloat(user.wallet.coins[i]);
+          const value = parseFloat(coinPrices[i].last);
 
           curVal += count * value;
         }
@@ -72,7 +67,7 @@ const TotalInvestmentAndProfit = () => {
           <TableRow>
             <TableCell>{humanReadableValue(totalInvestment)}</TableCell>
 
-            <TableCell>{humanReadableValue(wallet)}</TableCell>
+            <TableCell>{wallet}</TableCell>
             <TableCell>{humanReadableValue(curVal)}</TableCell>
 
             <Visibility hide={isMobile}>

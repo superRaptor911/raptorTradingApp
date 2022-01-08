@@ -107,9 +107,11 @@ const WazirxAddTransaction = ({coinId}) => {
         variant="outlined"
         type="number"
         value={total}
-        onChange={e => setTotal(e.target.value)}
+        onChange={e => {
+          setTotal(e.target.value);
+          setCount(e.target.value / price);
+        }}
         sx={{margin: 1, width: '95%'}}
-        disabled
       />
 
       <div style={{display: 'flex', marginTop: 20}}>
