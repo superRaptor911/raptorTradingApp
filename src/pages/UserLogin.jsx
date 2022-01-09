@@ -46,7 +46,12 @@ const UserLogin = () => {
         marginTop: '10%',
       }}>
       <TextField inputRef={emailRef} label="Email" sx={{width: '100%'}} />
-      <TextField inputRef={passRef} label="Password" sx={{width: '100%'}} />
+      <TextField
+        inputRef={passRef}
+        type="password"
+        label="Password"
+        sx={{width: '100%'}}
+      />
       <Button
         color="secondary"
         variant="contained"
