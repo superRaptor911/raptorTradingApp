@@ -34,6 +34,7 @@ const Wallet = ({coinId}) => {
 
   let count = wallet && wallet.coins && wallet.coins[coinId];
   count = count ? count : 0;
+  const balance = wallet && parseFloat(wallet.balance).toFixed(2);
   return (
     <Paper sx={{padding: 2}}>
       <Avatar
@@ -42,7 +43,7 @@ const Wallet = ({coinId}) => {
         sx={{margin: 'auto', width: 80, height: 80}}
       />
       <p style={{textAlign: 'center'}}>{count}</p>
-      <p>Balance : {wallet && wallet.balance}</p>
+      <p>Balance : {balance}</p>
     </Paper>
   );
 };

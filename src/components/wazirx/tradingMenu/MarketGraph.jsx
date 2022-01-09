@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import {Button, Paper, Typography} from '@mui/material';
+import {format} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import {
   ComposedChart,
@@ -23,17 +24,14 @@ const MarketGraph = ({coinId}) => {
 
   useEffect(() => {
     WazirxGetCoinHistory(coinId, period).then(result => {
-      const newData = [];
-      result.forEach(item => {
-        const time = new Date(item[0] * 1000);
-        const timeStr = `${time.getHours()}:${time.getMinutes()}`;
-        newData.push({name: timeStr, price: item[4]});
+      const newData = result.map(item => {
+        const price = parseFloat(item[4]);
+        const timeStr = format(new Date(item[0] * 1000), 'hh:mm');
+        return {name: timeStr, price: price};
       });
       setData(newData);
     });
   }, [coinId, period]);
-
-  const handlePeriodChange = () => {};
 
   return (
     <div>
@@ -77,6 +75,7 @@ const MarketGraph = ({coinId}) => {
           24H
         </Button>
       </Paper>
+
       <ComposedChart
         width={900}
         height={450}

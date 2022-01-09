@@ -5,20 +5,37 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {Button, TableHead} from '@mui/material';
 import useTimer from '../../hooks/useTimer';
-import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import {WazirxCancelOrder, wazirxGetTransactions} from '../../../api/wazirxApi';
+import {useStore} from '../../../store';
+
+const changeInTrans = (newTrans, oldTrans) => {
+  if (oldTrans.length !== newTrans.length) {
+    return true;
+  }
+
+  for (let i = 0; i < newTrans.length; i++) {
+    if (oldTrans[i].status !== newTrans[i].status) {
+      return true;
+    }
+  }
+
+  return false;
+};
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
+  const loadUsers = useStore(state => state.loadUsers);
 
   useTimer(1500, () => {
     wazirxGetTransactions().then(response => {
       if (response && response.status) {
+        if (changeInTrans(response.data, transactions)) {
+          loadUsers();
+        }
         setTransactions(response.data);
       }
     });
@@ -34,10 +51,6 @@ const Transactions = () => {
 
   const getFilteredTransaction = () => {
     return transactions.map((e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
-  };
-
-  const cancelOrder = (coinId, orderId) => {
-    WazirxCancelOrder(coinId, orderId);
   };
 
   return (
