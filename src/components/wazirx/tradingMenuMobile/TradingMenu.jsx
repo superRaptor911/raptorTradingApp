@@ -11,10 +11,10 @@ const TradingMenuMobile = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
   return (
-    <Box sx={{width: '100%'}}>
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column'}}>
       {selectedTab == 0 && <TradingCoinListMobile />}
       <BottomNavigation
-        style={{position: 'absolute', bottom: 0, width: '100%'}}
+        style={{width: '100%'}}
         showLabels
         value={selectedTab}
         onChange={(_event, newValue) => {
