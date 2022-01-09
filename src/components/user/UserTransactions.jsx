@@ -65,7 +65,7 @@ export default function UserTransaction({user, allTransactions}) {
               )
               : transactions
             ).map(row => (
-              <TableRow key={row.name}>
+              <TableRow key={row._id}>
                 <TableCell>{row.coinId}</TableCell>
 
                 <TableCell

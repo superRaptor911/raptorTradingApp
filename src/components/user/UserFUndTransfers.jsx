@@ -86,7 +86,7 @@ export default function UserFundTransferList({user}) {
   const fundTransfers = useStore(state => state.fundTransfers);
 
   useEffect(() => {
-    if (fundTransfers) {
+    if (fundTransfers && user) {
       setTransactions(
         fundTransfers.filter(item => item.username === user.name).reverse(),
       );
