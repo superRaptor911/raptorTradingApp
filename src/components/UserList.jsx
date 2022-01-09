@@ -60,6 +60,7 @@ const UserStats = ({investment, userCoins, coinPrices, balance, isMobile}) => {
   );
 };
 
+// List users And their profits
 const UserList = () => {
   const users = useStore(state => state.users);
   const loadUsers = useStore(state => state.loadUsers);

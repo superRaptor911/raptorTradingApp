@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,15 +10,11 @@ import Paper from '@mui/material/Paper';
 import {useStore} from '../../store';
 import {humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
-import Visibility from '../Visibility';
 
 const UserStats = ({user}) => {
-  const coinPrices = useStore(state => state.coinPrices);
-  const coins = useStore(state => state.coins);
   const fundTransfers = useStore(state => state.fundTransfers);
   const loadFundTransfers = useStore(state => state.loadFundTransfers);
 
-  const [prices, setPrices] = useState();
   const [totalInvestment, setTotalInvestment] = useState(0);
   const [totalWithdrawl, setTotalWithdrawl] = useState(0);
 
@@ -28,17 +24,6 @@ const UserStats = ({user}) => {
   useEffect(() => {
     loadFundTransfers();
   }, []);
-
-  useEffect(() => {
-    if (coins && coinPrices) {
-      let cids = {};
-      coins.forEach(item => {
-        cids[item.name] = coinPrices[item.id].last;
-      });
-
-      setPrices(cids);
-    }
-  }, [coins, coinPrices]);
 
   useEffect(() => {
     if (user && fundTransfers) {

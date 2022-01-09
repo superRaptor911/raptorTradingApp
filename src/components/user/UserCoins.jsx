@@ -13,6 +13,7 @@ import {humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
 import Visibility from '../Visibility';
 
+// Get List of coins from user's wallet
 const getCoinList = wallet => {
   let coinList = [];
   for (const i in wallet.coins) {
@@ -24,6 +25,7 @@ const getCoinList = wallet => {
   return coinList;
 };
 
+// Get Avatar of coin
 const getCoinAvatar = (coins, coinId) => {
   let avatar = '';
   coins.forEach(item => {
@@ -63,11 +65,15 @@ const UserCoinStats = ({coinId, count, prices, coinInvestment, isMobile}) => {
 
 const UserCoins = ({user, transactions}) => {
   const coinPrices = useStore(state => state.coinPrices);
+  const loadCoinPrices = useStore(state => state.loadCoinPrices);
   const coins = useStore(state => state.coins);
-  console.log(coinPrices);
   const [coinInvestment, setCoinInvestment] = useState();
 
   const isMobile = 'mobile' === useDeviceType();
+
+  useEffect(() => {
+    loadCoinPrices();
+  }, []);
 
   useEffect(() => {
     if (transactions) {

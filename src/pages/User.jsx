@@ -26,16 +26,22 @@ const getUser = (username, users) => {
 const User = () => {
   const {username} = useParams();
   const users = useStore(state => state.users);
-  const user = getUser(username, users);
+  const loadUsers = useStore(state => state.loadUsers);
 
   const transactions = useStore(state => state.transactions);
   const loadTransactions = useStore(state => state.loadTransactions);
 
   const [userTransactions, setUserTransactions] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     loadTransactions();
+    loadUsers();
   }, []);
+
+  useEffect(() => {
+    setUser(getUser(username, users));
+  }, [users]);
 
   useEffect(() => {
     if (transactions) {
