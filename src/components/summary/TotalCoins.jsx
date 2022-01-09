@@ -23,17 +23,16 @@ const TotalCoins = () => {
 
     if (coins && users) {
       coins.forEach(item => {
-        coinMap[item.name] = 0;
+        coinMap[item.id] = 0;
       });
 
       users.forEach(user => {
         const userCoins = user.wallet.coins;
         for (const i in userCoins) {
-          coinMap[i] += parseFloat(userCoins[i].count);
+          coinMap[i] += parseFloat(userCoins[i]);
         }
       });
     }
-
     setCoinsList(coinMap);
   }, [coins, users]);
 
@@ -60,7 +59,7 @@ const TotalCoins = () => {
         <TableBody>
           {coins &&
             coins.map(item => (
-              <TableRow key={item.name}>
+              <TableRow key={item.id}>
                 <TableCell>
                   <div
                     style={{
@@ -77,8 +76,8 @@ const TotalCoins = () => {
                 </TableCell>
                 <TableCell align="center">
                   {isMobile
-                    ? humanReadableValue(coinsList[item.name])
-                    : coinsList[item.name]}
+                    ? humanReadableValue(coinsList[item.id])
+                    : coinsList[item.id]}
                 </TableCell>
               </TableRow>
             ))}
