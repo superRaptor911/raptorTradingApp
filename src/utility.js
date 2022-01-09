@@ -15,3 +15,13 @@ export function humanReadableValue(value) {
 
   return value;
 }
+
+export function get24HrChange(prices, coinId) {
+  let coinPrice = prices ? prices[coinId].last : 0;
+  coinPrice = parseFloat(coinPrice);
+
+  let oldPrice = prices ? prices[coinId].open : 0;
+  oldPrice = parseFloat(oldPrice);
+
+  return ((100 * (coinPrice - oldPrice)) / oldPrice).toFixed(2);
+}

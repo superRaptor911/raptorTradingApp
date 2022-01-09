@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import WazirxTransactions from '../../components/wazirx/WazirxTransactions';
-import WazirxAddTransaction from '../../components/wazirx/WazirxAddTransaction';
-import WazirxCoinList from '../../components/wazirx/tradingMenu/WazirxCoinList';
 import TradingMenu from '../../components/wazirx/tradingMenu/TradingMenu';
+import useDeviceType from '../../components/hooks/useDeviceType';
+import TradingMenuMobile from '../../components/wazirx/tradingMenuMobile/TradingMenu';
 
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -18,10 +18,19 @@ function TabPanel(props) {
 
 const WazirxDashboard = () => {
   const [value, setValue] = useState(0);
+  const isMobile = 'mobile' === useDeviceType();
 
   const handleChange = (_event, newValue) => {
     setValue(newValue);
   };
+
+  if (isMobile) {
+    return (
+      <div>
+        <TradingMenuMobile />
+      </div>
+    );
+  }
 
   return (
     <div style={{overflowX: 'auto'}}>

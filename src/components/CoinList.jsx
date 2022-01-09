@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import useTimer from './hooks/useTimer';
 import useDeviceType from './hooks/useDeviceType';
 import Visibility from './Visibility';
+import {get24HrChange} from '../utility';
 
 const getCoinPrice = (prices, coinId) => {
   let coinPrice = prices ? prices[coinId].last : 0;
@@ -24,16 +25,6 @@ const getCoinPrice = (prices, coinId) => {
     coinPrice = coinPrice.toFixed(2);
   }
   return coinPrice;
-};
-
-const get24hrChange = (prices, coinId) => {
-  let coinPrice = prices ? prices[coinId].last : 0;
-  coinPrice = parseFloat(coinPrice);
-
-  let oldPrice = prices ? prices[coinId].open : 0;
-  oldPrice = parseFloat(oldPrice);
-
-  return ((100 * (coinPrice - oldPrice)) / oldPrice).toFixed(2);
 };
 
 const CoinList = () => {
@@ -101,9 +92,9 @@ const CoinList = () => {
                   align="right"
                   sx={{
                     color:
-                      get24hrChange(coinPrices, row.id) < 0 ? 'red' : 'green',
+                      get24HrChange(coinPrices, row.id) < 0 ? 'red' : 'green',
                   }}>
-                  {get24hrChange(coinPrices, row.id)}%
+                  {get24HrChange(coinPrices, row.id)}%
                 </TableCell>
               </TableRow>
             ))}
