@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableFooter from '@mui/material/TableFooter';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {TableHead} from '@mui/material';
+import {ButtonBase, TableHead} from '@mui/material';
 import useTimer from '../../hooks/useTimer';
 import {wazirxGetTransactions} from '../../../api/wazirxApi';
 import {useStore} from '../../../store';
@@ -26,7 +26,7 @@ const changeInTrans = (newTrans, oldTrans) => {
   return false;
 };
 
-const Transactions = () => {
+const WazirxTransactionsMobile = () => {
   const [transactions, setTransactions] = useState([]);
   const loadUsers = useStore(state => state.loadUsers);
 
@@ -56,7 +56,7 @@ const Transactions = () => {
   return (
     <TableContainer
       component={Paper}
-      sx={{width: 'max-content', height: '50vh'}}>
+      sx={{width: '100%', height: 'calc(100vh - 112px)'}}>
       <Table sx={{width: 400}} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
@@ -64,6 +64,7 @@ const Transactions = () => {
             <TableCell>Coin Count</TableCell>
             <TableCell>Coin Price</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>cntrl</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -77,10 +78,25 @@ const Transactions = () => {
                       ? 'rgba(30, 255, 30, 0.2)'
                       : 'rgba(255, 30, 30, 0.2)',
                 }}>
-                <TableCell>{row.receipt.symbol}</TableCell>
-                <TableCell>{row.receipt.origQty}</TableCell>
-                <TableCell>{row.receipt.price}</TableCell>
-                <TableCell>{row.receipt.status}</TableCell>
+                <TableCell style={{fontSize: 14}}>
+                  {row.receipt.symbol}
+                </TableCell>
+                <TableCell style={{fontSize: 14}}>
+                  {row.receipt.origQty}
+                </TableCell>
+                <TableCell style={{fontSize: 14}}>
+                  {row.receipt.price}
+                </TableCell>
+                <TableCell style={{fontSize: 14}}>
+                  {row.receipt.status}
+                </TableCell>
+                <TableCell style={{fontSize: 14}}>
+                  <ButtonBase
+                    disabled={row.status !== 'PENDING'}
+                    style={{color: row.status === 'PENDING' ? 'red' : 'grey'}}>
+                    X
+                  </ButtonBase>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -90,4 +106,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default WazirxTransactionsMobile;

@@ -7,6 +7,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import TradingCoinListMobile from './TradingCoinListMobile';
 import {useTradingStore} from './uiStore';
+import WazirxTransactionsMobile from './WazirxTransactionsMobile';
 
 const TradingMenuMobile = () => {
   const selectedTab = useTradingStore(state => state.selectedTab);
@@ -22,6 +23,7 @@ const TradingMenuMobile = () => {
         justifyContent: 'flex-end',
       }}>
       {selectedTab == 0 && <TradingCoinListMobile />}
+      {selectedTab == 1 && <WazirxTransactionsMobile />}
       <BottomNavigation
         style={{width: '100%'}}
         showLabels

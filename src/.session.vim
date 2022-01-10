@@ -10,20 +10,21 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenuMobile/PlaceOrder.jsx
+edit pages/wazirx/WazirxTradingMenuMobile.jsx
 argglobal
-balt components/wazirx/tradingMenuMobile/uiStore.js
-let s:l = 8 - ((7 * winheight(0) + 22) / 45)
+balt components/wazirx/tradingMenuMobile/PlaceOrder.jsx
+let s:l = 99 - ((22 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 8
-normal! 010|
+keepjumps 99
+normal! 019|
 tabnext 1
-badd +8 components/wazirx/tradingMenuMobile/PlaceOrder.jsx
+badd +60 components/wazirx/tradingMenuMobile/PlaceOrder.jsx
+badd +12 components/wazirx/tradingMenuMobile/uiStore.js
 badd +1 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +46 components/wazirx/tradingMenu/Wallet.jsx
-badd +28 components/wazirx/WazirxAddTransaction.jsx
+badd +140 components/wazirx/WazirxAddTransaction.jsx
 badd +70 components/summary/TotalInvestmentAndProfit.jsx
 badd +54 api/wazirxApi.js
 badd +30 pages/wazirx/WazirxDashboard.jsx
@@ -62,8 +63,7 @@ badd +11 components/TablePaginationAction.jsx
 badd +52 pages/UserLogin.jsx
 badd +24 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +36 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
-badd +1 components/wazirx/tradingMenuMobile/uiStore.js
-badd +2 pages/wazirx/WazirxTradingMenuMobile.jsx
+badd +99 pages/wazirx/WazirxTradingMenuMobile.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

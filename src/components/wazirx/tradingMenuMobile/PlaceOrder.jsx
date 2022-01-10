@@ -9,6 +9,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import useTimer from '../../hooks/useTimer';
 
 const PlaceOrder = ({visible, setVisible}) => {
   const coinId = useTradingStore(state => state.selectedCoinId);
@@ -22,6 +23,10 @@ const PlaceOrder = ({visible, setVisible}) => {
   const [count, setCount] = useState(0);
   const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
+
+  useTimer(1500, () => {
+    loadCoinPrices();
+  });
 
   useEffect(() => {
     setTotal(count * price);

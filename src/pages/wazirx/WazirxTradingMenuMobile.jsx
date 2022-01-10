@@ -93,6 +93,7 @@ const WazirxTradingMenuMobile = () => {
   const [data, setData] = useState([]);
   const [period, setPeriod] = useState(60);
   const [showPlaceMenu, setShowPlaceMenu] = useState(false);
+
   const coinId = useTradingStore(state => state.selectedCoinId);
   const history = useHistory();
 
