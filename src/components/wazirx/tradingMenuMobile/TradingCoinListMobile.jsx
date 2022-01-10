@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import {ButtonBase, Divider} from '@mui/material';
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import {useStore} from '../../../store';
 import {get24HrChange} from '../../../utility';
 
 const CoinItem = ({coin, prices}) => {
   const price = prices && prices[coin.id].last;
   const change = get24HrChange(prices, coin.id);
+
   return (
     <div>
       <ButtonBase
