@@ -2,6 +2,7 @@
 import {Button, Paper} from '@mui/material';
 import {format} from 'date-fns';
 import React, {useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {
   ComposedChart,
   XAxis,
@@ -12,6 +13,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import {WazirxGetCoinHistory} from '../../api/wazirxApi';
+import PlaceOrder from '../../components/wazirx/tradingMenuMobile/PlaceOrder';
 import {useTradingStore} from '../../components/wazirx/tradingMenuMobile/uiStore';
 
 const PeriodSelector = ({period, setPeriod}) => {
@@ -59,16 +61,26 @@ const PeriodSelector = ({period, setPeriod}) => {
   );
 };
 
-const BuySellButtons = ({coinId}) => {
+const BuySellButtons = ({coinId, setShowPlaceMenu}) => {
+  const setSide = useTradingStore(state => state.setSide);
+
   return (
     <div style={{width: '80%', margin: 'auto'}}>
       <Button
+        onClick={() => {
+          setSide('BUY');
+          setShowPlaceMenu(true);
+        }}
         variant="contained"
         style={{width: '100%', backgroundColor: 'green', marginTop: 20}}>
         Buy {coinId}
       </Button>
 
       <Button
+        onClick={() => {
+          setSide('SELL');
+          setShowPlaceMenu(true);
+        }}
         variant="contained"
         style={{width: '100%', backgroundColor: 'red', marginTop: 20}}>
         Sell {coinId}
@@ -80,7 +92,15 @@ const BuySellButtons = ({coinId}) => {
 const WazirxTradingMenuMobile = () => {
   const [data, setData] = useState([]);
   const [period, setPeriod] = useState(60);
+  const [showPlaceMenu, setShowPlaceMenu] = useState(false);
   const coinId = useTradingStore(state => state.selectedCoinId);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!coinId) {
+      history.goBack();
+    }
+  }, []);
 
   useEffect(() => {
     if (coinId) {
@@ -126,7 +146,8 @@ const WazirxTradingMenuMobile = () => {
         </ComposedChart>
       </ResponsiveContainer>
 
-      <BuySellButtons coinId={coinId} />
+      <BuySellButtons coinId={coinId} setShowPlaceMenu={setShowPlaceMenu} />
+      <PlaceOrder visible={showPlaceMenu} setVisible={setShowPlaceMenu} />
     </div>
   );
 };

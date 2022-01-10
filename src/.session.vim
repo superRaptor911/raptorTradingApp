@@ -10,21 +10,23 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenu/MarketGraph.jsx
+edit components/wazirx/tradingMenuMobile/PlaceOrder.jsx
 argglobal
-balt components/wazirx/tradingMenu/Wallet.jsx
-let s:l = 95 - ((32 * winheight(0) + 22) / 45)
+balt components/wazirx/tradingMenuMobile/uiStore.js
+let s:l = 8 - ((7 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 95
-normal! 046|
+keepjumps 8
+normal! 010|
 tabnext 1
-badd +50 components/wazirx/WazirxAddTransaction.jsx
+badd +8 components/wazirx/tradingMenuMobile/PlaceOrder.jsx
+badd +1 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +46 components/wazirx/tradingMenu/Wallet.jsx
+badd +28 components/wazirx/WazirxAddTransaction.jsx
 badd +70 components/summary/TotalInvestmentAndProfit.jsx
 badd +54 api/wazirxApi.js
-badd +33 pages/wazirx/WazirxDashboard.jsx
+badd +30 pages/wazirx/WazirxDashboard.jsx
 badd +20 components/wazirx/tradingMenu/TradingMenu.jsx
 badd +1 components/user/UserFUndTransfers.jsx
 badd +59 components/user/UserTransactions.jsx
@@ -32,21 +34,21 @@ badd +70 components/UserList.jsx
 badd +52 components/header/DrawerMenu.jsx
 badd +42 components/wazirx/tradingMenu/WazirxCoinList.jsx
 badd +112 components/Header.jsx
-badd +5 routes.js
+badd +14 routes.js
 badd +46 components/wazirx/tradingMenu/Transactions.jsx
 badd +1 components/wazirx/WazirxTransactions.jsx
 badd +46 api/api.js
 badd +3 components/hooks/useTimer.js
 badd +16 pages/AddUser.jsx
-badd +70 components/summary/TotalCoins.jsx
+badd +19 components/summary/TotalCoins.jsx
 badd +9 pages/Summary.jsx
 badd +77 pages/User.jsx
-badd +34 App.jsx
-badd +19 store.js
-badd +63 components/CoinList.jsx
+badd +49 App.jsx
+badd +1 store.js
+badd +96 components/CoinList.jsx
 badd +20 api/request.js
 badd +9 pages/Home.jsx
-badd +5 utility.js
+badd +19 utility.js
 badd +1 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
@@ -58,7 +60,10 @@ badd +111 pages/Transactions.jsx
 badd +14 components/user/UserStats.jsx
 badd +11 components/TablePaginationAction.jsx
 badd +52 pages/UserLogin.jsx
-badd +96 components/wazirx/tradingMenu/MarketGraph.jsx
+badd +24 components/wazirx/tradingMenuMobile/TradingMenu.jsx
+badd +36 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
+badd +1 components/wazirx/tradingMenuMobile/uiStore.js
+badd +2 pages/wazirx/WazirxTradingMenuMobile.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

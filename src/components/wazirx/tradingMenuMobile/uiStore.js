@@ -7,6 +7,9 @@ let store = set => ({
 
   selectedCoinId: null,
   setSelectedCoinId: coinId => set({selectedCoinId: coinId}),
+
+  side: 'SELL',
+  setSide: s => set({side: s}),
 });
 
 // store = persist(store);

@@ -34,7 +34,7 @@ const WazirxAddTransaction = ({coinId}) => {
       );
       setPriceLoading(false);
     }
-  }, [coinId, coinPrices]);
+  }, [coinId, coinPrices, transType]);
 
   const updatePrices = () => {
     setPriceLoading(true);
