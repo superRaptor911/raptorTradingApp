@@ -14,6 +14,9 @@ const Transactions = lazy(() => import('./pages/Transactions'));
 const AddUser = lazy(() => import('./pages/AddUser'));
 const UserLogin = lazy(() => import('./pages/UserLogin'));
 const WazirxDashboard = lazy(() => import('./pages/wazirx/WazirxDashboard'));
+const WazirxTradingMenuMobile = lazy(() =>
+  import('./pages/wazirx/WazirxTradingMenuMobile'),
+);
 
 function App() {
   return (
@@ -39,6 +42,12 @@ function App() {
               exact
               path={ROUTES.tradingMenu}
               component={WazirxDashboard}
+            />
+
+            <Route
+              exact
+              path={ROUTES.tradingMenuMobile}
+              component={WazirxTradingMenuMobile}
             />
           </Suspense>
         </Switch>

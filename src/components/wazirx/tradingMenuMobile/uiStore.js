@@ -10,4 +10,4 @@ let store = set => ({
 });
 
 // store = persist(store);
-export const useTradingMenuStore = create(store);
+export const useTradingStore = create(store);

@@ -6,11 +6,11 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import TradingCoinListMobile from './TradingCoinListMobile';
-import {useTradingMenuStore} from './uiStore';
+import {useTradingStore} from './uiStore';
 
 const TradingMenuMobile = () => {
-  const selectedTab = useTradingMenuStore(state => state.selectedTab);
-  const setSelectedTab = useTradingMenuStore(state => state.setSelectedTab);
+  const selectedTab = useTradingStore(state => state.selectedTab);
+  const setSelectedTab = useTradingStore(state => state.setSelectedTab);
 
   return (
     <Box
