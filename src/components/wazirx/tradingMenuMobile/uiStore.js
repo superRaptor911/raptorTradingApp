@@ -10,6 +10,9 @@ let store = set => ({
 
   side: 'SELL',
   setSide: s => set({side: s}),
+
+  transactionPlaceMessage: null,
+  setTransPlaceMessage: msg => set({transactionPlaceMessage: msg}),
 });
 
 // store = persist(store);

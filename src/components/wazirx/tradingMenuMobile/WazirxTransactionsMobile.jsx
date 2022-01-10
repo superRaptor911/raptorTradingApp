@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {ButtonBase, TableHead} from '@mui/material';
 import useTimer from '../../hooks/useTimer';
-import {wazirxGetTransactions} from '../../../api/wazirxApi';
+import {WazirxCancelOrder, wazirxGetTransactions} from '../../../api/wazirxApi';
 import {useStore} from '../../../store';
 
 const changeInTrans = (newTrans, oldTrans) => {
@@ -53,6 +53,10 @@ const WazirxTransactionsMobile = () => {
     return transactions.map((e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
   };
 
+  const cancelOrder = (coinId, orderId) => {
+    WazirxCancelOrder(coinId, orderId);
+  };
+
   return (
     <TableContainer
       component={Paper}
@@ -92,6 +96,7 @@ const WazirxTransactionsMobile = () => {
                 </TableCell>
                 <TableCell style={{fontSize: 14}}>
                   <ButtonBase
+                    onClick={() => cancelOrder(row.receipt.symbol, row.id)}
                     disabled={row.status !== 'PENDING'}
                     style={{color: row.status === 'PENDING' ? 'red' : 'grey'}}>
                     X

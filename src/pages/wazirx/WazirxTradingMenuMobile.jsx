@@ -3,6 +3,7 @@ import {Button, Paper} from '@mui/material';
 import {format} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
 import {
   ComposedChart,
   XAxis,
@@ -95,6 +96,8 @@ const WazirxTradingMenuMobile = () => {
   const [showPlaceMenu, setShowPlaceMenu] = useState(false);
 
   const coinId = useTradingStore(state => state.selectedCoinId);
+  const message = useTradingStore(state => state.transactionPlaceMessage);
+  const setMessage = useTradingStore(state => state.setTransPlaceMessage);
   const history = useHistory();
 
   useEffect(() => {
@@ -149,6 +152,15 @@ const WazirxTradingMenuMobile = () => {
 
       <BuySellButtons coinId={coinId} setShowPlaceMenu={setShowPlaceMenu} />
       <PlaceOrder visible={showPlaceMenu} setVisible={setShowPlaceMenu} />
+
+      <Snackbar
+        open={Boolean(message)}
+        autoHideDuration={2000}
+        onClose={() => {
+          setMessage(null);
+        }}
+        message={message}
+      />
     </div>
   );
 };

@@ -10,15 +10,19 @@ import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import useTimer from '../../hooks/useTimer';
+import {WazirxPlaceOrder} from '../../../api/wazirxApi';
+// import {useHistory} from 'react-router-dom';
+// import {ROUTES} from '../../../routes';
 
 const PlaceOrder = ({visible, setVisible}) => {
+  // const history = useHistory();
   const coinId = useTradingStore(state => state.selectedCoinId);
   const side = useTradingStore(state => state.side);
+  const setMessage = useTradingStore(state => state.setTransPlaceMessage);
 
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
-  const [showMsg, setShowMsg] = useState(false);
   const [priceLoading, setPriceLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [price, setPrice] = useState(0);
@@ -44,6 +48,18 @@ const PlaceOrder = ({visible, setVisible}) => {
   const updatePrices = () => {
     setPriceLoading(true);
     loadCoinPrices();
+  };
+
+  const onSubmit = async () => {
+    const result = await WazirxPlaceOrder(coinId, side, count, price);
+    if (result) {
+      setMessage(result.message);
+      if (result.status) {
+        // history.push(ROUTES.tradingMenu);
+      }
+    } else {
+      setMessage('Error');
+    }
   };
 
   return (
@@ -95,7 +111,7 @@ const PlaceOrder = ({visible, setVisible}) => {
           }}
         />
 
-        <Button style={{width: '100%'}} variant="contained">
+        <Button style={{width: '100%'}} variant="contained" onClick={onSubmit}>
           {side} {coinId}
         </Button>
       </Paper>

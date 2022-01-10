@@ -40,7 +40,6 @@ const TradingCoinListMobile = () => {
   const history = useHistory();
 
   const handleCoinPress = coinId => {
-    console.log('called ', coinId);
     setSelectedCoinId(coinId);
     history.push(ROUTES.tradingMenuMobile);
   };
