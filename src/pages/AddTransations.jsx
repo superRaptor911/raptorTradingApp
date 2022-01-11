@@ -20,6 +20,7 @@ const AddTransations = () => {
   const users = useStore(state => state.users);
   const coins = useStore(state => state.coins);
 
+  console.log(coin);
   useEffect(() => {
     setFee(count * price * 0.002);
   }, [count, price]);

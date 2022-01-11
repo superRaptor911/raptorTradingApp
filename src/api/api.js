@@ -59,7 +59,7 @@ export async function getTransactions() {
 export async function addTransaction(
   username,
   transType,
-  coin,
+  coinId,
   coinCount,
   price,
   fee,
@@ -69,7 +69,7 @@ export async function addTransaction(
   const response = await postRequest(url + 'transaction/add', {
     username: username,
     transType: transType,
-    coin: coin,
+    coinId: coinId,
     coinCount: coinCount,
     price: price,
     fee: fee,

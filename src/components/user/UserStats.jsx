@@ -74,7 +74,9 @@ const UserStats = ({user}) => {
         <TableBody>
           <TableRow>
             <TableCell align="center">
-              {isMobile ? humanReadableValue(userBalance) : userBalance}
+              {isMobile
+                ? humanReadableValue(userBalance)
+                : parseFloat(userBalance).toFixed(2)}
             </TableCell>
             <TableCell align="center">
               {humanReadableValue(totalInvestment)}
