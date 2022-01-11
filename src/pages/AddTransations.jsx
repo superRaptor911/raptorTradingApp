@@ -81,7 +81,7 @@ const AddTransations = () => {
           {coins &&
             coins.map(item => (
               <MenuItem value={item.name} key={item._id}>
-                {item.name}
+                {item.id}
               </MenuItem>
             ))}
         </Select>
