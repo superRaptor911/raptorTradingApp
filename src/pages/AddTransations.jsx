@@ -80,8 +80,8 @@ const AddTransations = () => {
           sx={{width: '80%', margin: 1, marginLeft: 'auto'}}>
           {coins &&
             coins.map(item => (
-              <MenuItem value={item.name} key={item._id}>
-                {item.id}
+              <MenuItem value={item.id} key={item._id}>
+                {item.name}
               </MenuItem>
             ))}
         </Select>
