@@ -78,7 +78,14 @@ const Transactions = () => {
                       : 'rgba(255, 30, 30, 0.2)',
                 }}>
                 <TableCell>{row.receipt.symbol}</TableCell>
-                <TableCell>{row.receipt.origQty}</TableCell>
+                <TableCell>
+                  <div style={{fontSize: 13, textAlign: 'center'}}>
+                    <div style={{borderBottom: '1px solid black'}}>
+                      {row.receipt.executedQty}
+                    </div>
+                    <div>{row.receipt.origQty}</div>
+                  </div>
+                </TableCell>
                 <TableCell>{row.receipt.price}</TableCell>
                 <TableCell>{row.receipt.status}</TableCell>
               </TableRow>

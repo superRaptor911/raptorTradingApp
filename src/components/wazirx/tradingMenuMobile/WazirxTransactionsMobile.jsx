@@ -65,7 +65,7 @@ const WazirxTransactionsMobile = () => {
         <TableHead>
           <TableRow>
             <TableCell>Coin</TableCell>
-            <TableCell>Coin Count</TableCell>
+            <TableCell>Coins</TableCell>
             <TableCell>Coin Price</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>cntrl</TableCell>
@@ -85,8 +85,13 @@ const WazirxTransactionsMobile = () => {
                 <TableCell style={{fontSize: 14}}>
                   {row.receipt.symbol}
                 </TableCell>
-                <TableCell style={{fontSize: 14}}>
-                  {row.receipt.origQty}
+                <TableCell>
+                  <div style={{fontSize: 13, textAlign: 'center'}}>
+                    <div style={{borderBottom: '1px solid black'}}>
+                      {row.receipt.executedQty}
+                    </div>
+                    <div>{row.receipt.origQty}</div>
+                  </div>
                 </TableCell>
                 <TableCell style={{fontSize: 14}}>
                   {row.receipt.price}

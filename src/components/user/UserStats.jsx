@@ -29,7 +29,7 @@ const UserStats = ({user}) => {
     if (user && fundTransfers) {
       let total = 0;
       let withdrawl = 0;
-      fundTransfers.map(item => {
+      fundTransfers.forEach(item => {
         if (item.username === user.name) {
           if (item.transType === 'DEPOSIT') {
             total += parseFloat(item.amount);
