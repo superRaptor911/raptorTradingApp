@@ -31,6 +31,16 @@ const AdminMenu = () => {
       <Button
         variant="contained"
         color="secondary"
+        onClick={() => history.push(ROUTES.addCoin)}
+        sx={{
+          width: '100%',
+        }}>
+        Add Coin
+      </Button>
+
+      <Button
+        variant="contained"
+        color="secondary"
         onClick={() => history.push(ROUTES.fundTransfer)}
         sx={{
           width: '100%',

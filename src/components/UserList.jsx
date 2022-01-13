@@ -27,11 +27,9 @@ const processUser = user => {
 const calculateCurrentValue = (userCoins, prices, balance) => {
   let total = 0;
   if (prices) {
-    console.log(userCoins);
     for (const i in userCoins) {
       const count = parseFloat(userCoins[i]);
       const value = parseFloat(prices[i].last);
-
       total += count * value;
     }
   }

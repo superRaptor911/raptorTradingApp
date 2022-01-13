@@ -9,6 +9,7 @@ export const ROUTES = {
   adminLogin: '/adminlogin',
   transactions: '/transactions',
   addUser: '/addUser',
+  addCoin: '/addcoin',
   loginUser: '/loginuser',
   tradingMenu: '/trading',
   tradingMenuMobile: '/tradingmobile',

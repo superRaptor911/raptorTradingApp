@@ -4,6 +4,17 @@ import {getRequest, postRequest} from './request';
 const url = 'https://raptor-trading.herokuapp.com/';
 // const url = 'http://localhost:8080/';
 
+export async function addCoin(name, id, avatar) {
+  const password = useStore.getState().password;
+  const response = await postRequest(url + 'coins/add', {
+    name: name,
+    id: id,
+    avatar: avatar,
+    password: password,
+  });
+  return response;
+}
+
 export async function addUser(username, email, avatar) {
   const password = useStore.getState().password;
   const response = await postRequest(url + 'users/add', {
