@@ -67,7 +67,7 @@ const TotalInvestmentAndProfit = () => {
           <TableRow>
             <TableCell>{humanReadableValue(totalInvestment)}</TableCell>
 
-            <TableCell>{wallet}</TableCell>
+            <TableCell>{wallet.toFixed(2)}</TableCell>
             <TableCell>{humanReadableValue(curVal)}</TableCell>
 
             <Visibility hide={isMobile}>

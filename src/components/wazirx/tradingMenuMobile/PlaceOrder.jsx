@@ -56,6 +56,7 @@ const PlaceOrder = ({visible, setVisible}) => {
       setMessage(result.message);
       if (result.status) {
         // history.push(ROUTES.tradingMenu);
+        setVisible(false);
       }
     } else {
       setMessage('Error');

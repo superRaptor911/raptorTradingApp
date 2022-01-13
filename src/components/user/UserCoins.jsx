@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import {useStore} from '../../store';
-import {humanReadableValue} from '../../utility';
+import {fixedNumber, humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
 import Visibility from '../Visibility';
 
@@ -17,7 +17,7 @@ import Visibility from '../Visibility';
 const getCoinList = wallet => {
   let coinList = [];
   for (const i in wallet.coins) {
-    const count = wallet.coins[i];
+    const count = fixedNumber(wallet.coins[i]);
     if (count > 0) {
       coinList.push({id: i, count: count});
     }
@@ -43,11 +43,11 @@ const UserCoinStats = ({coinId, count, prices, coinInvestment, isMobile}) => {
     const profit = value - investment;
     const profitPercent = (100 * profit) / investment;
 
+    const coinCout = isMobile ? humanReadableValue(count) : count;
+
     return (
       <Fragment>
-        <TableCell align="center">
-          {isMobile ? humanReadableValue(count) : count}
-        </TableCell>
+        <TableCell align="center">{coinCout}</TableCell>
         <TableCell align="center">{humanReadableValue(investment)}</TableCell>
         <TableCell align="center">{humanReadableValue(value)}</TableCell>
         <TableCell align="center" sx={{color: profit < 0 ? 'red' : 'green'}}>

@@ -16,6 +16,10 @@ export function humanReadableValue(value) {
   return value;
 }
 
+export function fixedNumber(num) {
+  return Number(parseFloat(num).toFixed(10));
+}
+
 export function get24HrChange(prices, coinId) {
   let coinPrice = prices ? prices[coinId].last : 0;
   coinPrice = parseFloat(coinPrice);

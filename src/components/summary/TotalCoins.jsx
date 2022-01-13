@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {humanReadableValue} from '../../utility';
+import {fixedNumber, humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
 
 const TotalCoins = () => {
@@ -77,7 +77,7 @@ const TotalCoins = () => {
                 <TableCell align="center">
                   {isMobile
                     ? humanReadableValue(coinsList[item.id])
-                    : coinsList[item.id]}
+                    : fixedNumber(coinsList[item.id])}
                 </TableCell>
               </TableRow>
             ))}
