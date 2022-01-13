@@ -6,6 +6,7 @@ import {ROUTES} from './routes';
 
 const Summary = lazy(() => import('./pages/Summary'));
 const User = lazy(() => import('./pages/User'));
+const CoinPage = lazy(() => import('./pages/Coin'));
 const FundTransfer = lazy(() => import('./pages/FundTransfer'));
 const AdminMenu = lazy(() => import('./pages/AdminMenu'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
@@ -32,6 +33,7 @@ function App() {
           <Suspense fallback={<div>Loading...</div>}>
             <Route exact path={ROUTES.summary} component={Summary} />
             <Route exact path={ROUTES.user} component={User} />
+            <Route exact path={ROUTES.coin} component={CoinPage} />
             <Route exact path={ROUTES.addTrans} component={AddTransations} />
             <Route exact path={ROUTES.fundTransfer} component={FundTransfer} />
             <Route exact path={ROUTES.adminMenu} component={AdminMenu} />

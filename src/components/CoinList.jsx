@@ -11,19 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import useTimer from './hooks/useTimer';
 import useDeviceType from './hooks/useDeviceType';
 import Visibility from './Visibility';
-import {get24HrChange} from '../utility';
+import {get24HrChange, humanReadableValue} from '../utility';
+import {useHistory} from 'react-router-dom';
 
 const getCoinPrice = (prices, coinId) => {
   let coinPrice = prices ? prices[coinId].last : 0;
   coinPrice = parseFloat(coinPrice);
-
-  if (coinPrice > 1000) {
-    coinPrice = (coinPrice / 1000).toFixed(2) + 'K';
-  } else if (coinPrice > 0 && coinPrice < 0.001) {
-    coinPrice = (coinPrice * 1000).toFixed(2) + 'm';
-  } else {
-    coinPrice = coinPrice.toFixed(2);
-  }
   return coinPrice;
 };
 
@@ -33,6 +26,8 @@ const CoinList = () => {
 
   const loadCoins = useStore(state => state.loadCoins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
+
+  const history = useHistory();
 
   const isMobile = 'mobile' === useDeviceType();
 
@@ -69,7 +64,9 @@ const CoinList = () => {
         <TableBody>
           {coins &&
             coins.map((row, id) => (
-              <TableRow key={id}>
+              <TableRow
+                key={id}
+                onClick={() => history.push('/coin/' + row.name)}>
                 <TableCell
                   component="th"
                   scope="row"
@@ -85,7 +82,7 @@ const CoinList = () => {
                   <TableCell>{row.id}</TableCell>
                 </Visibility>
                 <TableCell align="center">
-                  {getCoinPrice(coinPrices, row.id)}
+                  {humanReadableValue(getCoinPrice(coinPrices, row.id))}
                 </TableCell>
 
                 <TableCell

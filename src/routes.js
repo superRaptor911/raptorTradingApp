@@ -2,6 +2,7 @@ export const ROUTES = {
   home: '/',
   summary: '/summary',
   user: '/user/:username',
+  coin: '/coin/:coinName',
   userPath: '/user/',
   addTrans: '/addtransaction',
   fundTransfer: '/fundtransfer',
