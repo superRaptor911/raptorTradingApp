@@ -4,12 +4,12 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {ROUTES} from '../../../routes';
 import {useStore} from '../../../store';
-import {get24HrChange} from '../../../utility';
+import {get24HrChange} from '../../helper';
 import {useTradingStore} from '../tradingMenuMobile/uiStore';
 
 const CoinItem = ({coin, prices, handlePress}) => {
   const price = prices && prices[coin.id].last;
-  const change = get24HrChange(prices, coin.id);
+  const change = get24HrChange(coin.id);
 
   return (
     <div>

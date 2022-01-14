@@ -11,14 +11,9 @@ import Avatar from '@mui/material/Avatar';
 import useTimer from './hooks/useTimer';
 import useDeviceType from './hooks/useDeviceType';
 import Visibility from './Visibility';
-import {get24HrChange, humanReadableValue} from '../utility';
+import {humanReadableValue} from '../utility';
 import {useHistory} from 'react-router-dom';
-
-const getCoinPrice = (prices, coinId) => {
-  let coinPrice = prices ? prices[coinId].last : 0;
-  coinPrice = parseFloat(coinPrice);
-  return coinPrice;
-};
+import {get24HrChange, getCoinPrice} from './helper';
 
 const CoinList = () => {
   const coins = useStore(state => state.coins);
@@ -82,16 +77,15 @@ const CoinList = () => {
                   <TableCell>{row.id}</TableCell>
                 </Visibility>
                 <TableCell align="center">
-                  {humanReadableValue(getCoinPrice(coinPrices, row.id))}
+                  {humanReadableValue(getCoinPrice(row.id))}
                 </TableCell>
 
                 <TableCell
                   align="right"
                   sx={{
-                    color:
-                      get24HrChange(coinPrices, row.id) < 0 ? 'red' : 'green',
+                    color: get24HrChange(row.id) < 0 ? 'red' : 'green',
                   }}>
-                  {get24HrChange(coinPrices, row.id)}%
+                  {get24HrChange(row.id)}%
                 </TableCell>
               </TableRow>
             ))}

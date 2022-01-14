@@ -12,7 +12,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {get24HrChange} from '../utility';
+import {get24HrChange, getCoinPrice} from '../components/helper';
+import MarketGraph from '../components/wazirx/tradingMenu/MarketGraph';
 
 const getCoin = (coins, coinName) => {
   for (const i of coins) {
@@ -59,17 +60,14 @@ const CoinDetails = ({coin}) => {
                 {coin.name}
               </TableCell>
               <TableCell>{coin.id}</TableCell>
-              <TableCell align="center">
-                {getCoinPrice(coinPrices, coin.id)}
-              </TableCell>
+              <TableCell align="center">{getCoinPrice(coin.id)}</TableCell>
 
               <TableCell
                 align="right"
                 sx={{
-                  color:
-                    get24HrChange(coinPrices, coin.id) < 0 ? 'red' : 'green',
+                  color: get24HrChange(coin.id) < 0 ? 'red' : 'green',
                 }}>
-                {get24HrChange(coinPrices, coin.id)}%
+                {get24HrChange(coin.id)}%
               </TableCell>
             </TableRow>
           )}
@@ -99,10 +97,16 @@ const Coin = () => {
       style={{
         width: 'max-content',
         margin: 'auto',
-        marginTop: 80,
+        marginTop: 50,
         maxWidth: '100vw',
       }}>
-      <Paper sx={{paddingTop: 10, maxWidth: '95vw', margin: 'auto'}}>
+      <Paper
+        sx={{
+          paddingTop: 5,
+          maxWidth: '95vw',
+          margin: 'auto',
+          marginBottom: 10,
+        }}>
         {coin ? (
           <Fragment>
             <Avatar
@@ -111,6 +115,10 @@ const Coin = () => {
               sx={{width: 128, height: 128, margin: 'auto'}}
             />
             <Typography sx={{textAlign: 'center'}}>{coin.name}</Typography>
+            <CoinDetails coin={coin} />
+            <div style={{marginTop: 30}}>
+              <MarketGraph coinId={coin.id} />
+            </div>
           </Fragment>
         ) : (
           <CircularProgress />
