@@ -10,16 +10,17 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/CoinList.jsx
+edit components/wazirx/tradingMenu/MarketGraph.jsx
 argglobal
-balt pages/Coin.jsx
-let s:l = 85 - ((36 * winheight(0) + 22) / 45)
+let s:l = 29 - ((12 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 85
+keepjumps 29
 normal! 0
 tabnext 1
+badd +88 components/CoinList.jsx
+badd +120 pages/Coin.jsx
 badd +33 components/UserList.jsx
 badd +47 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +82 components/wazirx/tradingMenu/Transactions.jsx
@@ -27,7 +28,7 @@ badd +20 components/wazirx/tradingMenu/TradingMenu.jsx
 badd +8 api/api.js
 badd +59 components/wazirx/tradingMenuMobile/PlaceOrder.jsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
-badd +1 components/wazirx/tradingMenu/MarketGraph.jsx
+badd +78 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +46 components/wazirx/tradingMenu/Wallet.jsx
 badd +120 components/wazirx/WazirxAddTransaction.jsx
 badd +47 components/summary/TotalInvestmentAndProfit.jsx
@@ -47,10 +48,9 @@ badd +8 pages/Summary.jsx
 badd +4 pages/User.jsx
 badd +36 App.jsx
 badd +43 store.js
-badd +87 components/CoinList.jsx
 badd +20 api/request.js
 badd +9 pages/Home.jsx
-badd +19 utility.js
+badd +22 utility.js
 badd +121 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
@@ -62,11 +62,11 @@ badd +111 pages/Transactions.jsx
 badd +25 components/user/UserStats.jsx
 badd +11 components/TablePaginationAction.jsx
 badd +52 pages/UserLogin.jsx
-badd +26 components/wazirx/tradingMenuMobile/TradingMenu.jsx
-badd +64 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
-badd +154 pages/wazirx/WazirxTradingMenuMobile.jsx
+badd +25 components/wazirx/tradingMenuMobile/TradingMenu.jsx
+badd +37 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
+badd +143 pages/wazirx/WazirxTradingMenuMobile.jsx
 badd +6 pages/AddCoin.jsx
-badd +70 pages/Coin.jsx
+badd +13 components/helper.js
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

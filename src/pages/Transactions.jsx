@@ -15,7 +15,7 @@ import TablePaginationActions from '@mui/material/TablePagination/TablePaginatio
 
 export default function Transaction() {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const transactions = useStore(state => state.transactions);
   const loadTransactions = useStore(state => state.loadTransactions);
@@ -67,7 +67,7 @@ export default function Transaction() {
             ).map(row => (
               <TableRow key={row.name}>
                 <TableCell>{row.username}</TableCell>
-                <TableCell>{row.coin}</TableCell>
+                <TableCell>{row.coinId}</TableCell>
 
                 <TableCell
                   style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>
@@ -95,7 +95,7 @@ export default function Transaction() {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 15, {label: 'All', value: -1}]}
+              rowsPerPageOptions={[10, 15, 25, {label: 'All', value: -1}]}
               colSpan={3}
               count={itemCount}
               rowsPerPage={rowsPerPage}

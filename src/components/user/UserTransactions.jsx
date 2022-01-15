@@ -22,7 +22,7 @@ export default function UserTransaction({user, allTransactions}) {
   useEffect(() => {
     if (allTransactions) {
       setTransactions(
-        allTransactions.filter(item => item.username === user.name).reverse(),
+        allTransactions.filter(item => item.username === user.name),
       );
     }
   }, [allTransactions]);

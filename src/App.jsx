@@ -16,6 +16,7 @@ const AddUser = lazy(() => import('./pages/AddUser'));
 const AddCoin = lazy(() => import('./pages/AddCoin'));
 const UserLogin = lazy(() => import('./pages/UserLogin'));
 const WazirxDashboard = lazy(() => import('./pages/wazirx/WazirxDashboard'));
+const Automation = lazy(() => import('./pages/wazirx/Automation'));
 const WazirxTradingMenuMobile = lazy(() =>
   import('./pages/wazirx/WazirxTradingMenuMobile'),
 );
@@ -53,6 +54,7 @@ function App() {
               path={ROUTES.tradingMenuMobile}
               component={WazirxTradingMenuMobile}
             />
+            <Route exact path={ROUTES.automations} component={Automation} />
           </Suspense>
         </Switch>
       </Router>

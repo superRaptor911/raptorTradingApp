@@ -14,4 +14,5 @@ export const ROUTES = {
   loginUser: '/loginuser',
   tradingMenu: '/trading',
   tradingMenuMobile: '/tradingmobile',
+  automations: '/automation',
 };
