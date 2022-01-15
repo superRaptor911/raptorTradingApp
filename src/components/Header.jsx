@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,6 +15,9 @@ import {useStore} from '../store';
 import {loginUser} from '../api/api';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import {styled} from '@mui/material';
+
+const Offset = styled('div')(({theme}) => theme.mixins.toolbar);
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -64,8 +67,8 @@ const Header = () => {
 
   const history = useHistory();
   return (
-    <Box sx={{flexGrow: 1}}>
-      <AppBar position="sticky">
+    <Fragment>
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             size="large"
@@ -108,7 +111,8 @@ const Header = () => {
           </Menu>
         </Toolbar>
       </AppBar>
-    </Box>
+      <Offset />
+    </Fragment>
   );
 };
 
