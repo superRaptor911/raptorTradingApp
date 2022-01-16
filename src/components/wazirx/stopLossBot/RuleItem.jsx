@@ -82,6 +82,9 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
     updateRule(rule);
     setIsModified(false);
   };
+  const handleCheck = event => {
+    setisEnabled(event.target.checked);
+  };
 
   return (
     <Accordion>
@@ -102,7 +105,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
           </IconButton>
           <div className={classes.itemContainer}>
             <Typography>isEnabled</Typography>
-            <Switch />
+            <Switch checked={isEnabled} onChange={handleCheck} />
           </div>
 
           <div className={classes.itemContainer}>

@@ -43,7 +43,7 @@ const RulesMenu = () => {
       coinId: 'adainr',
       transType: 'SELL',
       count: 10,
-      price: 100,
+      price: 0,
     };
 
     await StopLossBotAddRule(
