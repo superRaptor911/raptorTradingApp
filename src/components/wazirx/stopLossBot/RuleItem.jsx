@@ -71,7 +71,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
     setIsModified(
       checkIfChanged(rule, isEnabled, coinId, price, count, transType),
     );
-  }, [coinId, price, count, transType]);
+  }, [isEnabled, coinId, price, count, transType]);
 
   const handleUpdatePress = () => {
     rule.isEnabled = isEnabled;

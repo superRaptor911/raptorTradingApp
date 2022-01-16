@@ -6,19 +6,17 @@ import {
   StopLossBotEditRule,
   StopLossBotListRules,
 } from '../../../api/wazirxApi';
-import useTimer from '../../hooks/useTimer';
 import RuleItem from './RuleItem';
 
 const RulesMenu = () => {
   const [rules, setRules] = useState([]);
-
-  useTimer(2000, () => {
+  useEffect(() => {
     StopLossBotListRules().then(result => {
       if (result && result.status) {
         result.data && setRules(result.data.reverse());
       }
     });
-  });
+  }, []);
 
   const updateRule = async newItem => {
     await StopLossBotEditRule(
