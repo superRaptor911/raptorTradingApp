@@ -1,0 +1,4 @@
+.optionCointainer {
+    display: flex;
+    justify-content: space-between;
+}

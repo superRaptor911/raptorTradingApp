@@ -1,18 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Paper, Typography} from '@mui/material';
-
-const RulesMenu = () => {
-  return (
-    <div>
-      <div>GG</div>
-    </div>
-  );
-};
+import RulesMenu from '../../components/wazirx/stopLossBot/RulesMenu';
 
 const StopLossBot = () => {
   return (
-    <div
-      style={{width: '90vw', maxWidth: 1200, margin: 'auto', marginTop: 100}}>
+    <div style={{width: '90vw', maxWidth: 1200, margin: 'auto', marginTop: 40}}>
       <Paper
         sx={{
           padding: 2,
@@ -20,13 +12,10 @@ const StopLossBot = () => {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-        <Typography variant="h4" style={{marginBottom: 30}}>
-          Automations
-        </Typography>
-        <Button variant="contained" color="secondary" style={{width: '90%'}}>
-          Stop Loss Bot
-        </Button>
+        <Typography variant="h4">Stop Loss Bot</Typography>
       </Paper>
+
+      <RulesMenu />
     </div>
   );
 };
