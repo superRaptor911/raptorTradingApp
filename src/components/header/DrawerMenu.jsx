@@ -26,6 +26,10 @@ const Menus = [
     link: ROUTES.tradingMenu,
   },
   {
+    name: 'Automations',
+    link: ROUTES.automations,
+  },
+  {
     name: 'Admin Menu',
     link: ROUTES.adminMenu,
   },
@@ -37,17 +41,18 @@ const DrawerMenu = ({showDrawer, toggleDrawer}) => {
     <Drawer open={showDrawer} onClose={toggleDrawer}>
       <List>
         {Menus.map((item, id) => (
-          <ListItem
-            button
-            key={id}
-            onClick={() => {
-              history.push(item.link);
-            }}>
-            <ListItemText primary={item.name} />
-          </ListItem>
+          <div key={id}>
+            <ListItem
+              button
+              onClick={() => {
+                history.push(item.link);
+              }}>
+              <ListItemText primary={item.name} />
+            </ListItem>
+            <Divider />
+          </div>
         ))}
       </List>
-      <Divider />
     </Drawer>
   );
 };
