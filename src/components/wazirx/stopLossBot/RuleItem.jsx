@@ -24,21 +24,27 @@ const useStyles = createUseStyles({
   },
 });
 
-const genTextualContract = (coinId, price, count, transType) => {
-  const str = `${transType} ${count} ${coinId} when price ${
-    transType === 'SELL' ? 'drops below' : 'exceeds above'
-  } ${price}`;
-
+const genTextualContract = (coinId, price, count, transType, condition) => {
+  const str = `${transType} ${count} ${coinId} when price ${condition} than ${price}`;
   return str;
 };
 
-const checkIfChanged = (rule, isEnabled, coinId, price, count, transType) => {
+const checkIfChanged = (
+  rule,
+  isEnabled,
+  coinId,
+  price,
+  count,
+  transType,
+  condition,
+) => {
   const isChanged = !(
     rule.isEnabled == isEnabled &&
     rule.coinId == coinId &&
     rule.price == price &&
     rule.count == count &&
-    rule.transType == transType
+    rule.transType == transType &&
+    rule.condition == condition
   );
 
   return isChanged;
@@ -50,6 +56,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
   const [coinId, setCoinId] = useState('dogeinr');
   const [price, setPrice] = useState(0);
   const [count, setCount] = useState(0);
+  const [condition, setCondition] = useState('LESS');
   const [transType, setTransType] = useState('SELL');
   const [isModified, setIsModified] = useState(null);
   const [textual, setTextual] = useState('');
@@ -63,13 +70,22 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
       setPrice(rule.price);
       setTransType(rule.transType);
       setisEnabled(rule.isEnabled);
+      setCondition(rule.condition);
     }
   }, [rule]);
 
   useEffect(() => {
-    setTextual(genTextualContract(coinId, price, count, transType));
+    setTextual(genTextualContract(coinId, price, count, transType, condition));
     setIsModified(
-      checkIfChanged(rule, isEnabled, coinId, price, count, transType),
+      checkIfChanged(
+        rule,
+        isEnabled,
+        coinId,
+        price,
+        count,
+        transType,
+        condition,
+      ),
     );
   }, [isEnabled, coinId, price, count, transType]);
 
@@ -79,6 +95,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
     rule.price = price;
     rule.count = count;
     rule.transType = transType;
+    rule.condition = condition;
     updateRule(rule);
     setIsModified(false);
   };
@@ -133,6 +150,18 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
               sx={{width: '60%', margin: 1, marginLeft: 'auto'}}>
               <MenuItem value="SELL"> SELL </MenuItem>
               <MenuItem value="BUY"> BUY </MenuItem>
+            </Select>
+          </div>
+
+          <div className={classes.itemContainer}>
+            <Typography>Condition</Typography>
+            <Select
+              value={condition}
+              label="Type"
+              onChange={e => setCondition(e.target.value)}
+              sx={{width: '60%', margin: 1, marginLeft: 'auto'}}>
+              <MenuItem value="LESS"> LESS </MenuItem>
+              <MenuItem value="GREATER"> GREATER </MenuItem>
             </Select>
           </div>
 

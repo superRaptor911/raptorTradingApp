@@ -63,6 +63,7 @@ export async function StopLossBotAddRule(
   price,
   count,
   transType,
+  condition,
 ) {
   const userCred = useStore.getState().userCred;
   const response = await postRequest(url + 'wazirx/stoplossbotaddrule', {
@@ -73,6 +74,7 @@ export async function StopLossBotAddRule(
     count: count,
     isEnabled: isEnabled,
     transType: transType,
+    condition: condition,
   });
   return response;
 }
@@ -84,6 +86,7 @@ export async function StopLossBotEditRule(
   price,
   count,
   transType,
+  condition,
 ) {
   const userCred = useStore.getState().userCred;
   const response = await postRequest(url + 'wazirx/stoplossboteditrule', {
@@ -95,6 +98,7 @@ export async function StopLossBotEditRule(
     count: count,
     isEnabled: isEnabled,
     transType: transType,
+    condition: condition,
   });
   return response;
 }

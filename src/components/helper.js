@@ -23,7 +23,7 @@ export const get24HrChange = coinId => {
 export const getUsernameFromEmail = email => {
   const users = useStore.getState().users;
   const user = users?.find(user => user.email === email);
-  return user?.email;
+  return user?.name;
 };
 
 export const getWazirxUser = () => {

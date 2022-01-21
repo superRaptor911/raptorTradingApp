@@ -26,6 +26,7 @@ const RulesMenu = () => {
       newItem.price,
       newItem.count,
       newItem.transType,
+      newItem.condition,
     );
 
     StopLossBotListRules().then(result => {
@@ -43,6 +44,7 @@ const RulesMenu = () => {
       transType: 'SELL',
       count: 10,
       price: 0,
+      condition: 'LESS',
     };
 
     await StopLossBotAddRule(
@@ -51,6 +53,7 @@ const RulesMenu = () => {
       newItem.price,
       newItem.count,
       newItem.transType,
+      newItem.condition,
     );
 
     StopLossBotListRules().then(result => {
