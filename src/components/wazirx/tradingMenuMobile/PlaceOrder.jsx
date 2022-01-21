@@ -11,6 +11,7 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import useTimer from '../../hooks/useTimer';
 import {WazirxPlaceOrder} from '../../../api/wazirxApi';
+import {getWazirxUser} from '../../helper';
 // import {useHistory} from 'react-router-dom';
 // import {ROUTES} from '../../../routes';
 
@@ -19,6 +20,7 @@ const PlaceOrder = ({visible, setVisible}) => {
   const coinId = useTradingStore(state => state.selectedCoinId);
   const side = useTradingStore(state => state.side);
   const setMessage = useTradingStore(state => state.setTransPlaceMessage);
+  const [user, setUser] = useState();
 
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
@@ -28,9 +30,10 @@ const PlaceOrder = ({visible, setVisible}) => {
   const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
 
-  useTimer(1500, () => {
+  useEffect(() => {
     loadCoinPrices();
-  });
+    setUser(getWazirxUser());
+  }, []);
 
   useEffect(() => {
     setTotal(count * price);

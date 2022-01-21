@@ -19,3 +19,19 @@ export const get24HrChange = coinId => {
 
   return ((100 * (coinPrice - oldPrice)) / oldPrice).toFixed(2);
 };
+
+export const getUsernameFromEmail = email => {
+  const users = useStore.getState().users;
+  const user = users?.find(user => user.email === email);
+  return user?.email;
+};
+
+export const getWazirxUser = () => {
+  const cred = useStore.getState().userCred;
+  if (cred) {
+    const users = useStore.getState().users;
+    const wazirxUser = users?.find(user => user.email === user.email);
+    return wazirxUser;
+  }
+  return null;
+};
