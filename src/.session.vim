@@ -10,40 +10,17 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/stopLossBot/RulesMenu.jsx
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe '2resize ' . ((&lines * 1 + 23) / 47)
-exe 'vert 2resize ' . ((&columns * 1 + 87) / 174)
-exe '3resize ' . ((&lines * 1 + 23) / 47)
-exe 'vert 3resize ' . ((&columns * 50 + 87) / 174)
+edit components/user/UserTransactions.jsx
 argglobal
-balt api/wazirxApi.js
-let s:l = 26 - ((21 * winheight(0) + 22) / 45)
+balt components/wazirx/stopLossBot/RuleItem.jsx
+let s:l = 62 - ((29 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 26
-normal! 011|
-wincmd w
-argglobal
-enew
-balt components/wazirx/stopLossBot/RulesMenu.jsx
-wincmd w
-argglobal
-enew
-balt components/wazirx/stopLossBot/RulesMenu.jsx
-wincmd w
-exe '2resize ' . ((&lines * 1 + 23) / 47)
-exe 'vert 2resize ' . ((&columns * 1 + 87) / 174)
-exe '3resize ' . ((&lines * 1 + 23) / 47)
-exe 'vert 3resize ' . ((&columns * 50 + 87) / 174)
+keepjumps 62
+normal! 03|
 tabnext 1
+badd +5 api/wazirxApi.js
 badd +7 pages/wazirx/StopLossBot.jsx
 badd +2 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +88 components/CoinList.jsx
@@ -58,11 +35,10 @@ badd +13 components/wazirx/tradingMenuMobile/uiStore.js
 badd +46 components/wazirx/tradingMenu/Wallet.jsx
 badd +120 components/wazirx/WazirxAddTransaction.jsx
 badd +47 components/summary/TotalInvestmentAndProfit.jsx
-badd +60 api/wazirxApi.js
 badd +42 pages/wazirx/WazirxDashboard.jsx
 badd +1 components/user/UserFUndTransfers.jsx
-badd +121 components/user/UserTransactions.jsx
-badd +52 components/header/DrawerMenu.jsx
+badd +20 components/user/UserTransactions.jsx
+badd +60 components/header/DrawerMenu.jsx
 badd +46 components/wazirx/tradingMenu/WazirxCoinList.jsx
 badd +34 components/Header.jsx
 badd +18 routes.js
@@ -77,7 +53,7 @@ badd +43 store.js
 badd +20 api/request.js
 badd +9 pages/Home.jsx
 badd +22 utility.js
-badd +136 components/user/UserCoins.jsx
+badd +89 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
 badd +3 pages/AddTransations.jsx
@@ -93,16 +69,14 @@ badd +37 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
 badd +143 pages/wazirx/WazirxTradingMenuMobile.jsx
 badd +6 pages/AddCoin.jsx
 badd +17 components/helper.js
-badd +3 pages/wazirx/Automation.jsx
-badd +26 components/wazirx/stopLossBot/RulesMenu.jsx
-badd +41 components/wazirx/stopLossBot/RuleItem.jsx
+badd +25 pages/wazirx/Automation.jsx
+badd +130 components/wazirx/stopLossBot/RuleItem.jsx
+badd +31 components/wazirx/stopLossBot/RulesMenu.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20 shortmess=filnxtToOFc
-let &winminheight = s:save_winminheight
-let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

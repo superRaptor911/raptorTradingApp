@@ -20,10 +20,7 @@ const TradingMenuMobile = () => {
         height: 'calc(100vh - 56px)',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
       }}>
-      {selectedTab == 0 && <TradingCoinListMobile />}
-      {selectedTab == 1 && <WazirxTransactionsMobile />}
       <BottomNavigation
         style={{width: '100%'}}
         showLabels
@@ -41,6 +38,8 @@ const TradingMenuMobile = () => {
           icon={<AccountBalanceWalletIcon />}
         />
       </BottomNavigation>
+      {selectedTab == 0 && <TradingCoinListMobile />}
+      {selectedTab == 1 && <WazirxTransactionsMobile />}
     </Box>
   );
 };

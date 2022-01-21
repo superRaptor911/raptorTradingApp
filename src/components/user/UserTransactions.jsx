@@ -13,6 +13,23 @@ import {TableHead} from '@mui/material';
 import useDeviceType from '../hooks/useDeviceType';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 
+const gg = transactions => {
+  let m = 3970.04;
+  const trans = [...transactions];
+  trans.reverse().forEach(row => {
+    const total = row.cost * row.coinCount + parseFloat(row.fee);
+    if (row.transType === 'BUY') {
+      m -= total;
+    } else {
+      m += total;
+      m -= 2 * row.fee;
+    }
+    console.log(
+      `${row.transType} ${row.coinCount} ${row.coinId} total = ${total}\n Balance: ${m}`,
+    );
+  });
+};
+
 export default function UserTransaction({user, allTransactions}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -41,6 +58,7 @@ export default function UserTransaction({user, allTransactions}) {
     setPage(0);
   };
 
+  gg(transactions);
   return (
     <TableContainer
       component={Paper}
