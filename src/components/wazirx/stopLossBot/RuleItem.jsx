@@ -109,7 +109,9 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header">
-        <Alert severity="info" style={{width: '100%'}}>
+        <Alert
+          severity={rule.isEnabled ? 'success' : 'error'}
+          style={{width: '100%'}}>
           {textual}
         </Alert>
       </AccordionSummary>
@@ -121,7 +123,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
             <DeleteIcon />
           </IconButton>
           <div className={classes.itemContainer}>
-            <Typography>isEnabled</Typography>
+            <Typography style={{color: 'blue'}}>Enabled</Typography>
             <Switch checked={isEnabled} onChange={handleCheck} />
           </div>
 
