@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {Button, Paper, Typography} from '@mui/material';
 import {useHistory} from 'react-router-dom';
 import {ROUTES} from '../../routes';

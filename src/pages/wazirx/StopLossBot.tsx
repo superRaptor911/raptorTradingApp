@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Button, Paper, Typography} from '@mui/material';
+import React from 'react';
+import {Paper, Typography} from '@mui/material';
 import RulesMenu from '../../components/wazirx/stopLossBot/RulesMenu';
 
 const StopLossBot = () => {

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {Button, Paper} from '@mui/material';
 import {format} from 'date-fns';
 import React, {useEffect, useState} from 'react';
@@ -17,7 +16,17 @@ import {WazirxGetCoinHistory} from '../../api/wazirxApi';
 import PlaceOrder from '../../components/wazirx/tradingMenuMobile/PlaceOrder';
 import {useTradingStore} from '../../components/wazirx/tradingMenuMobile/uiStore';
 
-const PeriodSelector = ({period, setPeriod}) => {
+interface PeriodSelectorProps {
+  period: number;
+  setPeriod: (period: number) => void;
+}
+
+interface BuySellButtonsProps {
+  coinId: string | null;
+  setShowPlaceMenu: (value: boolean) => void;
+}
+
+const PeriodSelector = ({period, setPeriod}: PeriodSelectorProps) => {
   return (
     <Paper style={{display: 'flex', margin: 'auto', width: 'max-content'}}>
       <Button
@@ -62,7 +71,7 @@ const PeriodSelector = ({period, setPeriod}) => {
   );
 };
 
-const BuySellButtons = ({coinId, setShowPlaceMenu}) => {
+const BuySellButtons = ({coinId, setShowPlaceMenu}: BuySellButtonsProps) => {
   const setSide = useTradingStore(state => state.setSide);
 
   return (
@@ -95,8 +104,10 @@ const WazirxTradingMenuMobile = () => {
   const [period, setPeriod] = useState(60);
   const [showPlaceMenu, setShowPlaceMenu] = useState(false);
 
-  const coinId = useTradingStore(state => state.selectedCoinId);
-  const message = useTradingStore(state => state.transactionPlaceMessage);
+  const coinId: string | null = useTradingStore(state => state.selectedCoinId);
+  const message: string | null = useTradingStore(
+    state => state.transactionPlaceMessage,
+  );
   const setMessage = useTradingStore(state => state.setTransPlaceMessage);
   const history = useHistory();
 
@@ -109,10 +120,10 @@ const WazirxTradingMenuMobile = () => {
   useEffect(() => {
     if (coinId) {
       WazirxGetCoinHistory(coinId, period).then(result => {
-        const newData = result.map(item => {
-          const price = parseFloat(item[4]);
+        const newData = result.map((item: Array<number>) => {
+          const price = item[4];
           const timeStr = format(new Date(item[0] * 1000), 'hh:mm');
-          return {name: timeStr, price: parseFloat(price)};
+          return {name: timeStr, price: price};
         });
         setData(newData);
       });

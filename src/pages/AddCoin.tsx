@@ -1,11 +1,11 @@
 import {Button, Paper, TextField} from '@mui/material';
 import React, {useState} from 'react';
-import {addCoin, addUser} from '../api/api';
+import {addCoin} from '../api/api';
 import Avatar from '@mui/material/Avatar';
 import Snackbar from '@mui/material/Snackbar';
 
 const AddCoin = () => {
-  const [showMsg, setShowMsg] = useState(false);
+  const [showMsg, setShowMsg] = useState<Boolean | String>(false);
   const [name, setName] = useState('');
   const [coinId, setCoinId] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -71,10 +71,10 @@ const AddCoin = () => {
       </div>
 
       <Snackbar
-        open={showMsg}
+        open={Boolean(showMsg)}
         autoHideDuration={2000}
         onClose={() => {
-          setShowMsg(null);
+          setShowMsg(false);
         }}
         message={showMsg}
       />
