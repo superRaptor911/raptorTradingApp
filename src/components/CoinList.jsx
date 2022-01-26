@@ -17,7 +17,6 @@ import {get24HrChange, getCoinPrice} from './helper';
 
 const CoinList = () => {
   const coins = useStore(state => state.coins);
-  const coinPrices = useStore(state => state.coinPrices);
 
   const loadCoins = useStore(state => state.loadCoins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);

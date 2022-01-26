@@ -34,6 +34,7 @@ const AddTransations = () => {
       price,
       fee,
       new Date(),
+      true,
     );
     if (result) {
       setShowMsg(result.message);

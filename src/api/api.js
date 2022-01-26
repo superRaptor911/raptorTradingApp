@@ -75,6 +75,7 @@ export async function addTransaction(
   price,
   fee,
   time,
+  force = null,
 ) {
   const password = useStore.getState().password;
   const response = await postRequest(url + 'transaction/add', {
@@ -86,6 +87,7 @@ export async function addTransaction(
     fee: fee,
     time: time,
     password: password,
+    force: force,
   });
   return response;
 }
