@@ -10,17 +10,21 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit api/api.js
+edit ~/program/react/vite/raptorTradingApp/src/store.ts
 argglobal
-balt api/wazirxApi.js
-let s:l = 4 - ((3 * winheight(0) + 22) / 45)
+balt components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
+let s:l = 79 - ((41 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
+keepjumps 79
 normal! 0
 tabnext 1
-badd +133 components/UserList.jsx
+badd +68 types.ts
+badd +1 components/UserList.jsx
+badd +64 components/CoinList.jsx
+badd +30 api/api.js
+badd +6 api/wazirxApi.js
 badd +37 pages/AddTransations.jsx
 badd +5 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +32 pages/AddCoin.tsx
@@ -30,14 +34,11 @@ badd +26 components/helper.js
 badd +85 components/wazirx/stopLossBot/RulesMenu.jsx
 badd +62 components/user/UserTransactions.jsx
 badd +62 components/wazirx/stopLossBot/RuleItem.jsx
-badd +6 api/wazirxApi.js
 badd +2 components/wazirx/tradingMenu/MarketGraph.jsx
-badd +88 components/CoinList.jsx
 badd +120 pages/Coin.jsx
 badd +67 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +82 components/wazirx/tradingMenu/Transactions.jsx
 badd +19 components/wazirx/tradingMenu/TradingMenu.jsx
-badd +5 api/api.js
 badd +72 components/wazirx/tradingMenuMobile/PlaceOrder.jsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
 badd +46 components/wazirx/tradingMenu/Wallet.jsx
@@ -48,7 +49,7 @@ badd +1 components/user/UserFUndTransfers.jsx
 badd +60 components/header/DrawerMenu.jsx
 badd +46 components/wazirx/tradingMenu/WazirxCoinList.jsx
 badd +34 components/Header.jsx
-badd +18 routes.js
+badd +1 routes.ts
 badd +69 components/wazirx/WazirxTransactions.jsx
 badd +3 components/hooks/useTimer.js
 badd +1 pages/AddUser.jsx
@@ -56,10 +57,9 @@ badd +69 components/summary/TotalCoins.jsx
 badd +8 pages/Summary.jsx
 badd +4 pages/User.jsx
 badd +48 App.jsx
-badd +43 store.js
 badd +1 api/request.js
 badd +9 pages/Home.jsx
-badd +22 utility.js
+badd +23 utility.ts
 badd +89 components/user/UserCoins.jsx
 badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
@@ -72,6 +72,7 @@ badd +11 components/TablePaginationAction.jsx
 badd +52 pages/UserLogin.jsx
 badd +41 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +44 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
+badd +0 ~/program/react/vite/raptorTradingApp/src/store.ts
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
