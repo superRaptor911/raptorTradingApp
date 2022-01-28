@@ -8,28 +8,34 @@ import {loginUser} from '../api/api';
 
 const UserLogin = () => {
   const history = useHistory();
-  const emailRef = useRef();
-  const passRef = useRef();
-  const [error, setError] = useState();
+  const emailRef = useRef<HTMLInputElement>();
+  const passRef = useRef<HTMLInputElement>();
+  const [error, setError] = useState<undefined | string | boolean>();
 
   const setUserCred = useStore(state => state.setUserCred);
 
   const handleSubmit = async () => {
-    const email = emailRef.current.value;
-    const password = passRef.current.value;
+    if (emailRef.current && passRef.current) {
+      const email = emailRef.current.value;
+      const password = passRef.current.value;
 
-    try {
-      const response = await loginUser(email, password);
-      if (response.status) {
-        setUserCred({email: email, password: password});
-        history.push(ROUTES.home);
-      } else {
-        setError(response.message);
+      try {
+        const response = await loginUser(email, password);
+        if (response) {
+          if (response.status) {
+            setUserCred({email: email, password: password});
+            history.push(ROUTES.home);
+          } else {
+            setError(response.message);
+          }
+        } else {
+          throw 'FAILED TO GET RESPONSE';
+        }
+      } catch (e) {
+        /* handle error */
+        setError('Something went wrong');
+        console.error('UserLogin::error', e);
       }
-    } catch (e) {
-      /* handle error */
-      setError('Something went wrong');
-      console.error('UserLogin::error', e);
     }
   };
 
@@ -61,10 +67,10 @@ const UserLogin = () => {
       </Button>
 
       <Snackbar
-        open={error}
+        open={Boolean(error)}
         autoHideDuration={2000}
         onClose={() => {
-          setError(null);
+          setError(false);
         }}
         message={error}
       />

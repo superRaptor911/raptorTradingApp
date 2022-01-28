@@ -5,13 +5,15 @@ import {useStore} from '../store';
 
 const AdminLogin = () => {
   const history = useHistory();
-  const passRef = useRef();
+  const passRef = useRef<HTMLInputElement>();
   const setPassword = useStore(state => state.setPassword);
 
   const handleSubmit = () => {
-    const password = passRef.current.value;
-    setPassword(password);
-    history.push('/');
+    if (passRef.current) {
+      const password = passRef.current.value;
+      setPassword(password);
+      history.push('/');
+    }
   };
 
   return (

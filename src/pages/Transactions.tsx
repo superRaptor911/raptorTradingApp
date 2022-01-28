@@ -11,9 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {humanReadableValue} from '../utility';
 import {TableHead} from '@mui/material';
-import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import TableCustomPaginationAction from '../components/TableCustomPaginationAction';
 
-export default function Transaction() {
+export default function TransactionPage() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -31,11 +31,16 @@ export default function Transaction() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -60,12 +65,12 @@ export default function Transaction() {
           {transactions &&
             (rowsPerPage > 0
               ? transactions.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage,
-              )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage,
+                )
               : transactions
             ).map(row => (
-              <TableRow key={row.name}>
+              <TableRow key={row._id}>
                 <TableCell>{row.username}</TableCell>
                 <TableCell>{row.coinId}</TableCell>
 
@@ -79,9 +84,7 @@ export default function Transaction() {
                   {humanReadableValue(row.fee)}
                 </TableCell>
                 <TableCell align="right">
-                  {humanReadableValue(
-                    row.cost * row.coinCount + parseFloat(row.fee),
-                  )}
+                  {humanReadableValue(row.cost * row.coinCount + row.fee)}
                 </TableCell>
               </TableRow>
             ))}
@@ -108,7 +111,7 @@ export default function Transaction() {
               }}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
+              ActionsComponent={TableCustomPaginationAction}
             />
           </TableRow>
         </TableFooter>

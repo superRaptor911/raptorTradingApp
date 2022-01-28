@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import {useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -8,23 +7,41 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
-const TablePaginationAction = props => {
+interface TCPA_Props {
+  count: number;
+  page: number;
+  rowsPerPage: number;
+  onPageChange: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    page: number,
+  ) => void;
+}
+
+const TableCustomPaginationAction = (props: TCPA_Props) => {
   const theme = useTheme();
   const {count, page, rowsPerPage, onPageChange} = props;
 
-  const handleFirstPageButtonClick = event => {
+  const handleFirstPageButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     onPageChange(event, 0);
   };
 
-  const handleBackButtonClick = event => {
+  const handleBackButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     onPageChange(event, page - 1);
   };
 
-  const handleNextButtonClick = event => {
+  const handleNextButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     onPageChange(event, page + 1);
   };
 
-  const handleLastPageButtonClick = event => {
+  const handleLastPageButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
@@ -66,4 +83,4 @@ const TablePaginationAction = props => {
   );
 };
 
-export default TablePaginationAction;
+export default TableCustomPaginationAction;

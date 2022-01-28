@@ -10,15 +10,14 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit App.jsx
+edit pages/AdminLogin.tsx\ 
 argglobal
-balt api/wazirxApi.ts
-let s:l = 13 - ((12 * winheight(0) + 22) / 45)
+let s:l = 7 - ((6 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 13
-normal! 060|
+keepjumps 7
+normal! 0
 tabnext 1
 badd +4 store.ts
 badd +44 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
@@ -54,11 +53,11 @@ badd +34 components/Header.jsx
 badd +1 routes.ts
 badd +69 components/wazirx/WazirxTransactions.jsx
 badd +3 components/hooks/useTimer.js
-badd +1 pages/AddUser.jsx
+badd +14 pages/AddUser.tsx
 badd +69 components/summary/TotalCoins.jsx
 badd +8 pages/Summary.jsx
 badd +4 pages/User.jsx
-badd +48 App.jsx
+badd +13 App.jsx
 badd +15 api/request.ts
 badd +9 pages/Home.jsx
 badd +14 utility.ts
@@ -67,7 +66,7 @@ badd +4 components/hooks/useDeviceType.js
 badd +5 components/Visibility.jsx
 badd +31 pages/FundTransfer.jsx
 badd +34 pages/AdminMenu.jsx
-badd +18 pages/AdminLogin.jsx
+badd +7 pages/AdminLogin.tsx\ 
 badd +26 pages/Transactions.jsx
 badd +25 components/user/UserStats.jsx
 badd +11 components/TablePaginationAction.jsx

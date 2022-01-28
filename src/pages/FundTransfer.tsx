@@ -7,7 +7,7 @@ import {useStore} from '../store';
 import {addFundTransfer} from '../api/api';
 
 const FundTransfer = () => {
-  const [showMsg, setShowMsg] = useState();
+  const [showMsg, setShowMsg] = useState<undefined | string | boolean>();
   const [name, setName] = useState('');
   const [transType, setTransType] = useState('DEPOSIT');
 
@@ -54,7 +54,7 @@ const FundTransfer = () => {
           sx={{width: '80%', margin: 1, marginLeft: 'auto'}}>
           {users &&
             users.map(item => (
-              <MenuItem value={item.name} key={item._id}>
+              <MenuItem value={item.name} key={item.email}>
                 {item.name}
               </MenuItem>
             ))}
@@ -78,7 +78,7 @@ const FundTransfer = () => {
           variant="outlined"
           type="number"
           value={amount}
-          onChange={e => setAmount(e.target.value)}
+          onChange={e => setAmount(Number(e.target.value))}
           sx={{marginLeft: 'auto'}}
         />
       </div>
@@ -89,7 +89,7 @@ const FundTransfer = () => {
           variant="outlined"
           type="number"
           value={donation}
-          onChange={e => setDonation(e.target.value)}
+          onChange={e => setDonation(Number(e.target.value))}
           sx={{width: '45%'}}
         />
 
@@ -98,7 +98,7 @@ const FundTransfer = () => {
           variant="outlined"
           type="number"
           value={fee}
-          onChange={e => setFee(e.target.value)}
+          onChange={e => setFee(Number(e.target.value))}
           sx={{width: '45%', marginLeft: 'auto'}}
         />
       </div>
@@ -115,10 +115,10 @@ const FundTransfer = () => {
       </div>
 
       <Snackbar
-        open={showMsg}
+        open={Boolean(showMsg)}
         autoHideDuration={2000}
         onClose={() => {
-          setShowMsg(null);
+          setShowMsg(false);
         }}
         message={showMsg}
       />

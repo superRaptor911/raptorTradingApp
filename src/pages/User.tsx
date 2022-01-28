@@ -10,29 +10,19 @@ import UserCoins from '../components/user/UserCoins';
 import UserStats from '../components/user/UserStats';
 import UserTransaction from '../components/user/UserTransactions';
 import UserFundTransferList from '../components/user/UserFUndTransfers';
+import {getUser} from '../components/helper';
+import {Transaction, User} from '../types';
 
-const getUser = (username, users) => {
-  let user = null;
-  if (username && users) {
-    users.forEach(item => {
-      if (item.name === username) {
-        user = item;
-      }
-    });
-  }
-  return user;
-};
-
-const User = () => {
-  const {username} = useParams();
+const UserPage = () => {
+  const {username}: {username: string} = useParams();
   const users = useStore(state => state.users);
   const loadUsers = useStore(state => state.loadUsers);
 
   const transactions = useStore(state => state.transactions);
   const loadTransactions = useStore(state => state.loadTransactions);
 
-  const [userTransactions, setUserTransactions] = useState();
-  const [user, setUser] = useState();
+  const [userTransactions, setUserTransactions] = useState<Transaction[]>();
+  const [user, setUser] = useState<User | null>();
 
   useEffect(() => {
     loadTransactions();
@@ -45,7 +35,7 @@ const User = () => {
 
   useEffect(() => {
     if (transactions) {
-      let list = [];
+      let list: Transaction[] = [];
       transactions.forEach(item => {
         if (item.username === username) {
           list.push(item);
@@ -74,7 +64,7 @@ const User = () => {
             />
             <Typography sx={{textAlign: 'center'}}>{user.name}</Typography>
 
-            <UserStats user={user} transactions={userTransactions} />
+            <UserStats user={user} />
             <UserCoins user={user} transactions={userTransactions} />
           </Fragment>
         ) : (
@@ -88,4 +78,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserPage;

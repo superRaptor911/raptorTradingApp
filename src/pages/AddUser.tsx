@@ -5,10 +5,10 @@ import Avatar from '@mui/material/Avatar';
 import Snackbar from '@mui/material/Snackbar';
 
 const AddUser = () => {
-  const [showMsg, setShowMsg] = useState(false);
+  const [showMsg, setShowMsg] = useState<boolean | undefined | string>(false);
   const [name, setName] = useState('');
-  const [email, setEmail] = useState();
-  const [avatar, setAvatar] = useState();
+  const [email, setEmail] = useState('');
+  const [avatar, setAvatar] = useState('');
 
   const onSubmit = async () => {
     const result = await addUser(name, email, avatar);
@@ -71,10 +71,10 @@ const AddUser = () => {
       </div>
 
       <Snackbar
-        open={showMsg}
+        open={Boolean(showMsg)}
         autoHideDuration={2000}
         onClose={() => {
-          setShowMsg(null);
+          setShowMsg(false);
         }}
         message={showMsg}
       />

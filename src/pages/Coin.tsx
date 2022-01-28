@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {Fragment, useEffect, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -12,19 +11,15 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {get24HrChange, getCoinPrice} from '../components/helper';
+import {get24HrChange, getCoin, getCoinPrice} from '../components/helper';
 import MarketGraph from '../components/wazirx/tradingMenu/MarketGraph';
+import {Coin} from '../types';
 
-const getCoin = (coins, coinName) => {
-  for (const i of coins) {
-    if (i.name == coinName) {
-      return i;
-    }
-  }
-  return null;
-};
+interface CoinDetailsProp {
+  coin: Coin;
+}
 
-const CoinDetails = ({coin}) => {
+const CoinDetails = ({coin}: CoinDetailsProp) => {
   const coinPrices = useStore(state => state.coinPrices);
   return (
     <TableContainer
@@ -77,9 +72,9 @@ const CoinDetails = ({coin}) => {
   );
 };
 
-const Coin = () => {
-  const {coinName} = useParams();
-  const [coin, setCoin] = useState();
+const CoinPage = () => {
+  const {coinName}: {coinName: string} = useParams();
+  const [coin, setCoin] = useState<Coin | null>();
 
   const coins = useStore(state => state.coins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
@@ -128,4 +123,4 @@ const Coin = () => {
   );
 };
 
-export default Coin;
+export default CoinPage;
