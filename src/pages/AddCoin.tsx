@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import Snackbar from '@mui/material/Snackbar';
 
 const AddCoin = () => {
-  const [showMsg, setShowMsg] = useState<Boolean | String>(false);
+  const [showMsg, setShowMsg] = useState<Boolean | String | undefined>(false);
   const [name, setName] = useState('');
   const [coinId, setCoinId] = useState('');
   const [avatar, setAvatar] = useState('');

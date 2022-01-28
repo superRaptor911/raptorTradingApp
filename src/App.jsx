@@ -10,7 +10,7 @@ const CoinPage = lazy(() => import('./pages/Coin'));
 const FundTransfer = lazy(() => import('./pages/FundTransfer'));
 const AdminMenu = lazy(() => import('./pages/AdminMenu'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
-const AddTransations = lazy(() => import('./pages/AddTransations'));
+const AddTransations = lazy(() => import('./pages/AddTransactions'));
 const Transactions = lazy(() => import('./pages/Transactions'));
 const AddUser = lazy(() => import('./pages/AddUser'));
 const AddCoin = lazy(() => import('./pages/AddCoin'));

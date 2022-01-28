@@ -8,11 +8,11 @@ import {addTransaction} from '../api/api';
 import Snackbar from '@mui/material/Snackbar';
 
 const AddTransations = () => {
-  const [showMsg, setShowMsg] = useState(false);
+  const [showMsg, setShowMsg] = useState<string | undefined | boolean>(false);
+  // States for transaction
   const [name, setName] = useState('');
   const [coin, setCoin] = useState('');
   const [transType, setTransType] = useState('SELL');
-
   const [count, setCount] = useState(0);
   const [price, setPrice] = useState(0);
   const [fee, setFee] = useState(0);
@@ -65,7 +65,7 @@ const AddTransations = () => {
           sx={{width: '80%', margin: 1, marginLeft: 'auto'}}>
           {users &&
             users.map(item => (
-              <MenuItem value={item.name} key={item._id}>
+              <MenuItem value={item.name} key={item.email}>
                 {item.name}
               </MenuItem>
             ))}
@@ -82,7 +82,7 @@ const AddTransations = () => {
           sx={{width: '80%', margin: 1, marginLeft: 'auto'}}>
           {coins &&
             coins.map(item => (
-              <MenuItem value={item.id} key={item._id}>
+              <MenuItem value={item.id} key={item.id}>
                 {item.name}
               </MenuItem>
             ))}
@@ -106,7 +106,7 @@ const AddTransations = () => {
           variant="outlined"
           type="number"
           value={count}
-          onChange={e => setCount(e.target.value)}
+          onChange={e => setCount(Number(e.target.value))}
           sx={{marginLeft: 'auto'}}
         />
       </div>
@@ -117,7 +117,7 @@ const AddTransations = () => {
           variant="outlined"
           type="number"
           value={price}
-          onChange={e => setPrice(e.target.value)}
+          onChange={e => setPrice(Number(e.target.value))}
           sx={{width: '45%'}}
         />
 
@@ -126,7 +126,7 @@ const AddTransations = () => {
           variant="outlined"
           type="number"
           value={fee}
-          onChange={e => setFee(e.target.value)}
+          onChange={e => setFee(Number(e.target.value))}
           sx={{width: '45%', marginLeft: 'auto'}}
         />
       </div>
@@ -143,10 +143,10 @@ const AddTransations = () => {
       </div>
 
       <Snackbar
-        open={showMsg}
+        open={Boolean(showMsg)}
         autoHideDuration={2000}
         onClose={() => {
-          setShowMsg(null);
+          setShowMsg(false);
         }}
         message={showMsg}
       />

@@ -7,11 +7,11 @@ export function humanReadableValue(value: string | number) {
   }
 
   if (value > 1000) {
-    value = (value / 1000).toFixed(3) + 'K';
-  } else if (value > 0.001 && value < 0) {
-    value = (value * 1000).toFixed(3) + 'm';
+    value = (value / 1000).toFixed(2) + 'K';
+  } else if (value > 0.001 && value < 0.1) {
+    value = (value * 1000).toFixed(2) + 'm';
   } else {
-    value = value.toFixed(3);
+    value = value.toFixed(2);
   }
 
   return value;
