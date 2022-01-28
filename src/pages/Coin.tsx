@@ -20,7 +20,6 @@ interface CoinDetailsProp {
 }
 
 const CoinDetails = ({coin}: CoinDetailsProp) => {
-  const coinPrices = useStore(state => state.coinPrices);
   return (
     <TableContainer
       component={Paper}
