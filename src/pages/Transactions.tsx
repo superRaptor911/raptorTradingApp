@@ -9,7 +9,7 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {humanReadableValue} from '../utility';
+import {fixedNumber, humanReadableValue} from '../utility';
 import {TableHead} from '@mui/material';
 import TableCustomPaginationAction from '../components/TableCustomPaginationAction';
 
@@ -55,7 +55,7 @@ export default function TransactionPage() {
             <TableCell>Name</TableCell>
             <TableCell>Coin</TableCell>
             <TableCell>Type</TableCell>
-            <TableCell align="right">Coin Count</TableCell>
+            <TableCell>Coin Count</TableCell>
             <TableCell align="right">Coin Price</TableCell>
             <TableCell align="right">Fee</TableCell>
             <TableCell align="right">Total</TableCell>
@@ -78,13 +78,13 @@ export default function TransactionPage() {
                   style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>
                   {row.transType}
                 </TableCell>
-                <TableCell align="right">{row.coinCount}</TableCell>
+                <TableCell align="center">{row.coinCount}</TableCell>
                 <TableCell align="right">{row.cost}</TableCell>
                 <TableCell align="right">
                   {humanReadableValue(row.fee)}
                 </TableCell>
                 <TableCell align="right">
-                  {humanReadableValue(row.cost * row.coinCount + row.fee)}
+                  {fixedNumber(row.cost * row.coinCount + row.fee).toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}
