@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,79 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import {useStore} from '../../store';
-import {fixedNumber, humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
 import Visibility from '../Visibility';
-import {Coin, Transaction, User, Wallet} from '../../types';
+import {Transaction, User} from '../../types';
+import {getCoinAvatar, getCoinList} from './helper';
+import UserCoinStats from './UserCoinStats';
 
 interface UserCoinsProps {
   user: User;
   transactions: Transaction[];
 }
-
-interface UserCoinStatsProps {
-  coinId: string;
-  count: number;
-  prices: any;
-  isMobile: boolean;
-  coinInvestment: {[key: string]: number};
-}
-
-// Get List of coins from user's wallet
-const getCoinList = (wallet: Wallet) => {
-  let coinList = [];
-  for (const i in wallet.coins) {
-    const count = fixedNumber(wallet.coins[i]);
-    if (count > 0) {
-      coinList.push({id: i, count: count});
-    }
-  }
-  return coinList;
-};
-
-// Get Avatar of coin
-const getCoinAvatar = (coins: Coin[], coinId: string) => {
-  let avatar = '';
-  coins.forEach(item => {
-    if (item.id === coinId) {
-      avatar = item.avatar;
-    }
-  });
-  return avatar;
-};
-
-const UserCoinStats = ({
-  coinId,
-  count,
-  prices,
-  coinInvestment,
-  isMobile,
-}: UserCoinStatsProps) => {
-  if (prices) {
-    const value = prices[coinId].last * count;
-    const investment = Math.max(0, coinInvestment ? coinInvestment[coinId] : 0);
-    const profit = value - investment;
-    const profitPercent = (100 * profit) / investment;
-
-    const coinCout = isMobile ? humanReadableValue(count) : count;
-
-    return (
-      <Fragment>
-        <TableCell align="center">{coinCout}</TableCell>
-        <TableCell align="center">{humanReadableValue(investment)}</TableCell>
-        <TableCell align="center">{humanReadableValue(value)}</TableCell>
-        <TableCell align="center" sx={{color: profit < 0 ? 'red' : 'green'}}>
-          {humanReadableValue(profit)}
-        </TableCell>
-        <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
-          {humanReadableValue(profitPercent)}%
-        </TableCell>
-      </Fragment>
-    );
-  }
-
-  return null;
-};
 
 const UserCoins = ({user, transactions}: UserCoinsProps) => {
   const coinPrices = useStore(state => state.coinPrices);
