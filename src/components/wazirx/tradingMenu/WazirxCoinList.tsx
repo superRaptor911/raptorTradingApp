@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useEffect} from 'react';
 import {useStore} from '../../../store';
 import List from '@mui/material/List';
@@ -9,32 +8,13 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import useTimer from '../../hooks/useTimer';
+import {getCoinPrice} from '../../helper';
 
-const getCoinPrice = (prices, coinId) => {
-  let coinPrice = prices ? prices[coinId].last : 0;
-  coinPrice = parseFloat(coinPrice);
+interface WazirxCoinListProp {
+  setSelectedCoin: (coin: string) => void;
+}
 
-  if (coinPrice > 1000) {
-    coinPrice = (coinPrice / 1000).toFixed(2) + 'K';
-  } else if (coinPrice > 0 && coinPrice < 0.001) {
-    coinPrice = (coinPrice * 1000).toFixed(2) + 'm';
-  } else {
-    coinPrice = coinPrice.toFixed(2);
-  }
-  return coinPrice;
-};
-
-const get24hrChange = (prices, coinId) => {
-  let coinPrice = prices ? prices[coinId].last : 0;
-  coinPrice = parseFloat(coinPrice);
-
-  let oldPrice = prices ? prices[coinId].open : 0;
-  oldPrice = parseFloat(oldPrice);
-
-  return ((100 * (coinPrice - oldPrice)) / oldPrice).toFixed(2);
-};
-
-const WazirxCoinList = ({setSelectedCoin}) => {
+const WazirxCoinList = ({setSelectedCoin}: WazirxCoinListProp) => {
   const coins = useStore(state => state.coins);
   const coinPrices = useStore(state => state.coinPrices);
 
@@ -68,7 +48,7 @@ const WazirxCoinList = ({setSelectedCoin}) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={item.name}
-                  secondary={getCoinPrice(coinPrices, item.id)}
+                  secondary={getCoinPrice(item.id, coinPrices)}
                 />
               </ListItemButton>
             </ListItem>

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,12 +11,13 @@ import {Button, TableHead} from '@mui/material';
 import useTimer from '../hooks/useTimer';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import {WazirxCancelOrder, wazirxGetTransactions} from '../../api/wazirxApi';
+import {WazirxTransaction} from '../../types';
 
 const WazirxTransactions = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<WazirxTransaction[]>([]);
 
   useTimer(1500, () => {
     wazirxGetTransactions().then(response => {
@@ -40,11 +40,16 @@ const WazirxTransactions = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
-  const handleChangePage = (_event, newPage) => {
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -52,14 +57,14 @@ const WazirxTransactions = () => {
   const getFilteredTransaction = () => {
     if (rowsPerPage > 0) {
       return transactions
-        .map((e, i, a) => a[a.length - 1 - i]) // Non inplace reverse
+        .map((_e, i, a) => a[a.length - 1 - i]) // Non inplace reverse
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
     }
 
-    return transactions.map((e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
+    return transactions.map((_e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
   };
 
-  const cancelOrder = (coinId, orderId) => {
+  const cancelOrder = (coinId: string, orderId: string) => {
     WazirxCancelOrder(coinId, orderId);
   };
 

@@ -1,14 +1,14 @@
-/* eslint-disable react/prop-types */
 import {Avatar, Paper} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {useStore} from '../../../store';
+import {Coin, Wallet} from '../../../types';
 
-const Wallet = ({coinId}) => {
+const UserWallet = ({coinId}: {coinId: string}) => {
   const users = useStore(state => state.users);
   const coins = useStore(state => state.coins);
   const cred = useStore(state => state.userCred);
-  const [wallet, setWallet] = useState();
-  const [coin, setCoin] = useState();
+  const [wallet, setWallet] = useState<Wallet>();
+  const [coin, setCoin] = useState<Coin>();
 
   useEffect(() => {
     if (cred && users) {
@@ -34,7 +34,8 @@ const Wallet = ({coinId}) => {
 
   let count = wallet && wallet.coins && wallet.coins[coinId];
   count = count ? count : 0;
-  const balance = wallet && parseFloat(wallet.balance).toFixed(2);
+  const balance = wallet && wallet.balance.toFixed(2);
+
   return (
     <Paper sx={{padding: 2}}>
       <Avatar
@@ -48,4 +49,4 @@ const Wallet = ({coinId}) => {
   );
 };
 
-export default Wallet;
+export default UserWallet;

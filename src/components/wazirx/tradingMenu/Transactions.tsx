@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,8 +10,12 @@ import {TableHead} from '@mui/material';
 import useTimer from '../../hooks/useTimer';
 import {wazirxGetTransactions} from '../../../api/wazirxApi';
 import {useStore} from '../../../store';
+import {WazirxTransaction} from '../../../types';
 
-const changeInTrans = (newTrans, oldTrans) => {
+const changeInTrans = (
+  newTrans: WazirxTransaction[],
+  oldTrans: WazirxTransaction[],
+) => {
   if (oldTrans.length !== newTrans.length) {
     return true;
   }
@@ -27,7 +30,7 @@ const changeInTrans = (newTrans, oldTrans) => {
 };
 
 const Transactions = () => {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<WazirxTransaction[]>([]);
   const loadUsers = useStore(state => state.loadUsers);
 
   useTimer(1500, () => {
@@ -50,7 +53,7 @@ const Transactions = () => {
   }, []);
 
   const getFilteredTransaction = () => {
-    return transactions.map((e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
+    return transactions.map((_e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
   };
 
   return (

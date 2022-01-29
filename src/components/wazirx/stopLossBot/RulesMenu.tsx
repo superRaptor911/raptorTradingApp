@@ -6,10 +6,12 @@ import {
   StopLossBotEditRule,
   StopLossBotListRules,
 } from '../../../api/wazirxApi';
+import {StopLoss} from '../../../types';
 import RuleItem from './RuleItem';
 
 const RulesMenu = () => {
-  const [rules, setRules] = useState([]);
+  const [rules, setRules] = useState<StopLoss[]>([]);
+
   useEffect(() => {
     StopLossBotListRules().then(result => {
       if (result && result.status) {
@@ -18,7 +20,7 @@ const RulesMenu = () => {
     });
   }, []);
 
-  const updateRule = async newItem => {
+  const updateRule = async (newItem: StopLoss) => {
     await StopLossBotEditRule(
       newItem.isEnabled,
       newItem._id,
@@ -63,7 +65,7 @@ const RulesMenu = () => {
     });
   };
 
-  const handleDelete = async id => {
+  const handleDelete = async (id: string) => {
     await StopLossBotDeleteRule(id);
 
     StopLossBotListRules().then(result => {

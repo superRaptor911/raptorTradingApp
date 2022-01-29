@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {Button, Paper, TextField} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -11,8 +10,8 @@ import Stack from '@mui/material/Stack';
 import {useStore} from '../../store';
 import {WazirxPlaceOrder} from '../../api/wazirxApi';
 
-const WazirxAddTransaction = ({coinId}) => {
-  const [showMsg, setShowMsg] = useState(false);
+const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
+  const [showMsg, setShowMsg] = useState<boolean | string>(false);
   const [priceLoading, setPriceLoading] = useState(false);
   const [transType, setTransType] = useState('SELL');
 
@@ -82,7 +81,7 @@ const WazirxAddTransaction = ({coinId}) => {
           variant="outlined"
           type="number"
           value={count}
-          onChange={e => setCount(e.target.value)}
+          onChange={e => setCount(Number(e.target.value))}
           sx={{margin: 1}}
         />
       </div>
@@ -93,7 +92,7 @@ const WazirxAddTransaction = ({coinId}) => {
           variant="outlined"
           type="number"
           value={price}
-          onChange={e => setPrice(e.target.value)}
+          onChange={e => setPrice(Number(e.target.value))}
           sx={{margin: 1, width: '80%'}}
         />
 
@@ -108,8 +107,8 @@ const WazirxAddTransaction = ({coinId}) => {
         type="number"
         value={total}
         onChange={e => {
-          setTotal(e.target.value);
-          setCount(e.target.value / price);
+          setTotal(Number(e.target.value));
+          setCount(Number(e.target.value) / price);
         }}
         sx={{margin: 1, width: '95%'}}
       />
@@ -129,7 +128,7 @@ const WazirxAddTransaction = ({coinId}) => {
         open={Boolean(showMsg)}
         autoHideDuration={2000}
         onClose={() => {
-          setShowMsg(null);
+          setShowMsg(false);
         }}
         message={showMsg}
       />

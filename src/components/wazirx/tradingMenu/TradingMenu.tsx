@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import WazirxAddTransaction from '../WazirxAddTransaction';
 import MarketGraph from './MarketGraph';
 import Transactions from './Transactions';
-import Wallet from './Wallet';
+import UserWallet from './Wallet';
 import WazirxCoinList from './WazirxCoinList';
 
 const TradingMenu = () => {
@@ -13,7 +13,7 @@ const TradingMenu = () => {
       <WazirxCoinList setSelectedCoin={setCoinId} />
       <div>
         <MarketGraph coinId={coinId} />
-        <Wallet coinId={coinId} />
+        <UserWallet coinId={coinId} />
       </div>
       <div>
         <WazirxAddTransaction coinId={coinId} />

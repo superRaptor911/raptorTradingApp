@@ -13,6 +13,13 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {StopLoss} from '../../../types';
+
+interface RuleItemProps {
+  rule: StopLoss;
+  updateRule: (rule: StopLoss) => void;
+  handleDelete: (id: string) => void;
+}
 
 const useStyles = createUseStyles({
   itemContainer: {
@@ -24,19 +31,25 @@ const useStyles = createUseStyles({
   },
 });
 
-const genTextualContract = (coinId, price, count, transType, condition) => {
+const genTextualContract = (
+  coinId: string,
+  price: number,
+  count: number,
+  transType: string,
+  condition: string,
+) => {
   const str = `${transType} ${count} ${coinId} when price ${condition} than ${price}`;
   return str;
 };
 
 const checkIfChanged = (
-  rule,
-  isEnabled,
-  coinId,
-  price,
-  count,
-  transType,
-  condition,
+  rule: StopLoss,
+  isEnabled: boolean,
+  coinId: string,
+  price: number,
+  count: number,
+  transType: string,
+  condition: string,
 ) => {
   const isChanged = !(
     rule.isEnabled == isEnabled &&
@@ -50,7 +63,7 @@ const checkIfChanged = (
   return isChanged;
 };
 
-const RuleItem = ({rule, updateRule, handleDelete}) => {
+const RuleItem = ({rule, updateRule, handleDelete}: RuleItemProps) => {
   const classes = useStyles();
   const [isEnabled, setisEnabled] = useState(false);
   const [coinId, setCoinId] = useState('dogeinr');
@@ -58,7 +71,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
   const [count, setCount] = useState(0);
   const [condition, setCondition] = useState('LESS');
   const [transType, setTransType] = useState('SELL');
-  const [isModified, setIsModified] = useState(null);
+  const [isModified, setIsModified] = useState(false);
   const [textual, setTextual] = useState('');
 
   const coins = useStore(state => state.coins);
@@ -99,7 +112,10 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
     updateRule(rule);
     setIsModified(false);
   };
-  const handleCheck = event => {
+
+  const handleCheck = (event: {
+    target: {checked: boolean | ((prevState: boolean) => boolean)};
+  }) => {
     setisEnabled(event.target.checked);
   };
 
@@ -174,7 +190,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
               variant="outlined"
               type="number"
               value={count}
-              onChange={e => setCount(e.target.value)}
+              onChange={e => setCount(Number(e.target.value))}
               sx={{marginLeft: 'auto'}}
             />
           </div>
@@ -186,7 +202,7 @@ const RuleItem = ({rule, updateRule, handleDelete}) => {
               variant="outlined"
               type="number"
               value={price}
-              onChange={e => setPrice(e.target.value)}
+              onChange={e => setPrice(Number(e.target.value))}
               sx={{marginLeft: 'auto'}}
             />
           </div>
