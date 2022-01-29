@@ -24,14 +24,14 @@ const TotalInvestmentAndProfit = () => {
 
   if (users) {
     users.forEach(user => {
-      totalInvestment += parseFloat(user.wallet.investment);
-      wallet += parseFloat(user.wallet.balance);
+      totalInvestment += user.wallet.investment;
+      wallet += user.wallet.balance;
     });
 
     if (coinPrices && coins) {
       users.forEach(user => {
         for (const i in user.wallet.coins) {
-          const count = parseFloat(user.wallet.coins[i]);
+          const count = user.wallet.coins[i];
           const value = parseFloat(coinPrices[i].last);
 
           curVal += count * value;

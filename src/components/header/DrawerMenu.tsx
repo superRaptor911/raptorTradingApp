@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -35,7 +34,12 @@ const Menus = [
   },
 ];
 
-const DrawerMenu = ({showDrawer, toggleDrawer}) => {
+interface DrawerMenuProps {
+  showDrawer: boolean;
+  toggleDrawer: () => void;
+}
+
+const DrawerMenu = ({showDrawer, toggleDrawer}: DrawerMenuProps) => {
   const history = useHistory();
   return (
     <Drawer open={showDrawer} onClose={toggleDrawer}>

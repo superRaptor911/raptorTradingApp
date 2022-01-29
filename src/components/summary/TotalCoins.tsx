@@ -14,12 +14,12 @@ import useDeviceType from '../hooks/useDeviceType';
 const TotalCoins = () => {
   const users = useStore(state => state.users);
   const coins = useStore(state => state.coins);
-  const [coinsList, setCoinsList] = useState({});
+  const [coinsList, setCoinsList] = useState<{[key: string]: number}>({});
 
   const isMobile = 'mobile' === useDeviceType();
 
   useEffect(() => {
-    const coinMap = {};
+    const coinMap: {[key: string]: number} = {};
 
     if (coins && users) {
       coins.forEach(item => {
@@ -29,7 +29,7 @@ const TotalCoins = () => {
       users.forEach(user => {
         const userCoins = user.wallet.coins;
         for (const i in userCoins) {
-          coinMap[i] += parseFloat(userCoins[i]);
+          coinMap[i] += userCoins[i];
         }
       });
     }

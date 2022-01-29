@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {Fragment, useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,9 +11,23 @@ import {useStore} from '../../store';
 import {fixedNumber, humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
 import Visibility from '../Visibility';
+import {Coin, Transaction, User, Wallet} from '../../types';
+
+interface UserCoinsProps {
+  user: User;
+  transactions: Transaction[];
+}
+
+interface UserCoinStatsProps {
+  coinId: string;
+  count: number;
+  prices: any;
+  isMobile: boolean;
+  coinInvestment: {[key: string]: number};
+}
 
 // Get List of coins from user's wallet
-const getCoinList = wallet => {
+const getCoinList = (wallet: Wallet) => {
   let coinList = [];
   for (const i in wallet.coins) {
     const count = fixedNumber(wallet.coins[i]);
@@ -26,7 +39,7 @@ const getCoinList = wallet => {
 };
 
 // Get Avatar of coin
-const getCoinAvatar = (coins, coinId) => {
+const getCoinAvatar = (coins: Coin[], coinId: string) => {
   let avatar = '';
   coins.forEach(item => {
     if (item.id === coinId) {
@@ -36,7 +49,13 @@ const getCoinAvatar = (coins, coinId) => {
   return avatar;
 };
 
-const UserCoinStats = ({coinId, count, prices, coinInvestment, isMobile}) => {
+const UserCoinStats = ({
+  coinId,
+  count,
+  prices,
+  coinInvestment,
+  isMobile,
+}: UserCoinStatsProps) => {
   if (prices) {
     const value = prices[coinId].last * count;
     const investment = Math.max(0, coinInvestment ? coinInvestment[coinId] : 0);
@@ -63,11 +82,13 @@ const UserCoinStats = ({coinId, count, prices, coinInvestment, isMobile}) => {
   return null;
 };
 
-const UserCoins = ({user, transactions}) => {
+const UserCoins = ({user, transactions}: UserCoinsProps) => {
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
   const coins = useStore(state => state.coins);
-  const [coinInvestment, setCoinInvestment] = useState();
+  const [coinInvestment, setCoinInvestment] = useState<{[key: string]: number}>(
+    {},
+  );
 
   const isMobile = 'mobile' === useDeviceType();
 
@@ -77,18 +98,16 @@ const UserCoins = ({user, transactions}) => {
 
   useEffect(() => {
     if (transactions) {
-      let cids = {};
+      let cids: {[key: string]: number} = {};
       coins.forEach(item => {
         cids[item.id] = 0;
       });
 
       transactions.forEach(item => {
         if (item.transType == 'BUY') {
-          cids[item.coinId] +=
-            item.coinCount * item.cost + parseFloat(item.fee);
+          cids[item.coinId] += item.coinCount * item.cost + Number(item.fee);
         } else {
-          cids[item.coinId] -=
-            item.coinCount * item.cost - parseFloat(item.fee);
+          cids[item.coinId] -= item.coinCount * item.cost - Number(item.fee);
         }
       });
       setCoinInvestment(cids);

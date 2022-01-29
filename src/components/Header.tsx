@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, {Fragment, useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -16,19 +14,20 @@ import {loginUser} from '../api/api';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {styled} from '@mui/material';
+import {User} from '../types';
 
 const Offset = styled('div')(({theme}) => theme.mixins.toolbar);
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<null | User>();
   const userCred = useStore(state => state.userCred);
   const setUserCred = useStore(state => state.setUserCred);
   const users = useStore(state => state.users);
-  const [anchorEl, setAnchorEl] = useState();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>();
   const open = Boolean(anchorEl);
 
-  const handleClick = event => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -37,7 +36,7 @@ const Header = () => {
   };
 
   const handleMyAccount = () => {
-    history.push(ROUTES.userPath + user.name);
+    user && history.push(ROUTES.userPath + user.name);
     setAnchorEl(null);
   };
 
