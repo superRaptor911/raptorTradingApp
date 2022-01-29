@@ -2,8 +2,8 @@ import {useStore} from '../store';
 import {Coin, User, Wallet} from '../types';
 
 // method to get coin price using coinID
-export const getCoinPrice = (coinId: string) => {
-  const prices = useStore.getState().coinPrices;
+export const getCoinPrice = (coinId: string, coinPrices?: any) => {
+  const prices = coinPrices || useStore.getState().coinPrices;
   let coinPrice = prices && prices[coinId]?.last;
   coinPrice = coinPrice ? Number(coinPrice) : 0;
   return coinPrice;

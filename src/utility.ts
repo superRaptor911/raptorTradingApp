@@ -1,5 +1,3 @@
-import {User, Wallet} from './types';
-
 // Get Human readable value
 export function humanReadableValue(value: string | number) {
   value = Number(value);
