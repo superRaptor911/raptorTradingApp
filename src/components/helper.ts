@@ -1,5 +1,5 @@
 import {useStore} from '../store';
-import {Coin, User} from '../types';
+import {Coin, User, Wallet} from '../types';
 
 // method to get coin price using coinID
 export const getCoinPrice = (coinId: string) => {
@@ -55,4 +55,21 @@ export const getUser = (username: string, users: User[]) => {
     }
   }
   return null;
+};
+
+// Calculate current portfolio of user
+export const calculatePortfolio = (wallet: Wallet, prices: any) => {
+  let total = 0;
+  // Calculate coin worth
+  if (prices && wallet.coins) {
+    for (const i in wallet.coins) {
+      if (prices[i]) {
+        const count = wallet.coins[i];
+        const value: number = prices[i].last;
+        total += count * value;
+      }
+    }
+  }
+
+  return total + wallet.balance;
 };

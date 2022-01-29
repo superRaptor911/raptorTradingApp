@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {Fragment, useEffect} from 'react';
 import {useStore} from '../store';
 import Table from '@mui/material/Table';
@@ -13,49 +12,44 @@ import {useHistory} from 'react-router-dom';
 import useDeviceType from './hooks/useDeviceType';
 import Visibility from './Visibility';
 import {humanReadableValue} from '../utility';
+import {Wallet} from '../types';
+import {calculatePortfolio} from './helper';
+
+interface UserStatsProps {
+  wallet: Wallet;
+  coinPrices: any;
+  isMobile: boolean;
+}
 
 // Pre-process user
-const processUser = user => {
-  const inv = parseFloat(user.wallet.investment);
-  const bal = parseFloat(user.wallet.balance).toFixed(2);
-  user.wallet.investment = Math.max(0, inv);
-  user.wallet.balance = bal;
-  return user;
+const getInvestmentAndBalance = (wallet: Wallet) => {
+  const inv = wallet.investment;
+  const bal = wallet.balance.toFixed(2);
+
+  const rtn = [Math.max(0, inv), Number(bal)];
+  return rtn;
 };
 
-// Calculate current portfolio of user
-const calculateCurrentValue = (userCoins, prices, balance) => {
-  let total = 0;
-  if (prices) {
-    for (const i in userCoins) {
-      if (prices[i]) {
-        const count = parseFloat(userCoins[i]);
-        const value = parseFloat(prices[i].last);
-        total += count * value;
-      }
-    }
-  }
-
-  return (total + balance).toFixed(2);
-};
-
-const UserStats = ({investment, userCoins, coinPrices, balance, isMobile}) => {
-  const curVal = calculateCurrentValue(userCoins, coinPrices, balance);
-  const profit = (curVal - investment).toFixed(2);
-  const profitPercent = ((100 * profit) / investment).toFixed(2);
+const UserStats = ({wallet, coinPrices, isMobile}: UserStatsProps) => {
+  const [investment, _balance] = getInvestmentAndBalance(wallet);
+  const curVal = calculatePortfolio(wallet, coinPrices);
+  const profit = curVal - investment;
+  const profitPercent = (100 * profit) / investment;
 
   return (
     <Fragment>
       <TableCell>{investment}</TableCell>
-      <TableCell>{isMobile ? humanReadableValue(curVal) : curVal}</TableCell>
+      <TableCell>
+        {isMobile ? humanReadableValue(curVal) : curVal.toFixed(2)}
+      </TableCell>
 
       <Visibility hide={isMobile}>
         <TableCell sx={{color: profit < 0 ? 'red' : 'green'}}>
-          {profit}
+          {profit.toFixed(2)}
         </TableCell>
       </Visibility>
       <TableCell align="right" sx={{color: profit < 0 ? 'red' : 'green'}}>
-        {profitPercent}%
+        {profitPercent.toFixed(2)}%
       </TableCell>
     </Fragment>
   );
@@ -100,7 +94,7 @@ const UserList = () => {
 
         <TableBody>
           {users &&
-            users.map(processUser).map((row, id) => (
+            users.map((row, id) => (
               <TableRow key={id}>
                 <TableCell
                   component="th"
@@ -118,10 +112,8 @@ const UserList = () => {
                 </TableCell>
 
                 <UserStats
-                  investment={row.wallet.investment}
                   coinPrices={coinPrices}
-                  userCoins={row.wallet.coins}
-                  balance={parseFloat(row.wallet.balance)}
+                  wallet={row.wallet}
                   isMobile={isMobile}
                 />
               </TableRow>
