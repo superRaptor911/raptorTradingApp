@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,8 +9,9 @@ import Paper from '@mui/material/Paper';
 import {useStore} from '../../store';
 import {humanReadableValue} from '../../utility';
 import useDeviceType from '../hooks/useDeviceType';
+import {User} from '../../types';
 
-const UserStats = ({user}) => {
+const UserStats = ({user}: {user: User}) => {
   const fundTransfers = useStore(state => state.fundTransfers);
   const loadFundTransfers = useStore(state => state.loadFundTransfers);
 
@@ -19,7 +19,7 @@ const UserStats = ({user}) => {
   const [totalWithdrawl, setTotalWithdrawl] = useState(0);
 
   const isMobile = 'mobile' === useDeviceType();
-  const userBalance = user?.wallet.balance;
+  const userBalance = user.wallet.balance;
 
   useEffect(() => {
     loadFundTransfers();
@@ -32,12 +32,9 @@ const UserStats = ({user}) => {
       fundTransfers.forEach(item => {
         if (item.username === user.name) {
           if (item.transType === 'DEPOSIT') {
-            total += parseFloat(item.amount);
+            total += item.amount;
           } else {
-            withdrawl +=
-              parseFloat(item.amount) -
-              parseFloat(item.fee) -
-              parseFloat(item.donation);
+            withdrawl += item.amount - item.fee - item.donation;
           }
         }
       });
@@ -76,7 +73,7 @@ const UserStats = ({user}) => {
             <TableCell align="center">
               {isMobile
                 ? humanReadableValue(userBalance)
-                : parseFloat(userBalance).toFixed(2)}
+                : userBalance.toFixed(2)}
             </TableCell>
             <TableCell align="center">
               {humanReadableValue(totalInvestment)}

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,29 +11,38 @@ import {humanReadableValue} from '../../utility';
 import {TableHead} from '@mui/material';
 import useDeviceType from '../hooks/useDeviceType';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
+import {Transaction, User} from '../../types';
 
-const gg = transactions => {
-  let m = 3970.04;
-  const trans = [...transactions];
-  trans.reverse().forEach(row => {
-    const total = row.cost * row.coinCount + parseFloat(row.fee);
-    if (row.transType === 'BUY') {
-      m -= total;
-    } else {
-      m += total;
-      m -= 2 * row.fee;
-    }
-    console.log(
-      `${row.transType} ${row.coinCount} ${row.coinId} total = ${total}\n Balance: ${m}`,
-    );
-  });
-};
+// const gg = transactions => {
+//   let m = 3970.04;
+//   const trans = [...transactions];
+//   trans.reverse().forEach(row => {
+//     const total = row.cost * row.coinCount + parseFloat(row.fee);
+//     if (row.transType === 'BUY') {
+//       m -= total;
+//     } else {
+//       m += total;
+//       m -= 2 * row.fee;
+//     }
+//     console.log(
+//       `${row.transType} ${row.coinCount} ${row.coinId} total = ${total}\n Balance: ${m}`,
+//     );
+//   });
+// };
 
-export default function UserTransaction({user, allTransactions}) {
+interface UserTransactionProps {
+  user: User;
+  allTransactions: Transaction[];
+}
+
+export default function UserTransaction({
+  user,
+  allTransactions,
+}: UserTransactionProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     if (allTransactions) {
@@ -49,16 +57,21 @@ export default function UserTransaction({user, allTransactions}) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  gg(transactions);
+  // gg(transactions);
   return (
     <TableContainer
       component={Paper}
@@ -78,9 +91,9 @@ export default function UserTransaction({user, allTransactions}) {
           {transactions &&
             (rowsPerPage > 0
               ? transactions.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage,
-              )
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage,
+                )
               : transactions
             ).map(row => (
               <TableRow key={row._id}>
@@ -100,9 +113,7 @@ export default function UserTransaction({user, allTransactions}) {
                   {humanReadableValue(row.fee)}
                 </TableCell>
                 <TableCell align="center">
-                  {humanReadableValue(
-                    row.cost * row.coinCount + parseFloat(row.fee),
-                  )}
+                  {humanReadableValue(row.cost * row.coinCount + row.fee)}
                 </TableCell>
               </TableRow>
             ))}

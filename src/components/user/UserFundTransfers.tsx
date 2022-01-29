@@ -13,12 +13,13 @@ import {TableHead} from '@mui/material';
 import useDeviceType from '../hooks/useDeviceType';
 import {useStore} from '../../store';
 import TableCustomPaginationAction from '../TableCustomPaginationAction';
+import {FundTransfer, User} from '../../types';
 
-export default function UserFundTransferList({user}) {
+export default function UserFundTransferList({user}: {user: User}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<FundTransfer[]>([]);
   const fundTransfers = useStore(state => state.fundTransfers);
 
   useEffect(() => {
@@ -34,11 +35,16 @@ export default function UserFundTransferList({user}) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - itemCount) : 0;
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -66,7 +72,7 @@ export default function UserFundTransferList({user}) {
                 )
               : transactions
             ).map(row => (
-              <TableRow key={row.name}>
+              <TableRow key={row._id}>
                 <TableCell
                   style={{
                     color: row.transType === 'DEPOSIT' ? 'green' : 'red',
@@ -74,7 +80,9 @@ export default function UserFundTransferList({user}) {
                   {isMobile ? row.transType[0] : row.transType}
                 </TableCell>
                 <TableCell align="center">
-                  {isMobile ? humanReadableValue(row.amount) : row.amount}
+                  {isMobile
+                    ? humanReadableValue(row.amount)
+                    : row.amount.toFixed(2)}
                 </TableCell>
                 <TableCell align="center">
                   {humanReadableValue(row.fee)}
@@ -83,11 +91,7 @@ export default function UserFundTransferList({user}) {
                   {isMobile ? humanReadableValue(row.donation) : row.donation}
                 </TableCell>
                 <TableCell align="center">
-                  {humanReadableValue(
-                    parseFloat(row.amount) -
-                      parseFloat(row.donation) -
-                      parseFloat(row.fee),
-                  )}
+                  {(row.amount - row.donation - row.fee).toFixed(2)}
                 </TableCell>
               </TableRow>
             ))}

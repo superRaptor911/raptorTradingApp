@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import UserCoins from '../components/user/UserCoins';
 import UserStats from '../components/user/UserStats';
 import UserTransaction from '../components/user/UserTransactions';
-import UserFundTransferList from '../components/user/UserFUndTransfers';
+import UserFundTransferList from '../components/user/UserFundTransfers';
 import {getUser} from '../components/helper';
 import {Transaction, User} from '../types';
 
@@ -21,8 +21,8 @@ const UserPage = () => {
   const transactions = useStore(state => state.transactions);
   const loadTransactions = useStore(state => state.loadTransactions);
 
-  const [userTransactions, setUserTransactions] = useState<Transaction[]>();
-  const [user, setUser] = useState<User | null>();
+  const [userTransactions, setUserTransactions] = useState<Transaction[]>([]);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     loadTransactions();
@@ -66,14 +66,14 @@ const UserPage = () => {
 
             <UserStats user={user} />
             <UserCoins user={user} transactions={userTransactions} />
+
+            <UserTransaction user={user} allTransactions={userTransactions} />
+            <UserFundTransferList user={user} />
           </Fragment>
         ) : (
           <CircularProgress />
         )}
       </Paper>
-
-      <UserTransaction user={user} allTransactions={userTransactions} />
-      <UserFundTransferList user={user} />
     </div>
   );
 };

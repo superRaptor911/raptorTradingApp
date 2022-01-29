@@ -1,9 +1,9 @@
 import React, {lazy, Suspense} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Header from './components/Header';
 import Home from './pages/Home';
 import {ROUTES} from './routes';
 
+const Header = lazy(() => import('./components/Header'));
 const Summary = lazy(() => import('./pages/Summary'));
 const User = lazy(() => import('./pages/User'));
 const CoinPage = lazy(() => import('./pages/Coin'));
@@ -26,7 +26,11 @@ function App() {
   return (
     <div style={{overflowX: 'hidden'}}>
       <Router>
-        <Header />
+        <Suspense
+          fallback={<div style={{textAlign: 'center'}}>Header Loading...</div>}>
+          <Header />
+        </Suspense>
+        {/* <Header /> */}
         <Switch>
           <Route exact path={ROUTES.home}>
             <Home />
