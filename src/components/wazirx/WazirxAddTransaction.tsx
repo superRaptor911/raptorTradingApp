@@ -19,6 +19,8 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
   const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
@@ -41,7 +43,9 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
   };
 
   const onSubmit = async () => {
+    setIsLoading(true);
     const result = await WazirxPlaceOrder(coinId, transType, count, price);
+    setIsLoading(false);
     if (result) {
       setShowMsg(result.message);
       if (result.status) {
@@ -115,6 +119,7 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
 
       <div style={{display: 'flex', marginTop: 20}}>
         <Button
+          disabled={isLoading}
           variant="contained"
           onClick={onSubmit}
           sx={{

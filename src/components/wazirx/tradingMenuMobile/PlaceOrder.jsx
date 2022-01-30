@@ -29,6 +29,7 @@ const PlaceOrder = ({visible, setVisible}) => {
   const [count, setCount] = useState(0);
   const [price, setPrice] = useState(0);
   const [total, setTotal] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loadCoinPrices();
@@ -54,7 +55,9 @@ const PlaceOrder = ({visible, setVisible}) => {
   };
 
   const onSubmit = async () => {
+    setIsLoading(true);
     const result = await WazirxPlaceOrder(coinId, side, count, price);
+    setIsLoading(false);
     if (result) {
       setMessage(result.message);
       if (result.status) {
@@ -115,7 +118,11 @@ const PlaceOrder = ({visible, setVisible}) => {
           }}
         />
 
-        <Button style={{width: '100%'}} variant="contained" onClick={onSubmit}>
+        <Button
+          style={{width: '100%'}}
+          variant="contained"
+          disabled={isLoading}
+          onClick={onSubmit}>
           {side} {coinId}
         </Button>
       </Paper>
