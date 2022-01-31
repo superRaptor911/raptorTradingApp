@@ -44,7 +44,7 @@ const UserPage = () => {
 
       setUserTransactions(list);
     }
-  }, [transactions]);
+  }, [transactions, username]);
 
   return (
     <div
