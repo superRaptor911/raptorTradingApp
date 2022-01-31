@@ -31,7 +31,7 @@ const UserPage = () => {
 
   useEffect(() => {
     setUser(getUser(username, users));
-  }, [users]);
+  }, [users, username]);
 
   useEffect(() => {
     if (transactions) {
