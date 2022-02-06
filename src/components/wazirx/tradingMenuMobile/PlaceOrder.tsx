@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useEffect, useState} from 'react';
 import Modal from '@mui/material/Modal';
 import {Button, Paper} from '@mui/material';
@@ -9,18 +8,20 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import useTimer from '../../hooks/useTimer';
 import {WazirxPlaceOrder} from '../../../api/wazirxApi';
 import {getWazirxUser} from '../../helper';
-// import {useHistory} from 'react-router-dom';
-// import {ROUTES} from '../../../routes';
+import {Wallet} from '../../../types';
 
-const PlaceOrder = ({visible, setVisible}) => {
-  // const history = useHistory();
+interface PlaceOrderProps {
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+}
+
+const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
   const coinId = useTradingStore(state => state.selectedCoinId);
   const side = useTradingStore(state => state.side);
   const setMessage = useTradingStore(state => state.setTransPlaceMessage);
-  const [user, setUser] = useState();
+  const [userWallet, setUserWallet] = useState<Wallet | null | undefined>();
 
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
@@ -33,7 +34,10 @@ const PlaceOrder = ({visible, setVisible}) => {
 
   useEffect(() => {
     loadCoinPrices();
-    setUser(getWazirxUser());
+    const user = getWazirxUser();
+    if (user) {
+      setUserWallet(user.wallet);
+    }
   }, []);
 
   useEffect(() => {
@@ -55,17 +59,18 @@ const PlaceOrder = ({visible, setVisible}) => {
   };
 
   const onSubmit = async () => {
-    setIsLoading(true);
-    const result = await WazirxPlaceOrder(coinId, side, count, price);
-    setIsLoading(false);
-    if (result) {
-      setMessage(result.message);
-      if (result.status) {
-        // history.push(ROUTES.tradingMenu);
-        setVisible(false);
+    if (coinId) {
+      setIsLoading(true);
+      const result = await WazirxPlaceOrder(coinId, side, count, price);
+      setIsLoading(false);
+      if (result) {
+        setMessage(result.message);
+        if (result.status) {
+          setVisible(false);
+        }
+      } else {
+        setMessage('Error');
       }
-    } else {
-      setMessage('Error');
     }
   };
 
@@ -89,7 +94,7 @@ const PlaceOrder = ({visible, setVisible}) => {
           variant="outlined"
           style={{width: '100%', marginTop: 10}}
           value={count}
-          onChange={e => setCount(e.target.value)}
+          onChange={e => setCount(Number(e.target.value))}
         />
 
         <div style={{display: 'flex'}}>
@@ -99,7 +104,7 @@ const PlaceOrder = ({visible, setVisible}) => {
             variant="outlined"
             style={{width: '100%', marginTop: 12}}
             value={price}
-            onChange={e => setPrice(e.target.value)}
+            onChange={e => setPrice(Number(e.target.value))}
           />
 
           <IconButton color="secondary" onClick={updatePrices} style={{}}>
@@ -113,8 +118,9 @@ const PlaceOrder = ({visible, setVisible}) => {
           style={{width: '100%', marginTop: 12, marginBottom: 15}}
           value={total}
           onChange={e => {
-            setTotal(e.target.value);
-            setCount(e.target.value / price);
+            const val = Number(e.target.value);
+            setTotal(val);
+            setCount(val / price);
           }}
         />
 
