@@ -31,7 +31,7 @@ export const getWazirxUser = () => {
   const cred = useStore.getState().userCred;
   if (cred) {
     const users = useStore.getState().users;
-    const wazirxUser = users?.find(user => user.email === user.email);
+    const wazirxUser = users?.find(user => user.email === cred.email);
     return wazirxUser;
   }
   return null;

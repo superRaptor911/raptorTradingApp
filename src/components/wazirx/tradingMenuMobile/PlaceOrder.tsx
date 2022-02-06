@@ -11,6 +11,8 @@ import Stack from '@mui/material/Stack';
 import {WazirxPlaceOrder} from '../../../api/wazirxApi';
 import {getWazirxUser} from '../../helper';
 import {Wallet} from '../../../types';
+import {useHistory} from 'react-router-dom';
+import {ROUTES} from '../../../routes';
 
 interface PlaceOrderProps {
   visible: boolean;
@@ -18,10 +20,11 @@ interface PlaceOrderProps {
 }
 
 const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
+  const history = useHistory();
   const coinId = useTradingStore(state => state.selectedCoinId);
   const side = useTradingStore(state => state.side);
   const setMessage = useTradingStore(state => state.setTransPlaceMessage);
-  const [userWallet, setUserWallet] = useState<Wallet | null | undefined>();
+  const [userWallet, setUserWallet] = useState<Wallet | undefined>();
 
   const coinPrices = useStore(state => state.coinPrices);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
@@ -37,6 +40,8 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
     const user = getWazirxUser();
     if (user) {
       setUserWallet(user.wallet);
+    } else {
+      history.push(ROUTES.loginUser);
     }
   }, []);
 
@@ -74,6 +79,21 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
     }
   };
 
+  // Get number of coins in user's wallet
+  const getCoinCount = () => {
+    let count = 0;
+    if (coinId) {
+      const coinCount = userWallet?.coins?.[coinId];
+      if (coinCount) {
+        count = coinCount;
+      }
+    }
+    return count;
+  };
+
+  if (!coinId || !userWallet) {
+    return null;
+  }
   return (
     <Modal open={visible} onClose={() => setVisible(false)}>
       <Paper
@@ -96,6 +116,16 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
           value={count}
           onChange={e => setCount(Number(e.target.value))}
         />
+        {getCoinCount() > 0 && (
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 14,
+              padding: 4,
+            }}>
+            {coinId + ' ' + getCoinCount()}
+          </div>
+        )}
 
         <div style={{display: 'flex'}}>
           <TextField
@@ -115,7 +145,7 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
         <TextField
           label="Total"
           variant="outlined"
-          style={{width: '100%', marginTop: 12, marginBottom: 15}}
+          style={{width: '100%', marginTop: 14}}
           value={total}
           onChange={e => {
             const val = Number(e.target.value);
@@ -123,9 +153,17 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
             setCount(val / price);
           }}
         />
+        <div
+          style={{
+            display: 'flex',
+            fontSize: 14,
+            padding: 4,
+          }}>
+          ₹{userWallet?.balance.toFixed(2)}
+        </div>
 
         <Button
-          style={{width: '100%'}}
+          style={{width: '100%', marginTop: 12}}
           variant="contained"
           disabled={isLoading}
           onClick={onSubmit}>

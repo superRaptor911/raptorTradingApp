@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenuMobile/PlaceOrder.jsx
+edit components/wazirx/tradingMenuMobile/PlaceOrder.tsx
 argglobal
-balt components/wazirx/WazirxAddTransaction.tsx
-let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+balt components/helper.ts
+let s:l = 88 - ((19 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 037|
+keepjumps 88
+normal! 012|
 tabnext 1
+badd +120 components/wazirx/tradingMenuMobile/PlaceOrder.tsx
+badd +122 components/wazirx/WazirxAddTransaction.tsx
 badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +38 components/CoinList.tsx
 badd +37 pages/AdminLogin.tsx
@@ -34,7 +36,7 @@ badd +5 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
-badd +5 components/helper.ts
+badd +31 components/helper.ts
 badd +1 components/user/UserTransactions.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +20 components/wazirx/tradingMenu/MarketGraph.jsx
@@ -42,10 +44,8 @@ badd +36 pages/Coin.tsx
 badd +67 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +1 components/wazirx/tradingMenu/Transactions.tsx
 badd +19 components/wazirx/tradingMenu/TradingMenu.tsx
-badd +72 components/wazirx/tradingMenuMobile/PlaceOrder.jsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
 badd +8 components/wazirx/tradingMenu/Wallet.tsx
-badd +122 components/wazirx/WazirxAddTransaction.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
 badd +30 pages/wazirx/WazirxDashboard.jsx
 badd +18 components/user/UserFundTransfers.tsx
