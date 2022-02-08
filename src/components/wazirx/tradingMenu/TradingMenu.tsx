@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import WazirxAddTransaction from '../WazirxAddTransaction';
+import PlaceOrder from '../PlaceOrder';
 import MarketGraph from './MarketGraph';
 import Transactions from './Transactions';
 import UserWallet from './Wallet';
@@ -16,7 +16,7 @@ const TradingMenu = () => {
         <UserWallet coinId={coinId} />
       </div>
       <div>
-        <WazirxAddTransaction coinId={coinId} />
+        <PlaceOrder coinId={coinId} />
         <Transactions />
       </div>
     </div>

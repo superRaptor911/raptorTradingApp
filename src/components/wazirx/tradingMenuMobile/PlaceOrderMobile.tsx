@@ -19,7 +19,7 @@ interface PlaceOrderProps {
   setVisible: (visible: boolean) => void;
 }
 
-const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
+const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
   const history = useHistory();
   const coinId = useTradingStore(state => state.selectedCoinId);
   const side = useTradingStore(state => state.side);
@@ -179,4 +179,4 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
   );
 };
 
-export default PlaceOrder;
+export default PlaceOrderMobile;

@@ -10,19 +10,19 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenuMobile/PlaceOrder.tsx
+edit components/wazirx/WazirxAddTransaction.tsx
 argglobal
-balt components/helper.ts
-let s:l = 177 - ((44 * winheight(0) + 22) / 45)
+balt pages/AddTransactions.tsx
+let s:l = 120 - ((42 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 177
-normal! 026|
+keepjumps 120
+normal! 020|
 tabnext 1
-badd +126 components/wazirx/tradingMenuMobile/PlaceOrder.tsx
+badd +69 components/wazirx/tradingMenuMobile/PlaceOrder.tsx
 badd +34 components/helper.ts
-badd +122 components/wazirx/WazirxAddTransaction.tsx
+badd +47 components/wazirx/WazirxAddTransaction.tsx
 badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +38 components/CoinList.tsx
 badd +37 pages/AdminLogin.tsx

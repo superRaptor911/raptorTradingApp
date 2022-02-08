@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import {useStore} from '../../store';
 import {WazirxPlaceOrder} from '../../api/wazirxApi';
 
-const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
+const PlaceOrder = ({coinId}: {coinId: string}) => {
   const [showMsg, setShowMsg] = useState<boolean | string>(false);
   const [priceLoading, setPriceLoading] = useState(false);
   const [transType, setTransType] = useState('SELL');
@@ -146,4 +146,4 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
   );
 };
 
-export default WazirxAddTransaction;
+export default PlaceOrder;

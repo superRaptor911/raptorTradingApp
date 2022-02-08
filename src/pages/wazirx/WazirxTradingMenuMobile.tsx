@@ -13,8 +13,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import {WazirxGetCoinHistory} from '../../api/wazirxApi';
-import PlaceOrder from '../../components/wazirx/tradingMenuMobile/PlaceOrder';
 import {useTradingStore} from '../../components/wazirx/tradingMenuMobile/uiStore';
+import PlaceOrderMobile from '../../components/wazirx/tradingMenuMobile/PlaceOrderMobile';
 
 interface PeriodSelectorProps {
   period: number;
@@ -162,7 +162,7 @@ const WazirxTradingMenuMobile = () => {
       </ResponsiveContainer>
 
       <BuySellButtons coinId={coinId} setShowPlaceMenu={setShowPlaceMenu} />
-      <PlaceOrder visible={showPlaceMenu} setVisible={setShowPlaceMenu} />
+      <PlaceOrderMobile visible={showPlaceMenu} setVisible={setShowPlaceMenu} />
 
       <Snackbar
         open={Boolean(message)}
