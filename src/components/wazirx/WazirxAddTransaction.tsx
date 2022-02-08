@@ -15,9 +15,9 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
   const [priceLoading, setPriceLoading] = useState(false);
   const [transType, setTransType] = useState('SELL');
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number | string>(0);
   const [price, setPrice] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState<number | string>(0);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +25,7 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
   useEffect(() => {
-    setTotal(count * price);
+    setTotal(Number(count) * price);
   }, [count, price]);
 
   useEffect(() => {
@@ -44,7 +44,12 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    const result = await WazirxPlaceOrder(coinId, transType, count, price);
+    const result = await WazirxPlaceOrder(
+      coinId,
+      transType,
+      Number(count),
+      price,
+    );
     setIsLoading(false);
     if (result) {
       setShowMsg(result.message);
@@ -85,7 +90,7 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
           variant="outlined"
           type="number"
           value={count}
-          onChange={e => setCount(Number(e.target.value))}
+          onChange={e => setCount(e.target.value)}
           sx={{margin: 1}}
         />
       </div>
@@ -111,7 +116,7 @@ const WazirxAddTransaction = ({coinId}: {coinId: string}) => {
         type="number"
         value={total}
         onChange={e => {
-          setTotal(Number(e.target.value));
+          setTotal(e.target.value);
           setCount(Number(e.target.value) / price);
         }}
         sx={{margin: 1, width: '95%'}}
