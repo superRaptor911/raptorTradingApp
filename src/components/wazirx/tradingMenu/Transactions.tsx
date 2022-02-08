@@ -53,7 +53,7 @@ const Transactions = () => {
   }, []);
 
   const getFilteredTransaction = () => {
-    return transactions.map((_e, i, a) => a[a.length - 1 - i]); // Non inplace reverse
+    return transactions.map((_e, i, a) => a[a.length - 1 - i]).slice(0, 25); // Non inplace reverse
   };
 
   return (
