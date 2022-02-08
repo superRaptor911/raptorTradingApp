@@ -13,14 +13,15 @@ argglobal
 edit components/wazirx/tradingMenuMobile/PlaceOrder.tsx
 argglobal
 balt components/helper.ts
-let s:l = 88 - ((19 * winheight(0) + 22) / 45)
+let s:l = 177 - ((44 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 88
-normal! 012|
+keepjumps 177
+normal! 026|
 tabnext 1
-badd +120 components/wazirx/tradingMenuMobile/PlaceOrder.tsx
+badd +126 components/wazirx/tradingMenuMobile/PlaceOrder.tsx
+badd +34 components/helper.ts
 badd +122 components/wazirx/WazirxAddTransaction.tsx
 badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +38 components/CoinList.tsx
@@ -36,7 +37,6 @@ badd +5 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
-badd +31 components/helper.ts
 badd +1 components/user/UserTransactions.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +20 components/wazirx/tradingMenu/MarketGraph.jsx

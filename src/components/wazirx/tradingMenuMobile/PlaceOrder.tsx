@@ -30,9 +30,9 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
   const [priceLoading, setPriceLoading] = useState(false);
-  const [count, setCount] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [count, setCount] = useState<number | string>('0');
+  const [price, setPrice] = useState<number>(0);
+  const [total, setTotal] = useState<number | string>('0');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
   }, []);
 
   useEffect(() => {
-    setTotal(count * price);
+    setTotal(Number(count) * Number(price));
   }, [count, price]);
 
   useEffect(() => {
@@ -66,7 +66,12 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
   const onSubmit = async () => {
     if (coinId) {
       setIsLoading(true);
-      const result = await WazirxPlaceOrder(coinId, side, count, price);
+      const result = await WazirxPlaceOrder(
+        coinId,
+        side,
+        Number(count),
+        Number(price),
+      );
       setIsLoading(false);
       if (result) {
         setMessage(result.message);
@@ -114,7 +119,7 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
           variant="outlined"
           style={{width: '100%', marginTop: 10}}
           value={count}
-          onChange={e => setCount(Number(e.target.value))}
+          onChange={e => setCount(e.target.value)}
         />
         {getCoinCount() > 0 && (
           <div
@@ -149,7 +154,7 @@ const PlaceOrder = ({visible, setVisible}: PlaceOrderProps) => {
           value={total}
           onChange={e => {
             const val = Number(e.target.value);
-            setTotal(val);
+            setTotal(e.target.value);
             setCount(val / price);
           }}
         />
