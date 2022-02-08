@@ -8,10 +8,10 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {Button, TableHead} from '@mui/material';
-import useTimer from '../hooks/useTimer';
+import useTimer from '../../hooks/useTimer';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
-import {WazirxCancelOrder, wazirxGetTransactions} from '../../api/wazirxApi';
-import {WazirxTransaction} from '../../types';
+import {WazirxCancelOrder, wazirxGetTransactions} from '../../../api/wazirxApi';
+import {WazirxTransaction} from '../../../types';
 
 const WazirxTransactions = () => {
   const [page, setPage] = useState(0);

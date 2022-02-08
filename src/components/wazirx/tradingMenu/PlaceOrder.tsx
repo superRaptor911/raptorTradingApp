@@ -7,8 +7,8 @@ import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import {useStore} from '../../store';
-import {WazirxPlaceOrder} from '../../api/wazirxApi';
+import {useStore} from '../../../store';
+import {WazirxPlaceOrder} from '../../../api/wazirxApi';
 
 const PlaceOrder = ({coinId}: {coinId: string}) => {
   const [showMsg, setShowMsg] = useState<boolean | string>(false);

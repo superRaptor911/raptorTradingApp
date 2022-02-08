@@ -1,13 +1,12 @@
-/* eslint-disable react/prop-types */
 import React, {useState} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import WazirxTransactions from '../../components/wazirx/WazirxTransactions';
 import TradingMenu from '../../components/wazirx/tradingMenu/TradingMenu';
 import useDeviceType from '../../components/hooks/useDeviceType';
 import TradingMenuMobile from '../../components/wazirx/tradingMenuMobile/TradingMenu';
+import WazirxTransactions from '../../components/wazirx/tradingMenu/WazirxTransactions';
 
-function TabPanel(props) {
+function TabPanel(props: any) {
   const {children, value, index, ...other} = props;
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
@@ -20,7 +19,7 @@ const WazirxDashboard = () => {
   const [value, setValue] = useState(0);
   const isMobile = 'mobile' === useDeviceType();
 
-  const handleChange = (_event, newValue) => {
+  const handleChange = (_event: any, newValue: any) => {
     setValue(newValue);
   };
 
