@@ -36,6 +36,7 @@ const UserCoins = ({user, transactions}: UserCoinsProps) => {
   useEffect(() => {
     if (transactions) {
       let cids: {[key: string]: number} = {};
+
       coins.forEach(item => {
         cids[item.id] = 0;
       });

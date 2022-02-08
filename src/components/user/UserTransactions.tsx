@@ -12,6 +12,7 @@ import {TableHead} from '@mui/material';
 import useDeviceType from '../hooks/useDeviceType';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import {Transaction, User} from '../../types';
+import {getCoinPrice} from '../helper';
 
 // const gg = transactions => {
 //   let m = 3970.04;
@@ -34,6 +35,39 @@ interface UserTransactionProps {
   user: User;
   allTransactions: Transaction[];
 }
+
+const RenderRow = (row: Transaction, isMobile: boolean) => {
+  const total = row.cost * row.coinCount + row.fee;
+  const curPrice = row.coinCount * getCoinPrice(row.coinId);
+  const change = curPrice - total;
+  return (
+    <TableRow key={row._id}>
+      <TableCell>{row.coinId}</TableCell>
+
+      <TableCell
+        align="center"
+        style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>
+        {isMobile ? row.transType[0] : row.transType}
+      </TableCell>
+      <TableCell align="center">
+        {isMobile ? humanReadableValue(row.coinCount) : row.coinCount}
+      </TableCell>
+      <TableCell align="center">
+        {isMobile ? humanReadableValue(row.cost) : row.cost}
+      </TableCell>
+      <TableCell align="center">{humanReadableValue(row.fee)}</TableCell>
+      <TableCell align="center">{humanReadableValue(total)}</TableCell>
+
+      <TableCell align="center">
+        {row.transType == 'BUY' ? humanReadableValue(curPrice) : '-'}
+      </TableCell>
+
+      <TableCell align="center" style={{color: change > 0 ? 'green' : 'red'}}>
+        {row.transType == 'BUY' ? humanReadableValue(change) : '-'}
+      </TableCell>
+    </TableRow>
+  );
+};
 
 export default function UserTransaction({
   user,
@@ -80,11 +114,13 @@ export default function UserTransaction({
         <TableHead>
           <TableRow>
             <TableCell>Coin</TableCell>
-            <TableCell>Type</TableCell>
+            <TableCell align="center">Type</TableCell>
             <TableCell align="center">Coin Count</TableCell>
             <TableCell align="center">Coin Price</TableCell>
             <TableCell align="center">Fee</TableCell>
             <TableCell align="center">Total</TableCell>
+            <TableCell align="center">Cur Val</TableCell>
+            <TableCell align="center">Change</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -95,28 +131,7 @@ export default function UserTransaction({
                   page * rowsPerPage + rowsPerPage,
                 )
               : transactions
-            ).map(row => (
-              <TableRow key={row._id}>
-                <TableCell>{row.coinId}</TableCell>
-
-                <TableCell
-                  style={{color: row.transType === 'BUY' ? 'green' : 'red'}}>
-                  {isMobile ? row.transType[0] : row.transType}
-                </TableCell>
-                <TableCell align="center">
-                  {isMobile ? humanReadableValue(row.coinCount) : row.coinCount}
-                </TableCell>
-                <TableCell align="center">
-                  {isMobile ? humanReadableValue(row.cost) : row.cost}
-                </TableCell>
-                <TableCell align="center">
-                  {humanReadableValue(row.fee)}
-                </TableCell>
-                <TableCell align="center">
-                  {humanReadableValue(row.cost * row.coinCount + row.fee)}
-                </TableCell>
-              </TableRow>
-            ))}
+            ).map(row => RenderRow(row, isMobile))}
 
           {emptyRows > 0 && (
             <TableRow style={{height: 53 * emptyRows}}>
@@ -125,24 +140,21 @@ export default function UserTransaction({
           )}
         </TableBody>
         <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[10, 15, 25, {label: 'All', value: -1}]}
-              colSpan={3}
-              count={itemCount}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
+          <TablePagination
+            rowsPerPageOptions={[10, 15, 25, {label: 'All', value: -1}]}
+            count={itemCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            SelectProps={{
+              inputProps: {
+                'aria-label': 'rows per page',
+              },
+              native: true,
+            }}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
         </TableFooter>
       </Table>
     </TableContainer>

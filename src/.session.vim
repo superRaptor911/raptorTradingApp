@@ -10,15 +10,15 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit ~/program/react/vite/raptorTradingApp/src/components/wazirx/tradingMenu/./PlaceOrder.tsx
+edit components/wazirx/tradingMenu/Transactions.tsx
 argglobal
-balt components/wazirx/tradingMenu/TradingMenu.tsx
-let s:l = 2 - ((1 * winheight(0) + 22) / 45)
+balt pages/wazirx/WazirxDashboard.tsx
+let s:l = 92 - ((44 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 2
-normal! 0
+keepjumps 92
+normal! 058|
 tabnext 1
 badd +32 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
 badd +34 components/helper.ts
@@ -32,7 +32,7 @@ badd +27 components/UserList.tsx
 badd +32 api/api.ts
 badd +30 api/wazirxApi.ts
 badd +91 pages/AddTransactions.tsx
-badd +1 pages/wazirx/WazirxTradingMenuMobile.tsx
+badd +2 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
@@ -41,18 +41,17 @@ badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +20 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +36 pages/Coin.tsx
 badd +55 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
-badd +1 components/wazirx/tradingMenu/Transactions.tsx
-badd +2 components/wazirx/tradingMenu/TradingMenu.tsx
+badd +56 components/wazirx/tradingMenu/Transactions.tsx
+badd +16 components/wazirx/tradingMenu/TradingMenu.tsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
 badd +8 components/wazirx/tradingMenu/Wallet.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
-badd +30 pages/wazirx/WazirxDashboard.jsx
+badd +1 pages/wazirx/WazirxDashboard.tsx
 badd +18 components/user/UserFundTransfers.tsx
 badd +1 components/header/DrawerMenu.tsx
 badd +1 components/wazirx/tradingMenu/WazirxCoinList.tsx
 badd +55 components/Header.tsx
 badd +1 routes.ts
-badd +33 components/wazirx/WazirxTransactions.tsx
 badd +3 components/hooks/useTimer.js
 badd +12 pages/AddUser.tsx
 badd +18 components/summary/TotalCoins.tsx
@@ -71,10 +70,11 @@ badd +34 pages/Transactions.tsx
 badd +17 components/user/UserStats.tsx
 badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
-badd +20 components/wazirx/tradingMenuMobile/TradingMenu.jsx
+badd +28 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +17 components/user/helper.ts
 badd +1 components/user/UserCoinStats.tsx
-badd +1 ~/program/react/vite/raptorTradingApp/src/components/wazirx/tradingMenu/./PlaceOrder.tsx
+badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
+badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
