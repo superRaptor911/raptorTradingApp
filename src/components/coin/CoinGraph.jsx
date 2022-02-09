@@ -29,7 +29,7 @@ const convertToObj = d => {
   };
 };
 
-const CoinGraph = ({coinId}) => {
+const CoinGraph = ({coinId, customHeight = 600}) => {
   const [initialData, setInitialData] = useState([]);
   const [width, setWidth] = useState(800);
   const [period, setPeriod] = useState(60);
@@ -37,14 +37,6 @@ const CoinGraph = ({coinId}) => {
   const div = useCallback(node => {
     if (node !== null) {
       setWidth(node.getBoundingClientRect().width);
-      // console.log(node);
-      // node.addEventListener(
-      //   'scroll',
-      //   () => {
-      //     console.log('ggggg');
-      //   },
-      //   {passive: false},
-      // );
     }
   }, []);
 
@@ -70,7 +62,7 @@ const CoinGraph = ({coinId}) => {
 
   const margin = {left: 70, right: 70, top: 20, bottom: 30};
 
-  const height = 600;
+  const height = customHeight ? customHeight : 600;
 
   const gridHeight = height - margin.top - margin.bottom;
   const gridWidth = width - margin.left - margin.right;
@@ -83,11 +75,7 @@ const CoinGraph = ({coinId}) => {
     ? {innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2}
     : {};
 
-  const handleReset = () => {
-    this.setState({
-      suffix: this.state.suffix + 1,
-    });
-  };
+  const handleReset = () => {};
 
   const candlesAppearance = {
     wickStroke: '#000000',

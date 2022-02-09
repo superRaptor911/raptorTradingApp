@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/user/UserCoins.tsx
+edit components/coin/CoinGraph.jsx
 argglobal
-balt components/user/UserTransactions.tsx
-let s:l = 50 - ((22 * winheight(0) + 22) / 45)
+balt components/coin/PeriodSelector.jsx
+let s:l = 55 - ((29 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 50
-normal! 07|
+keepjumps 55
+normal! 021|
 tabnext 1
+badd +29 components/user/UserCoins.tsx
+badd +118 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
 badd +32 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
@@ -32,16 +34,15 @@ badd +42 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
 badd +1 types.ts
 badd +27 components/UserList.tsx
 badd +32 api/api.ts
-badd +30 api/wazirxApi.ts
+badd +55 api/wazirxApi.ts
 badd +91 pages/AddTransactions.tsx
 badd +2 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
-badd +118 components/user/UserTransactions.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
-badd +20 components/wazirx/tradingMenu/MarketGraph.jsx
-badd +36 pages/Coin.tsx
+badd +2 components/wazirx/tradingMenu/MarketGraph.jsx
+badd +32 pages/Coin.tsx
 badd +55 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +16 components/wazirx/tradingMenu/TradingMenu.tsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
@@ -61,7 +62,6 @@ badd +56 App.jsx
 badd +15 api/request.ts
 badd +9 pages/Home.tsx
 badd +3 utility.ts
-badd +50 components/user/UserCoins.tsx
 badd +4 components/hooks/useDeviceType.js
 badd +8 components/Visibility.tsx
 badd +34 pages/FundTransfer.tsx
@@ -75,6 +75,8 @@ badd +17 components/user/helper.ts
 badd +22 components/user/UserCoinStats.tsx
 badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
+badd +55 components/coin/CoinGraph.jsx
+badd +5 components/coin/PeriodSelector.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
