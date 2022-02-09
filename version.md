@@ -42,3 +42,11 @@ Note: There is a bug in transactions, it will be fixed in next update
 
 * Number input Bug (unable to remove zero/ unable to put point) fixed (Reported by @Akshay)
 * Limited transaction history to 25 in desktop buy menu
+
+# Raptor Trading v2.5 (Graph Update) 
+
+* Replaced old graph with candlestick stock chart
+* Very fast zoom/pan (For desktop only, not optimised for Mobile)
+* More data is displayed in graph
+* Included current value and change in value for every transactions made by user (Feature requested
+  by @Neeraj and @Akshay)

@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/coin/PeriodSelector.jsx
+edit components/user/UserCoins.tsx
 argglobal
-balt components/coin/CoinGraph.jsx
-let s:l = 15 - ((7 * winheight(0) + 22) / 45)
+balt components/user/UserCoinStats.tsx
+let s:l = 70 - ((6 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 15
-normal! 09|
+keepjumps 70
+normal! 047|
 tabnext 1
+badd +15 components/coin/PeriodSelector.jsx
+badd +98 components/coin/CoinGraph.jsx
 badd +29 components/user/UserCoins.tsx
 badd +118 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
@@ -72,11 +74,9 @@ badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
 badd +23 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +17 components/user/helper.ts
-badd +22 components/user/UserCoinStats.tsx
+badd +37 components/user/UserCoinStats.tsx
 badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
-badd +98 components/coin/CoinGraph.jsx
-badd +5 components/coin/PeriodSelector.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
