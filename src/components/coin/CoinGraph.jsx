@@ -60,7 +60,7 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
   const start = xAccessor(data[Math.max(0, data.length - 50)]);
   const xExtents = [start, end];
 
-  const margin = {left: 70, right: 70, top: 20, bottom: 30};
+  const margin = {left: 50, right: 50, top: 20, bottom: 30};
 
   const height = customHeight ? customHeight : 600;
 

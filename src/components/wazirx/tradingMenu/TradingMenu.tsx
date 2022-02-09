@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import PlaceOrder from './PlaceOrder';
-import MarketGraph from './MarketGraph';
 import Transactions from './Transactions';
 import UserWallet from './Wallet';
 import WazirxCoinList from './WazirxCoinList';
