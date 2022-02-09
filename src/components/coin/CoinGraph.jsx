@@ -16,6 +16,7 @@ import {OHLCTooltip} from 'react-stockcharts/lib/tooltip';
 import {fitWidth} from 'react-stockcharts/lib/helper';
 import {last} from 'react-stockcharts/lib/utils';
 import {WazirxGetCoinHistory} from '../../api/wazirxApi';
+import PeriodSelector from './PeriodSelector';
 
 const convertToObj = d => {
   return {
@@ -31,6 +32,7 @@ const convertToObj = d => {
 const CoinGraph = ({coinId}) => {
   const [initialData, setInitialData] = useState([]);
   const [width, setWidth] = useState(800);
+  const [period, setPeriod] = useState(60);
 
   const div = useCallback(node => {
     if (node !== null) {
@@ -47,10 +49,10 @@ const CoinGraph = ({coinId}) => {
   }, []);
 
   useEffect(() => {
-    WazirxGetCoinHistory(coinId, 60, 2000).then(coinData => {
+    WazirxGetCoinHistory(coinId, period, 2000).then(coinData => {
       setInitialData(coinData.map(item => convertToObj(item)));
     });
-  }, [coinId]);
+  }, [coinId, period]);
 
   if (initialData.length == 0) {
     return null;
@@ -105,6 +107,7 @@ const CoinGraph = ({coinId}) => {
 
   return (
     <div ref={div} onMouseEnter={changeScroll} onMouseLeave={changeScroll}>
+      <PeriodSelector period={period} setPeriod={setPeriod} />
       <ChartCanvas
         width={width}
         height={height}
