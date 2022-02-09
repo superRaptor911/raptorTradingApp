@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/wazirx/tradingMenu/Transactions.tsx
+edit components/user/UserCoins.tsx
 argglobal
-balt pages/wazirx/WazirxDashboard.tsx
-let s:l = 92 - ((44 * winheight(0) + 22) / 45)
+balt components/user/UserTransactions.tsx
+let s:l = 50 - ((22 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 92
-normal! 058|
+keepjumps 50
+normal! 07|
 tabnext 1
+badd +89 components/wazirx/tradingMenu/Transactions.tsx
+badd +1 pages/wazirx/WazirxDashboard.tsx
 badd +32 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
 badd +34 components/helper.ts
 badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
@@ -36,17 +38,15 @@ badd +2 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
-badd +1 components/user/UserTransactions.tsx
+badd +118 components/user/UserTransactions.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +20 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +36 pages/Coin.tsx
 badd +55 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
-badd +56 components/wazirx/tradingMenu/Transactions.tsx
 badd +16 components/wazirx/tradingMenu/TradingMenu.tsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
 badd +8 components/wazirx/tradingMenu/Wallet.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
-badd +1 pages/wazirx/WazirxDashboard.tsx
 badd +18 components/user/UserFundTransfers.tsx
 badd +1 components/header/DrawerMenu.tsx
 badd +1 components/wazirx/tradingMenu/WazirxCoinList.tsx
@@ -61,7 +61,7 @@ badd +56 App.jsx
 badd +15 api/request.ts
 badd +9 pages/Home.tsx
 badd +3 utility.ts
-badd +107 components/user/UserCoins.tsx
+badd +50 components/user/UserCoins.tsx
 badd +4 components/hooks/useDeviceType.js
 badd +8 components/Visibility.tsx
 badd +34 pages/FundTransfer.tsx
@@ -72,7 +72,7 @@ badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
 badd +28 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +17 components/user/helper.ts
-badd +1 components/user/UserCoinStats.tsx
+badd +22 components/user/UserCoinStats.tsx
 badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

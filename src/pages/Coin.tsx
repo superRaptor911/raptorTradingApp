@@ -14,6 +14,7 @@ import TableRow from '@mui/material/TableRow';
 import {get24HrChange, getCoin, getCoinPrice} from '../components/helper';
 import MarketGraph from '../components/wazirx/tradingMenu/MarketGraph';
 import {Coin} from '../types';
+import CoinGraph from '../components/coin/CoinGraph';
 
 interface CoinDetailsProp {
   coin: Coin;
@@ -25,7 +26,7 @@ const CoinDetails = ({coin}: CoinDetailsProp) => {
       component={Paper}
       sx={{
         width: '90vw',
-        maxWidth: 1000,
+        maxWidth: 1200,
         margin: 'auto',
         marginTop: 10,
       }}>
@@ -109,9 +110,9 @@ const CoinPage = () => {
               sx={{width: 128, height: 128, margin: 'auto'}}
             />
             <Typography sx={{textAlign: 'center'}}>{coin.name}</Typography>
-            <CoinDetails coin={coin} />
             <div style={{marginTop: 30}}>
-              <MarketGraph coinId={coin.id} />
+              <CoinGraph coinId={coin.id} />
+              <CoinDetails coin={coin} />
             </div>
           </Fragment>
         ) : (
