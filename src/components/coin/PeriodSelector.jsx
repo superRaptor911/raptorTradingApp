@@ -4,7 +4,12 @@ import {Button, Paper} from '@mui/material';
 
 const PeriodSelector = ({period, setPeriod}) => {
   return (
-    <Paper style={{display: 'flex', margin: 'auto', width: 'max-content'}}>
+    <Paper
+      style={{
+        display: 'flex',
+        margin: 'auto',
+        width: 'max-content',
+      }}>
       <Button
         variant="text"
         color={period == 30 ? 'primary' : 'secondary'}

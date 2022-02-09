@@ -25,9 +25,12 @@ const UserCoinStats = ({
 
     const coinCout = isMobile ? humanReadableValue(count) : count;
 
+    const avgPrice = humanReadableValue(investment / count);
+
     return (
       <Fragment>
         <TableCell align="center">{coinCout}</TableCell>
+        <TableCell align="center">{avgPrice}</TableCell>
         <TableCell align="center">{humanReadableValue(investment)}</TableCell>
         <TableCell align="center">{humanReadableValue(value)}</TableCell>
         <TableCell align="center" sx={{color: profit < 0 ? 'red' : 'green'}}>

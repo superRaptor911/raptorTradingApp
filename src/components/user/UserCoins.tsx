@@ -67,6 +67,7 @@ const UserCoins = ({user, transactions}: UserCoinsProps) => {
           <TableRow>
             <TableCell>Coin</TableCell>
             <TableCell align="center">Count</TableCell>
+            <TableCell align="center">Avg Price</TableCell>
             <TableCell align="center">Investment</TableCell>
             <TableCell align="center">Current Value</TableCell>
             <TableCell align="center">Profit</TableCell>

@@ -10,15 +10,15 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/coin/CoinGraph.jsx
+edit components/coin/PeriodSelector.jsx
 argglobal
-balt components/coin/PeriodSelector.jsx
-let s:l = 55 - ((29 * winheight(0) + 22) / 45)
+balt components/coin/CoinGraph.jsx
+let s:l = 15 - ((7 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 55
-normal! 021|
+keepjumps 15
+normal! 09|
 tabnext 1
 badd +29 components/user/UserCoins.tsx
 badd +118 components/user/UserTransactions.tsx
@@ -36,15 +36,15 @@ badd +27 components/UserList.tsx
 badd +32 api/api.ts
 badd +55 api/wazirxApi.ts
 badd +91 pages/AddTransactions.tsx
-badd +2 pages/wazirx/WazirxTradingMenuMobile.tsx
+badd +62 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
-badd +2 components/wazirx/tradingMenu/MarketGraph.jsx
+badd +69 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +32 pages/Coin.tsx
 badd +55 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
-badd +16 components/wazirx/tradingMenu/TradingMenu.tsx
+badd +3 components/wazirx/tradingMenu/TradingMenu.tsx
 badd +13 components/wazirx/tradingMenuMobile/uiStore.js
 badd +8 components/wazirx/tradingMenu/Wallet.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
@@ -70,12 +70,12 @@ badd +34 pages/Transactions.tsx
 badd +17 components/user/UserStats.tsx
 badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
-badd +28 components/wazirx/tradingMenuMobile/TradingMenu.jsx
+badd +23 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +17 components/user/helper.ts
 badd +22 components/user/UserCoinStats.tsx
 badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
-badd +55 components/coin/CoinGraph.jsx
+badd +98 components/coin/CoinGraph.jsx
 badd +5 components/coin/PeriodSelector.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
