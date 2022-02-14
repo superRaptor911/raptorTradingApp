@@ -30,7 +30,6 @@ function App() {
           fallback={<div style={{textAlign: 'center'}}>Header Loading...</div>}>
           <Header />
         </Suspense>
-        {/* <Header /> */}
         <Switch>
           <Route exact path={ROUTES.home}>
             <Home />
@@ -55,7 +54,6 @@ function App() {
               path={ROUTES.tradingMenu}
               component={WazirxDashboard}
             />
-
             <Route
               exact
               path={ROUTES.tradingMenuMobile}

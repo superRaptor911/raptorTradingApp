@@ -18,11 +18,12 @@ if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 70
-normal! 047|
+normal! 013|
 tabnext 1
+badd +0 components/user/UserCoins.tsx
+badd +37 components/user/UserCoinStats.tsx
 badd +15 components/coin/PeriodSelector.jsx
 badd +98 components/coin/CoinGraph.jsx
-badd +29 components/user/UserCoins.tsx
 badd +118 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
@@ -74,7 +75,6 @@ badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
 badd +23 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +17 components/user/helper.ts
-badd +37 components/user/UserCoinStats.tsx
 badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
