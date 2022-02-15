@@ -3,75 +3,39 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {timeFormat} from 'd3-time-format';
 import {format} from 'd3-format';
 import {ChartCanvas, Chart, ZoomButtons} from 'react-stockcharts';
-import {BarSeries, CandlestickSeries} from 'react-stockcharts/lib/series';
+import {
+  BarSeries,
+  CandlestickSeries,
+  LineSeries,
+} from 'react-stockcharts/lib/series';
 import {XAxis, YAxis} from 'react-stockcharts/lib/axes';
 import {
   CrossHairCursor,
+  CurrentCoordinate,
   MouseCoordinateX,
   MouseCoordinateY,
 } from 'react-stockcharts/lib/coordinates';
-
 import {discontinuousTimeScaleProvider} from 'react-stockcharts/lib/scale';
-import {OHLCTooltip} from 'react-stockcharts/lib/tooltip';
+import {OHLCTooltip, MovingAverageTooltip} from 'react-stockcharts/lib/tooltip';
 import {last} from 'react-stockcharts/lib/utils';
 import {WazirxGetCoinHistory} from '../../api/wazirxApi';
 import PeriodSelector from './PeriodSelector';
-
-const convertToObj = d => {
-  return {
-    date: new Date(d[0] * 1000),
-    open: d[1],
-    high: d[2],
-    low: d[3],
-    close: d[4],
-    volume: d[5],
-  };
-};
-
-const candlesAppearance = {
-  wickStroke: '#000000',
-  fill: function fill(d) {
-    return d.close > d.open ? 'rgb(89,200,147)' : 'rgb(241,83,96)';
-  },
-  stroke: 'rgba(0,0,0)',
-  candleStrokeWidth: 0.5,
-  widthRatio: 0.8,
-  opacity: 1,
-};
-
-const changeScroll = () => {
-  let style = document.body.style.overflow;
-  document.body.style.overflow = style === 'hidden' ? 'auto' : 'hidden';
-};
-
-const CalculateDimentions = (customHeight, width) => {
-  const margin = {left: 50, right: 50, top: 20, bottom: 30};
-
-  const height = customHeight ? customHeight : 600;
-
-  const gridHeight = height - margin.top - margin.bottom;
-  const gridWidth = width - margin.left - margin.right;
-
-  const showGrid = true;
-  const yGrid = showGrid
-    ? {innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2}
-    : {};
-  const xGrid = showGrid
-    ? {innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2}
-    : {};
-
-  return {
-    margin: margin,
-    height: height,
-    yGrid: yGrid,
-    xGrid: xGrid,
-  };
-};
+import {
+  calculateGraphDimentions,
+  candlesAppearance,
+  convertWazirxMarketItemToObj,
+  initGraphIndicators,
+  toggleScrollBar,
+} from './coinGraphHelper';
+import Loading from '../Loading';
 
 const CoinGraph = ({coinId, customHeight = 600}) => {
   const [initialData, setInitialData] = useState([]);
+  const [calculatedData, setCalculatedData] = useState([]);
   const [width, setWidth] = useState(800);
   const [period, setPeriod] = useState(60);
+
+  const {ema20, sma20, wma20, tma20, ema50} = initGraphIndicators();
 
   const div = useCallback(node => {
     if (node !== null) {
@@ -81,32 +45,41 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
 
   useEffect(() => {
     WazirxGetCoinHistory(coinId, period, 2000).then(coinData => {
-      setInitialData(coinData.map(item => convertToObj(item)));
+      setInitialData(coinData.map(item => convertWazirxMarketItemToObj(item)));
     });
   }, [coinId, period]);
 
-  if (initialData.length == 0) {
-    return null;
+  useEffect(() => {
+    const newCalculatedData = ema20(sma20(wma20(tma20(ema50(initialData)))));
+    setCalculatedData(newCalculatedData);
+  }, [initialData]);
+
+  if (initialData.length == 0 || calculatedData.length == 0) {
+    return <Loading marginTop={10} />;
   }
 
   const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
     d => d.date,
   );
+
   const {data, xScale, xAccessor, displayXAccessor} =
-    xScaleProvider(initialData);
+    xScaleProvider(calculatedData);
 
   const end = xAccessor(last(data));
   const start = xAccessor(data[Math.max(0, data.length - 50)]);
   const xExtents = [start, end];
 
-  const {margin, height, yGrid, xGrid} = CalculateDimentions(
+  const {margin, height, yGrid, xGrid} = calculateGraphDimentions(
     customHeight,
     width,
   );
 
   const handleReset = () => {};
   return (
-    <div ref={div} onMouseEnter={changeScroll} onMouseLeave={changeScroll}>
+    <div
+      ref={div}
+      onMouseEnter={toggleScrollBar}
+      onMouseLeave={toggleScrollBar}>
       <PeriodSelector period={period} setPeriod={setPeriod} />
       <ChartCanvas
         width={width}
@@ -133,9 +106,77 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
             displayFormat={format('.2f')}
           />
           <CandlestickSeries {...candlesAppearance} />
+          <LineSeries yAccessor={sma20.accessor()} stroke={sma20.stroke()} />
+          <LineSeries yAccessor={wma20.accessor()} stroke={wma20.stroke()} />
+          <LineSeries yAccessor={tma20.accessor()} stroke={tma20.stroke()} />
+          <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()} />
+          <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()} />
+          <CurrentCoordinate
+            yAccessor={sma20.accessor()}
+            fill={sma20.stroke()}
+          />
+          <CurrentCoordinate
+            yAccessor={wma20.accessor()}
+            fill={wma20.stroke()}
+          />
+          <CurrentCoordinate
+            yAccessor={tma20.accessor()}
+            fill={tma20.stroke()}
+          />
+          <CurrentCoordinate
+            yAccessor={ema20.accessor()}
+            fill={ema20.stroke()}
+          />
+          <CurrentCoordinate
+            yAccessor={ema50.accessor()}
+            fill={ema50.stroke()}
+          />
           <OHLCTooltip origin={[-40, 0]} />
+
+          <MovingAverageTooltip
+            onClick={e => console.log(e)}
+            origin={[-38, 15]}
+            options={[
+              {
+                yAccessor: sma20.accessor(),
+                type: 'SMA',
+                stroke: sma20.stroke(),
+                windowSize: sma20.options().windowSize,
+                echo: 'some echo here',
+              },
+              {
+                yAccessor: wma20.accessor(),
+                type: 'WMA',
+                stroke: wma20.stroke(),
+                windowSize: wma20.options().windowSize,
+                echo: 'some echo here',
+              },
+              {
+                yAccessor: tma20.accessor(),
+                type: 'TMA',
+                stroke: tma20.stroke(),
+                windowSize: tma20.options().windowSize,
+                echo: 'some echo here',
+              },
+              {
+                yAccessor: ema20.accessor(),
+                type: 'EMA',
+                stroke: ema20.stroke(),
+                windowSize: ema20.options().windowSize,
+                echo: 'some echo here',
+              },
+              {
+                yAccessor: ema50.accessor(),
+                type: 'EMA',
+                stroke: ema50.stroke(),
+                windowSize: ema50.options().windowSize,
+                echo: 'some echo here',
+              },
+            ]}
+          />
           <ZoomButtons onReset={handleReset} />
         </Chart>
+
         <Chart
           id={2}
           height={100}
