@@ -11,10 +11,18 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {get24HrChange, getCoin, getCoinPrice} from '../components/helper';
+import {
+  get24HrChange,
+  getCoin,
+  getCoinPrice,
+  getUser,
+  getWazirxUser,
+} from '../components/helper';
 import MarketGraph from '../components/wazirx/tradingMenu/MarketGraph';
 import {Coin} from '../types';
 import CoinGraph from '../components/coin/CoinGraph';
+import Loading from '../components/Loading';
+import UserTransaction from '../components/user/UserTransactions';
 
 interface CoinDetailsProp {
   coin: Coin;
@@ -41,31 +49,25 @@ const CoinDetails = ({coin}: CoinDetailsProp) => {
         </TableHead>
 
         <TableBody>
-          {coin && (
-            <TableRow>
-              <TableCell
-                component="th"
-                scope="row"
-                sx={{display: 'flex', alignItems: 'center'}}>
-                <Avatar
-                  src={coin.avatar}
-                  alt={coin.name}
-                  sx={{marginRight: 2}}
-                />
-                {coin.name}
-              </TableCell>
-              <TableCell>{coin.id}</TableCell>
-              <TableCell align="center">{getCoinPrice(coin.id)}</TableCell>
+          <TableRow>
+            <TableCell
+              component="th"
+              scope="row"
+              sx={{display: 'flex', alignItems: 'center'}}>
+              <Avatar src={coin.avatar} alt={coin.name} sx={{marginRight: 2}} />
+              {coin.name}
+            </TableCell>
+            <TableCell>{coin.id}</TableCell>
+            <TableCell align="center">{getCoinPrice(coin.id)}</TableCell>
 
-              <TableCell
-                align="right"
-                sx={{
-                  color: get24HrChange(coin.id) < 0 ? 'red' : 'green',
-                }}>
-                {get24HrChange(coin.id)}%
-              </TableCell>
-            </TableRow>
-          )}
+            <TableCell
+              align="right"
+              sx={{
+                color: get24HrChange(coin.id) < 0 ? 'red' : 'green',
+              }}>
+              {get24HrChange(coin.id)}%
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
@@ -78,6 +80,8 @@ const CoinPage = () => {
 
   const coins = useStore(state => state.coins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
+  const transactions = useStore(state => state.transactions);
+  const user = getWazirxUser();
 
   useEffect(() => {
     setCoin(getCoin(coins, coinName));
@@ -86,6 +90,10 @@ const CoinPage = () => {
   useEffect(() => {
     loadCoinPrices();
   }, []);
+
+  if (!coin) {
+    return <Loading marginTop={20} />;
+  }
 
   return (
     <div
@@ -102,22 +110,23 @@ const CoinPage = () => {
           margin: 'auto',
           marginBottom: 10,
         }}>
-        {coin ? (
-          <Fragment>
-            <Avatar
-              src={coin.avatar}
-              alt={coin.name}
-              sx={{width: 128, height: 128, margin: 'auto'}}
+        <Avatar
+          src={coin.avatar}
+          alt={coin.name}
+          sx={{width: 128, height: 128, margin: 'auto'}}
+        />
+        <Typography sx={{textAlign: 'center'}}>{coin.name}</Typography>
+        <div style={{marginTop: 30}}>
+          <CoinGraph coinId={coin.id} />
+          <CoinDetails coin={coin} />
+          {user && (
+            <UserTransaction
+              allTransactions={transactions}
+              user={user}
+              coinId={coin.id}
             />
-            <Typography sx={{textAlign: 'center'}}>{coin.name}</Typography>
-            <div style={{marginTop: 30}}>
-              <CoinGraph coinId={coin.id} />
-              <CoinDetails coin={coin} />
-            </div>
-          </Fragment>
-        ) : (
-          <CircularProgress />
-        )}
+          )}
+        </div>
       </Paper>
     </div>
   );

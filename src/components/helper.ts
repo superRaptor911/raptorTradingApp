@@ -48,7 +48,8 @@ export const getCoin = (coins: Coin[], coinName: string) => {
 };
 
 // Get user from users array using user name
-export const getUser = (username: string, users: User[]) => {
+export const getUser = (username: string, users?: User[]) => {
+  users = users ? users : useStore.getState().users;
   for (const user of users) {
     if (user.name === username) {
       return user;

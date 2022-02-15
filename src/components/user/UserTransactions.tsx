@@ -34,6 +34,7 @@ import {getCoinPrice} from '../helper';
 interface UserTransactionProps {
   user: User;
   allTransactions: Transaction[];
+  coinId?: string;
 }
 
 const RenderRow = (row: Transaction, isMobile: boolean) => {
@@ -72,17 +73,23 @@ const RenderRow = (row: Transaction, isMobile: boolean) => {
 export default function UserTransaction({
   user,
   allTransactions,
+  coinId,
 }: UserTransactionProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     if (allTransactions) {
-      setTransactions(
-        allTransactions.filter(item => item.username === user.name),
+      // Filter by username
+      let filtered = allTransactions.filter(
+        item => item.username === user.name,
       );
+      // if coinid filter by coinid
+      filtered = coinId
+        ? filtered.filter(item => item.coinId == coinId)
+        : filtered;
+      setTransactions(filtered);
     }
   }, [allTransactions]);
 
