@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, Fragment} from 'react';
 import {timeFormat} from 'd3-time-format';
 import {format} from 'd3-format';
 import {ChartCanvas, Chart, ZoomButtons} from 'react-stockcharts';
@@ -28,12 +28,20 @@ import {
   toggleScrollBar,
 } from './coinGraphHelper';
 import Loading from '../Loading';
+import IndicatorSelector from './IndicatorSelector';
 
 const CoinGraph = ({coinId, customHeight = 600}) => {
   const [initialData, setInitialData] = useState([]);
   const [calculatedData, setCalculatedData] = useState([]);
   const [width, setWidth] = useState(800);
   const [period, setPeriod] = useState(60);
+  const [indicators, setIndicators] = useState({
+    ema20: false,
+    sma20: false,
+    wma20: false,
+    tma20: false,
+    ema50: false,
+  });
 
   const {ema20, sma20, wma20, tma20, ema50} = initGraphIndicators();
 
@@ -81,6 +89,10 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
       onMouseEnter={toggleScrollBar}
       onMouseLeave={toggleScrollBar}>
       <PeriodSelector period={period} setPeriod={setPeriod} />
+      <IndicatorSelector
+        indicators={indicators}
+        setIndicators={setIndicators}
+      />
       <ChartCanvas
         width={width}
         height={height}
@@ -106,31 +118,74 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
             displayFormat={format('.2f')}
           />
           <CandlestickSeries {...candlesAppearance} />
-          <LineSeries yAccessor={sma20.accessor()} stroke={sma20.stroke()} />
-          <LineSeries yAccessor={wma20.accessor()} stroke={wma20.stroke()} />
-          <LineSeries yAccessor={tma20.accessor()} stroke={tma20.stroke()} />
-          <LineSeries yAccessor={ema20.accessor()} stroke={ema20.stroke()} />
-          <LineSeries yAccessor={ema50.accessor()} stroke={ema50.stroke()} />
-          <CurrentCoordinate
-            yAccessor={sma20.accessor()}
-            fill={sma20.stroke()}
-          />
-          <CurrentCoordinate
-            yAccessor={wma20.accessor()}
-            fill={wma20.stroke()}
-          />
-          <CurrentCoordinate
-            yAccessor={tma20.accessor()}
-            fill={tma20.stroke()}
-          />
-          <CurrentCoordinate
-            yAccessor={ema20.accessor()}
-            fill={ema20.stroke()}
-          />
-          <CurrentCoordinate
-            yAccessor={ema50.accessor()}
-            fill={ema50.stroke()}
-          />
+          {indicators.ema20 && (
+            <Fragment>
+              <LineSeries
+                yAccessor={ema20.accessor()}
+                stroke={ema20.stroke()}
+              />
+
+              <CurrentCoordinate
+                yAccessor={ema20.accessor()}
+                fill={ema20.stroke()}
+              />
+            </Fragment>
+          )}
+
+          {indicators.sma20 && (
+            <Fragment>
+              <LineSeries
+                yAccessor={sma20.accessor()}
+                stroke={sma20.stroke()}
+              />
+              <CurrentCoordinate
+                yAccessor={sma20.accessor()}
+                fill={sma20.stroke()}
+              />
+            </Fragment>
+          )}
+
+          {indicators.wma20 && (
+            <Fragment>
+              <LineSeries
+                yAccessor={wma20.accessor()}
+                stroke={wma20.stroke()}
+              />
+              <CurrentCoordinate
+                yAccessor={wma20.accessor()}
+                fill={wma20.stroke()}
+              />
+            </Fragment>
+          )}
+
+          {indicators.tma && (
+            <Fragment>
+              <LineSeries
+                yAccessor={tma20.accessor()}
+                stroke={tma20.stroke()}
+              />
+
+              <CurrentCoordinate
+                yAccessor={tma20.accessor()}
+                fill={tma20.stroke()}
+              />
+            </Fragment>
+          )}
+
+          {indicators.ema50 && (
+            <Fragment>
+              <LineSeries
+                yAccessor={ema50.accessor()}
+                stroke={ema50.stroke()}
+              />
+
+              <CurrentCoordinate
+                yAccessor={ema50.accessor()}
+                fill={ema50.stroke()}
+              />
+            </Fragment>
+          )}
+
           <OHLCTooltip origin={[-40, 0]} />
 
           <MovingAverageTooltip
