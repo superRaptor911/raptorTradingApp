@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Loading from './components/Loading';
 import Home from './pages/Home';
 import {ROUTES} from './routes';
+import ReloadPrompt from './ReloadPrompt';
 
 const Header = lazy(() => import('./components/Header'));
 const Summary = lazy(() => import('./pages/Summary'));
@@ -62,6 +63,8 @@ function App() {
           </Suspense>
         </Switch>
       </Router>
+
+      <ReloadPrompt />
     </div>
   );
 }
