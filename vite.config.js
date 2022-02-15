@@ -18,8 +18,10 @@ export default defineConfig({
         'icons/*.svg',
       ],
       manifest: {
-        theme_color: '#BD34FE',
-
+        name: 'Raptor Trading',
+        short_name: 'RT',
+        description: 'Personal crypto trading platform',
+        theme_color: '#ffffff',
         icons: [
           {
             src: '/android-chrome-192x192.png',
