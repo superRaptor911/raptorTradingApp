@@ -50,3 +50,9 @@ Note: There is a bug in transactions, it will be fixed in next update
 * More data is displayed in graph
 * Included current value and change in value for every transactions made by user (Feature requested
   by @Neeraj and @Akshay)
+
+# Raptor Trading v2.51
+
+* Added avg. coin price in User stats
+* Added User transaction history in Coin Menu
+* Added Advanced Graph Indicators (sma20 , ema20, tma20 , wma20, ema50)
