@@ -1,5 +1,6 @@
 import React, {lazy, Suspense} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Loading from './components/Loading';
 import Home from './pages/Home';
 import {ROUTES} from './routes';
 
@@ -26,8 +27,7 @@ function App() {
   return (
     <div style={{overflowX: 'hidden'}}>
       <Router>
-        <Suspense
-          fallback={<div style={{textAlign: 'center'}}>Header Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Header />
         </Suspense>
         <Switch>
@@ -35,7 +35,7 @@ function App() {
             <Home />
           </Route>
 
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <Route exact path={ROUTES.summary} component={Summary} />
             <Route exact path={ROUTES.user} component={User} />
             <Route exact path={ROUTES.coin} component={CoinPage} />
