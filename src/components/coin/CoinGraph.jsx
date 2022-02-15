@@ -86,8 +86,8 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
   return (
     <div
       ref={div}
-      onMouseEnter={toggleScrollBar}
-      onMouseLeave={toggleScrollBar}>
+      onMouseEnter={() => toggleScrollBar(false)}
+      onMouseLeave={() => toggleScrollBar(true)}>
       <PeriodSelector period={period} setPeriod={setPeriod} />
       <IndicatorSelector
         indicators={indicators}

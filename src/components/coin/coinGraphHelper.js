@@ -23,9 +23,8 @@ export const candlesAppearance = {
   opacity: 1,
 };
 
-export const toggleScrollBar = () => {
-  let style = document.body.style.overflow;
-  document.body.style.overflow = style === 'hidden' ? 'auto' : 'hidden';
+export const toggleScrollBar = val => {
+  document.body.style.overflow = val === true ? 'auto' : 'hidden';
 };
 
 export const calculateGraphDimentions = (customHeight, width) => {
