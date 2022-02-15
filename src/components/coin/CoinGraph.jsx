@@ -13,7 +13,6 @@ import {
 
 import {discontinuousTimeScaleProvider} from 'react-stockcharts/lib/scale';
 import {OHLCTooltip} from 'react-stockcharts/lib/tooltip';
-import {fitWidth} from 'react-stockcharts/lib/helper';
 import {last} from 'react-stockcharts/lib/utils';
 import {WazirxGetCoinHistory} from '../../api/wazirxApi';
 import PeriodSelector from './PeriodSelector';
@@ -26,6 +25,46 @@ const convertToObj = d => {
     low: d[3],
     close: d[4],
     volume: d[5],
+  };
+};
+
+const candlesAppearance = {
+  wickStroke: '#000000',
+  fill: function fill(d) {
+    return d.close > d.open ? 'rgb(89,200,147)' : 'rgb(241,83,96)';
+  },
+  stroke: 'rgba(0,0,0)',
+  candleStrokeWidth: 0.5,
+  widthRatio: 0.8,
+  opacity: 1,
+};
+
+const changeScroll = () => {
+  let style = document.body.style.overflow;
+  document.body.style.overflow = style === 'hidden' ? 'auto' : 'hidden';
+};
+
+const CalculateDimentions = (customHeight, width) => {
+  const margin = {left: 50, right: 50, top: 20, bottom: 30};
+
+  const height = customHeight ? customHeight : 600;
+
+  const gridHeight = height - margin.top - margin.bottom;
+  const gridWidth = width - margin.left - margin.right;
+
+  const showGrid = true;
+  const yGrid = showGrid
+    ? {innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2}
+    : {};
+  const xGrid = showGrid
+    ? {innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2}
+    : {};
+
+  return {
+    margin: margin,
+    height: height,
+    yGrid: yGrid,
+    xGrid: xGrid,
   };
 };
 
@@ -60,39 +99,12 @@ const CoinGraph = ({coinId, customHeight = 600}) => {
   const start = xAccessor(data[Math.max(0, data.length - 50)]);
   const xExtents = [start, end];
 
-  const margin = {left: 50, right: 50, top: 20, bottom: 30};
-
-  const height = customHeight ? customHeight : 600;
-
-  const gridHeight = height - margin.top - margin.bottom;
-  const gridWidth = width - margin.left - margin.right;
-
-  const showGrid = true;
-  const yGrid = showGrid
-    ? {innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.2}
-    : {};
-  const xGrid = showGrid
-    ? {innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.2}
-    : {};
+  const {margin, height, yGrid, xGrid} = CalculateDimentions(
+    customHeight,
+    width,
+  );
 
   const handleReset = () => {};
-
-  const candlesAppearance = {
-    wickStroke: '#000000',
-    fill: function fill(d) {
-      return d.close > d.open ? 'rgb(89,200,147)' : 'rgb(241,83,96)';
-    },
-    stroke: 'rgba(0,0,0)',
-    candleStrokeWidth: 0.5,
-    widthRatio: 0.8,
-    opacity: 1,
-  };
-
-  const changeScroll = () => {
-    let style = document.body.style.overflow;
-    document.body.style.overflow = style === 'hidden' ? 'auto' : 'hidden';
-  };
-
   return (
     <div ref={div} onMouseEnter={changeScroll} onMouseLeave={changeScroll}>
       <PeriodSelector period={period} setPeriod={setPeriod} />
