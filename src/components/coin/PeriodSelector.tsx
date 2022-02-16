@@ -1,8 +1,12 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import {Button, Paper} from '@mui/material';
 
-const PeriodSelector = ({period, setPeriod}) => {
+interface PeriodSelectorProps {
+  period: number;
+  setPeriod: (period: number) => void;
+}
+
+const PeriodSelector = ({period, setPeriod}: PeriodSelectorProps) => {
   return (
     <Paper
       style={{

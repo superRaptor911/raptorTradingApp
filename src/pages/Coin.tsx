@@ -1,8 +1,7 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import {useParams} from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
 import {useStore} from '../store';
 import {Avatar} from '@mui/material';
 import Table from '@mui/material/Table';
@@ -15,14 +14,13 @@ import {
   get24HrChange,
   getCoin,
   getCoinPrice,
-  getUser,
   getWazirxUser,
 } from '../components/helper';
-import MarketGraph from '../components/wazirx/tradingMenu/MarketGraph';
 import {Coin} from '../types';
 import CoinGraph from '../components/coin/CoinGraph';
 import Loading from '../components/Loading';
 import UserTransaction from '../components/user/UserTransactions';
+import StopLossBot4Coin from '../components/coin/StopLossBot4Coin';
 
 interface CoinDetailsProp {
   coin: Coin;
@@ -126,6 +124,7 @@ const CoinPage = () => {
               coinId={coin.id}
             />
           )}
+          <StopLossBot4Coin coinId={coin.id} />
         </div>
       </Paper>
     </div>

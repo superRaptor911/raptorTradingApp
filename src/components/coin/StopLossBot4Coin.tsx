@@ -1,30 +1,46 @@
-import {Button} from '@mui/material';
+import {Alert, Button} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
+  StopLossBotListRules,
+  StopLossBotEditRule,
   StopLossBotAddRule,
   StopLossBotDeleteRule,
-  StopLossBotEditRule,
-  StopLossBotListRules,
-} from '../../../api/wazirxApi';
-import {StopLoss} from '../../../types';
-import Loading from '../../Loading';
-import RuleItem from './RuleItem';
-import Alert from '@mui/material/Alert';
-import Visibility from '../../Visibility';
+} from '../../api/wazirxApi';
+import {StopLoss} from '../../types';
+import Loading from '../Loading';
+import Visibility from '../Visibility';
+import RuleItem from '../wazirx/stopLossBot/RuleItem';
 
-const RulesMenu = () => {
+interface StopLossBot4CoinProps {
+  coinId: string;
+}
+
+const getFilteredRules = (rules: StopLoss[], coinId: string) => {
+  return rules.reverse().filter((item: StopLoss) => item.coinId == coinId);
+};
+
+const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
   const [rules, setRules] = useState<StopLoss[]>([]);
   const [loading, setLoading] = useState(true);
+  const [limitReached, setLimitReached] = useState(false);
 
   // Load Rules in initial render
   useEffect(() => {
-    StopLossBotListRules().then(result => {
-      if (result && result.status) {
-        result.data && setRules(result.data.reverse());
-      }
-      setLoading(false);
-    });
-  }, []);
+    if (coinId) {
+      StopLossBotListRules().then(result => {
+        console.log(result);
+        if (result && result.status) {
+          const {data} = result;
+          if (data) {
+            setLimitReached(data.length >= 6);
+            // Reverse and filter rules by coinId
+            setRules(getFilteredRules(data, coinId));
+          }
+        }
+        setLoading(false);
+      });
+    }
+  }, [coinId]);
 
   const updateRule = async (newItem: StopLoss) => {
     await StopLossBotEditRule(
@@ -39,7 +55,7 @@ const RulesMenu = () => {
 
     StopLossBotListRules().then(result => {
       if (result && result.status) {
-        result.data && setRules(result.data.reverse());
+        result.data && setRules(getFilteredRules(result.data, coinId));
       }
     });
   };
@@ -48,7 +64,7 @@ const RulesMenu = () => {
     const newItem = {
       id: 0,
       isEnabled: true,
-      coinId: 'adainr',
+      coinId: coinId,
       transType: 'SELL',
       count: 10,
       price: 0,
@@ -85,7 +101,6 @@ const RulesMenu = () => {
     return <Loading marginTop={20} />;
   }
 
-  const limitReached = rules.length >= 6;
   return (
     <div style={{width: '100%', maxWidth: 600, margin: 'auto', marginTop: 50}}>
       <Visibility hide={!limitReached}>
@@ -115,4 +130,4 @@ const RulesMenu = () => {
   );
 };
 
-export default RulesMenu;
+export default StopLossBot4Coin;
