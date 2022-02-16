@@ -13,9 +13,8 @@ const StopLossBot = () => {
           alignItems: 'center',
         }}>
         <Typography variant="h4">Stop Loss Bot</Typography>
+        <RulesMenu />
       </Paper>
-
-      <RulesMenu />
     </div>
   );
 };

@@ -31,6 +31,7 @@ const useStyles = createUseStyles({
   },
 });
 
+// Get text form of stop loss contract
 const genTextualContract = (
   coinId: string,
   price: number,
@@ -42,6 +43,7 @@ const genTextualContract = (
   return str;
 };
 
+// Function to check if rule was changed
 const checkIfChanged = (
   rule: StopLoss,
   isEnabled: boolean,
@@ -120,7 +122,7 @@ const RuleItem = ({rule, updateRule, handleDelete}: RuleItemProps) => {
   };
 
   return (
-    <Accordion>
+    <Accordion sx={{backgroundColor: 'secondary.light', marginBottom: 1}}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

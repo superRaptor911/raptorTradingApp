@@ -7,16 +7,22 @@ import {
   StopLossBotListRules,
 } from '../../../api/wazirxApi';
 import {StopLoss} from '../../../types';
+import Loading from '../../Loading';
 import RuleItem from './RuleItem';
+import Alert from '@mui/material/Alert';
+import Visibility from '../../Visibility';
 
 const RulesMenu = () => {
   const [rules, setRules] = useState<StopLoss[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  // Load Rules in initial render
   useEffect(() => {
     StopLossBotListRules().then(result => {
       if (result && result.status) {
         result.data && setRules(result.data.reverse());
       }
+      setLoading(false);
     });
   }, []);
 
@@ -38,7 +44,7 @@ const RulesMenu = () => {
     });
   };
 
-  const addRule = async () => {
+  const addNewRule = async () => {
     const newItem = {
       id: 0,
       isEnabled: true,
@@ -75,10 +81,24 @@ const RulesMenu = () => {
     });
   };
 
+  if (loading) {
+    return <Loading marginTop={20} />;
+  }
+
+  const limitReached = rules.length >= 5;
+
   return (
     <div style={{width: '100%', maxWidth: 600, margin: 'auto', marginTop: 50}}>
+      <Visibility hide={!limitReached}>
+        <Alert severity={'error'} style={{marginBottom: 10}}>
+          You can only add upto 5 rules!
+        </Alert>
+      </Visibility>
       <div style={{width: 'max-content', margin: 'auto', marginBottom: 10}}>
-        <Button variant="contained" onClick={addRule}>
+        <Button
+          variant="contained"
+          onClick={addNewRule}
+          disabled={limitReached}>
           Add Rule
         </Button>
       </div>
