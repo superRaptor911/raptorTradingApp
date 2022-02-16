@@ -13,8 +13,14 @@ const PeriodSelector = ({period, setPeriod}) => {
       <Button
         variant="text"
         color={period == 30 ? 'primary' : 'secondary'}
-        onClick={() => setPeriod(30)}>
-        30min
+        onClick={() => setPeriod(5)}>
+        5min
+      </Button>
+      <Button
+        variant="text"
+        color={period == 30 ? 'primary' : 'secondary'}
+        onClick={() => setPeriod(15)}>
+        15min
       </Button>
       <Button
         variant="text"
@@ -26,21 +32,8 @@ const PeriodSelector = ({period, setPeriod}) => {
       <Button
         variant="text"
         color={period == 120 ? 'primary' : 'secondary'}
-        onClick={() => setPeriod(120)}>
-        2H
-      </Button>
-      <Button
-        variant="text"
-        color={period == 240 ? 'primary' : 'secondary'}
         onClick={() => setPeriod(240)}>
         4H
-      </Button>
-
-      <Button
-        variant="text"
-        color={period == 720 ? 'primary' : 'secondary'}
-        onClick={() => setPeriod(720)}>
-        12H
       </Button>
       <Button
         variant="text"
