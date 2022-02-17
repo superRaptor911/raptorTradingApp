@@ -1,14 +1,15 @@
 import {Button} from '@mui/material';
 import React, {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import {useTradingStore} from '../../components/wazirx/tradingMenuMobile/uiStore';
-import PlaceOrderMobile from '../../components/wazirx/tradingMenuMobile/PlaceOrderMobile';
-import CoinGraph from '../../components/coin/CoinGraph';
+import PlaceOrderMobile from '../wazirx/tradingMenuMobile/PlaceOrderMobile';
+import {useTradingStore} from '../wazirx/tradingMenuMobile/uiStore';
 
 interface BuySellButtonsProps {
   coinId: string | null;
   setShowPlaceMenu: (value: boolean) => void;
+}
+
+interface CoinBuyMenuProps {
+  coinId: string;
 }
 
 const BuySellButtons = ({coinId, setShowPlaceMenu}: BuySellButtonsProps) => {
@@ -39,38 +40,20 @@ const BuySellButtons = ({coinId, setShowPlaceMenu}: BuySellButtonsProps) => {
   );
 };
 
-const WazirxTradingMenuMobile = () => {
+const CoinBuyMenu = ({coinId}: CoinBuyMenuProps) => {
   const [showPlaceMenu, setShowPlaceMenu] = useState(false);
-
-  const coinId: string | null = useTradingStore(state => state.selectedCoinId);
-  const message: string | null = useTradingStore(
-    state => state.transactionPlaceMessage,
-  );
-  const setMessage = useTradingStore(state => state.setTransPlaceMessage);
-  const history = useHistory();
+  const setSelectedCoin = useTradingStore(state => state.setSelectedCoinId);
 
   useEffect(() => {
-    if (!coinId) {
-      history.goBack();
-    }
-  }, []);
+    setSelectedCoin(coinId);
+  }, [coinId]);
 
   return (
-    <div style={{height: 'calc(100vh - 61px)', fontSize: '14px', marginTop: 5}}>
-      <CoinGraph coinId={coinId} />
+    <div>
       <BuySellButtons coinId={coinId} setShowPlaceMenu={setShowPlaceMenu} />
       <PlaceOrderMobile visible={showPlaceMenu} setVisible={setShowPlaceMenu} />
-
-      <Snackbar
-        open={Boolean(message)}
-        autoHideDuration={2000}
-        onClose={() => {
-          setMessage(null);
-        }}
-        message={message}
-      />
     </div>
   );
 };
 
-export default WazirxTradingMenuMobile;
+export default CoinBuyMenu;

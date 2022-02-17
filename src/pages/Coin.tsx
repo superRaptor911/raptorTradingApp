@@ -21,6 +21,8 @@ import CoinGraph from '../components/coin/CoinGraph';
 import Loading from '../components/Loading';
 import UserTransaction from '../components/user/UserTransactions';
 import StopLossBot4Coin from '../components/coin/StopLossBot4Coin';
+import CoinBuyMenu from '../components/coin/CoinBuyMenu';
+import useTimer from '../components/hooks/useTimer';
 
 interface CoinDetailsProp {
   coin: Coin;
@@ -87,10 +89,16 @@ const CoinPage = () => {
   }, [coinName]);
 
   // Load coin price and transaction list on load
-  useEffect(() => {
-    loadCoinPrices();
+  // useEffect(() => {
+  //   loadCoinPrices();
+  //   loadTransactions();
+  // }, []);
+
+  // Load coin price and transaction list every 2000 ms
+  useTimer(2000, () => {
     loadTransactions();
-  }, []);
+    loadCoinPrices();
+  });
 
   if (!coin) {
     return <Loading marginTop={20} />;
@@ -119,6 +127,7 @@ const CoinPage = () => {
         <Typography sx={{textAlign: 'center'}}>{coin.name}</Typography>
         <div style={{marginTop: 30}}>
           <CoinGraph coinId={coin.id} />
+          <CoinBuyMenu coinId={coin.id} />
           <CoinDetails coin={coin} />
           {user && (
             <UserTransaction
