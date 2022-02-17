@@ -56,3 +56,12 @@ Note: There is a bug in transactions, it will be fixed in next update
 * Added avg. coin price in User stats
 * Added User transaction history in Coin Menu
 * Added Advanced Graph Indicators (sma20 , ema20, tma20 , wma20, ema50)
+
+# Raptor Trading v2.52
+
+* Updated Stop Loss Bot menu style
+* Limited Stop Loss rules to 6 per user
+* Added Stop Loss Menu to Coin Page
+* Fixed stop Loss bug
+* Fixed user transactions not updating in coin page
+* Added buy menu in coin page
