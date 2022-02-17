@@ -79,14 +79,17 @@ const CoinPage = () => {
   const coins = useStore(state => state.coins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
   const transactions = useStore(state => state.transactions);
+  const loadTransactions = useStore(state => state.loadTransactions);
   const user = getWazirxUser();
 
   useEffect(() => {
     setCoin(getCoin(coins, coinName));
   }, [coinName]);
 
+  // Load coin price and transaction list on load
   useEffect(() => {
     loadCoinPrices();
+    loadTransactions();
   }, []);
 
   if (!coin) {
