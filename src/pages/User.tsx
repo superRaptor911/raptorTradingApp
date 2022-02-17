@@ -13,6 +13,7 @@ import UserFundTransferList from '../components/user/UserFundTransfers';
 import {getUser} from '../components/helper';
 import {Transaction, User} from '../types';
 import UserTradesGraph from '../components/user/UserTradesGraph';
+import UserCoinNetWorthGraph from '../components/user/UserCoinNetWorthGraph';
 
 const UserPage = () => {
   const {username}: {username: string} = useParams();
@@ -70,6 +71,7 @@ const UserPage = () => {
 
             <UserTransaction user={user} allTransactions={userTransactions} />
             <UserFundTransferList user={user} />
+            <UserCoinNetWorthGraph user={user} />
             <UserTradesGraph userTransactions={userTransactions} />
           </Fragment>
         ) : (

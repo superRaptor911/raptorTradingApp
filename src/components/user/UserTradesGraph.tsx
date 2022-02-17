@@ -1,6 +1,7 @@
 import {MenuItem, Select} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
+  Brush,
   LineChart,
   Line,
   XAxis,
@@ -61,9 +62,8 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
       setData(newData);
     }
   }, [selectedCoin]);
-
   return (
-    <div>
+    <div style={{fontSize: 12}}>
       <Select
         labelId="name-label"
         value={selectedCoin}
@@ -97,6 +97,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
             stroke="#8884d8"
             activeDot={{r: 8}}
           />
+          {data.length > 10 && <Brush />}
         </LineChart>
       </ResponsiveContainer>
     </div>
