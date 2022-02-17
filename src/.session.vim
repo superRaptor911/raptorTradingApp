@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit ~/program/react/vite/raptorTradingApp/src/components/coin/StopLossBot4Coin.tsx
+edit components/user/UserTradesGraph.tsx
 argglobal
-balt components/coin/IndicatorSelector.jsx
-let s:l = 135 - ((44 * winheight(0) + 22) / 45)
+balt pages/AddTransactions.tsx
+let s:l = 83 - ((35 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 135
-normal! 09|
+keepjumps 83
+normal! 019|
 tabnext 1
+badd +1 components/user/UserTradesGraph.tsx
+badd +93 pages/AddTransactions.tsx
 badd +38 components/coin/IndicatorSelector.jsx
 badd +92 components/coin/CoinGraph.jsx
 badd +70 components/user/UserCoins.tsx
@@ -28,28 +30,27 @@ badd +15 components/coin/PeriodSelector.jsx
 badd +35 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
-badd +32 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
+badd +114 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
 badd +33 components/helper.ts
 badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +38 components/CoinList.tsx
 badd +37 pages/AdminLogin.tsx
-badd +59 store.ts
-badd +42 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
+badd +60 store.ts
+badd +64 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
 badd +1 types.ts
 badd +27 components/UserList.tsx
 badd +32 api/api.ts
 badd +55 api/wazirxApi.ts
-badd +91 pages/AddTransactions.tsx
 badd +62 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +69 components/wazirx/tradingMenu/MarketGraph.jsx
-badd +126 pages/Coin.tsx
-badd +55 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
+badd +106 pages/Coin.tsx
+badd +119 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +3 components/wazirx/tradingMenu/TradingMenu.tsx
-badd +13 components/wazirx/tradingMenuMobile/uiStore.js
+badd +1 components/wazirx/tradingMenuMobile/uiStore.js
 badd +8 components/wazirx/tradingMenu/Wallet.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
 badd +18 components/user/UserFundTransfers.tsx
@@ -61,8 +62,8 @@ badd +3 components/hooks/useTimer.js
 badd +12 pages/AddUser.tsx
 badd +18 components/summary/TotalCoins.tsx
 badd +1 pages/Summary.tsx
-badd +69 pages/User.tsx
-badd +38 App.jsx
+badd +39 pages/User.tsx
+badd +32 App.jsx
 badd +15 api/request.ts
 badd +9 pages/Home.tsx
 badd +3 utility.ts
@@ -74,13 +75,15 @@ badd +34 pages/Transactions.tsx
 badd +17 components/user/UserStats.tsx
 badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
-badd +23 components/wazirx/tradingMenuMobile/TradingMenu.jsx
+badd +31 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +17 components/user/helper.ts
 badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 badd +6 components/Loading.tsx
 badd +96 components/coin/coinGraphHelper.js
-badd +44 ~/program/react/vite/raptorTradingApp/src/components/coin/StopLossBot4Coin.tsx
+badd +32 components/coin/StopLossBot4Coin.tsx
+badd +41 components/coin/CoinBuyMenu.tsx
+badd +5 main.jsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -92,6 +95,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

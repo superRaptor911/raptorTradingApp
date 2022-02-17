@@ -12,6 +12,7 @@ import UserTransaction from '../components/user/UserTransactions';
 import UserFundTransferList from '../components/user/UserFundTransfers';
 import {getUser} from '../components/helper';
 import {Transaction, User} from '../types';
+import UserTradesGraph from '../components/user/UserTradesGraph';
 
 const UserPage = () => {
   const {username}: {username: string} = useParams();
@@ -69,6 +70,7 @@ const UserPage = () => {
 
             <UserTransaction user={user} allTransactions={userTransactions} />
             <UserFundTransferList user={user} />
+            <UserTradesGraph userTransactions={userTransactions} />
           </Fragment>
         ) : (
           <CircularProgress />
