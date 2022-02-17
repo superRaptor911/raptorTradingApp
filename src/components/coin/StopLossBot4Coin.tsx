@@ -15,8 +15,20 @@ interface StopLossBot4CoinProps {
   coinId: string;
 }
 
-const getFilteredRules = (rules: StopLoss[], coinId: string) => {
-  return rules.reverse().filter((item: StopLoss) => item.coinId == coinId);
+const getFilteredRules = (result: any, coinId: string) => {
+  if (result && result.status && result.data) {
+    const {data} = result;
+    return data.reverse().filter((item: StopLoss) => item.coinId == coinId);
+  }
+  return [];
+};
+
+const checkIfLimitReached = (result: any) => {
+  if (result && result.status && result.data) {
+    const {data} = result;
+    return data.length >= 6;
+  }
+  return true;
 };
 
 const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
@@ -28,15 +40,8 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
   useEffect(() => {
     if (coinId) {
       StopLossBotListRules().then(result => {
-        console.log(result);
-        if (result && result.status) {
-          const {data} = result;
-          if (data) {
-            setLimitReached(data.length >= 6);
-            // Reverse and filter rules by coinId
-            setRules(getFilteredRules(data, coinId));
-          }
-        }
+        setRules(getFilteredRules(result, coinId));
+        setLimitReached(checkIfLimitReached(result));
         setLoading(false);
       });
     }
@@ -54,9 +59,8 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
     );
 
     StopLossBotListRules().then(result => {
-      if (result && result.status) {
-        result.data && setRules(getFilteredRules(result.data, coinId));
-      }
+      setRules(getFilteredRules(result, coinId));
+      setLimitReached(checkIfLimitReached(result));
     });
   };
 
@@ -81,9 +85,8 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
     );
 
     StopLossBotListRules().then(result => {
-      if (result && result.status) {
-        result.data && setRules(result.data.reverse());
-      }
+      setRules(getFilteredRules(result, coinId));
+      setLimitReached(checkIfLimitReached(result));
     });
   };
 
@@ -91,9 +94,8 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
     await StopLossBotDeleteRule(id);
 
     StopLossBotListRules().then(result => {
-      if (result && result.status) {
-        result.data && setRules(result.data.reverse());
-      }
+      setRules(getFilteredRules(result, coinId));
+      setLimitReached(checkIfLimitReached(result));
     });
   };
 
