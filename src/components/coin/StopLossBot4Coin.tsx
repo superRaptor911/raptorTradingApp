@@ -1,4 +1,4 @@
-import {Alert, Button} from '@mui/material';
+import {Alert, Button, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
   StopLossBotListRules,
@@ -104,7 +104,11 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
   }
 
   return (
-    <div style={{width: '100%', maxWidth: 600, margin: 'auto', marginTop: 50}}>
+    <div
+      style={{width: '100%', margin: 'auto', marginTop: 50, paddingBottom: 20}}>
+      <Typography variant="h4" textAlign="center" sx={{marginBottom: 2}}>
+        Stop Loss for {coinId}
+      </Typography>
       <Visibility hide={!limitReached}>
         <Alert severity={'error'} style={{marginBottom: 10}}>
           You can only add upto 6 rules!
