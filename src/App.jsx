@@ -4,6 +4,7 @@ import Loading from './components/Loading';
 import Home from './pages/Home';
 import {ROUTES} from './routes';
 import ReloadPrompt from './ReloadPrompt';
+import ScrollToTop from 'react-router-scroll-top';
 
 const Header = lazy(() => import('./components/Header'));
 const Summary = lazy(() => import('./pages/Summary'));
@@ -28,6 +29,7 @@ function App() {
   return (
     <div style={{overflowX: 'hidden'}}>
       <Router>
+        <ScrollToTop />
         <Suspense fallback={<Loading />}>
           <Header />
         </Suspense>
