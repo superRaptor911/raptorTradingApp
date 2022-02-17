@@ -35,7 +35,7 @@ interface Store {
 
 export const useStore = create<Store, SetState<Store>, GetState<Store>>(
   persist(
-    (set, _get) => ({
+    (set, get) => ({
       password: null,
       setPassword: (pass: string) => set({password: pass}),
 
@@ -63,7 +63,9 @@ export const useStore = create<Store, SetState<Store>, GetState<Store>>(
       transactions: [],
       loadTransactions: async () => {
         const data = await getTransactions();
-        data && set({transactions: data});
+        data &&
+          get().transactions.length != data.length &&
+          set({transactions: data});
       },
 
       fundTransfers: [],
