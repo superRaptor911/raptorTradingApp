@@ -52,7 +52,7 @@ export default function UserFundTransferList({user}: {user: User}) {
   return (
     <TableContainer
       component={Paper}
-      sx={{maxWidth: '95%', margin: 'auto', marginTop: 10, marginBottom: 20}}>
+      sx={{maxWidth: '95%', margin: 'auto', marginTop: 10, marginBottom: 10}}>
       <Table sx={{minWidth: 500}} aria-label="custom pagination table">
         <TableHead>
           <TableRow>

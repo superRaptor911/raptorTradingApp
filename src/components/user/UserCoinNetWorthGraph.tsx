@@ -1,3 +1,4 @@
+import {Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
   ResponsiveContainer,
@@ -50,6 +51,9 @@ const UserCoinNetWorthGraph = ({user}: UserCoinWorthGraphProps) => {
 
   return (
     <div style={{fontSize: 12}}>
+      <Typography variant="h5" textAlign="center">
+        Portfolio Graph
+      </Typography>
       <ResponsiveContainer width="100%" height={500}>
         <BarChart width={730} height={250} data={data} layout="horizontal">
           {/* <CartesianGrid strokeDasharray="3 3" /> */}
