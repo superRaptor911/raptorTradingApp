@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import {useParams} from 'react-router-dom';
@@ -24,6 +24,7 @@ import StopLossBot4Coin from '../components/coin/StopLossBot4Coin';
 import CoinBuyMenu from '../components/coin/CoinBuyMenu';
 import useTimer from '../components/hooks/useTimer';
 import UserTradesGraph from '../components/user/UserTradesGraph';
+import Visibility from '../components/Visibility';
 
 interface CoinDetailsProp {
   coin: Coin;
@@ -130,22 +131,24 @@ const CoinPage = () => {
         <Typography sx={{textAlign: 'center'}}>{coin.name}</Typography>
         <div style={{marginTop: 30}}>
           <CoinGraph coinId={coin.id} />
-          <CoinBuyMenu coinId={coin.id} />
+
+          <Visibility hide={!Boolean(user)}>
+            <CoinBuyMenu coinId={coin.id} />
+          </Visibility>
+
           <CoinDetails coin={coin} />
-          {user && (
-            <Fragment>
-              <UserTransaction
-                allTransactions={transactions}
-                user={user}
-                coinId={coin.id}
-              />
-              <UserTradesGraph
-                userTransactions={userTransactions}
-                coinId={coin.id}
-              />
-            </Fragment>
-          )}
-          <StopLossBot4Coin coinId={coin.id} />
+          <Visibility hide={!Boolean(user)}>
+            <UserTransaction
+              allTransactions={transactions}
+              user={user}
+              coinId={coin.id}
+            />
+            <UserTradesGraph
+              userTransactions={userTransactions}
+              coinId={coin.id}
+            />
+            <StopLossBot4Coin coinId={coin.id} />
+          </Visibility>
         </div>
       </Paper>
     </div>

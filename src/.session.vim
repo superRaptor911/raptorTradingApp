@@ -10,17 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/user/UserTradesGraph.tsx
+edit pages/Coin.tsx
 argglobal
-balt components/user/UserCoinNetWorthGraph.tsx
-let s:l = 65 - ((21 * winheight(0) + 22) / 45)
+balt components/user/UserTradesGraph.tsx
+let s:l = 16 - ((15 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 65
-normal! 0
+keepjumps 16
+normal! 015|
 tabnext 1
-badd +66 components/user/UserTradesGraph.tsx
+badd +87 components/user/UserTradesGraph.tsx
+badd +54 components/user/UserCoinNetWorthGraph.tsx
 badd +93 pages/AddTransactions.tsx
 badd +38 components/coin/IndicatorSelector.jsx
 badd +82 components/coin/CoinGraph.jsx
@@ -47,7 +48,7 @@ badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +69 components/wazirx/tradingMenu/MarketGraph.jsx
-badd +106 pages/Coin.tsx
+badd +1 pages/Coin.tsx
 badd +119 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +3 components/wazirx/tradingMenu/TradingMenu.tsx
 badd +1 components/wazirx/tradingMenuMobile/uiStore.js
@@ -62,7 +63,7 @@ badd +3 components/hooks/useTimer.js
 badd +12 pages/AddUser.tsx
 badd +18 components/summary/TotalCoins.tsx
 badd +1 pages/Summary.tsx
-badd +73 pages/User.tsx
+badd +40 pages/User.tsx
 badd +32 App.jsx
 badd +15 api/request.ts
 badd +9 pages/Home.tsx
@@ -81,10 +82,9 @@ badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 badd +6 components/Loading.tsx
 badd +96 components/coin/coinGraphHelper.js
-badd +32 components/coin/StopLossBot4Coin.tsx
+badd +109 components/coin/StopLossBot4Coin.tsx
 badd +41 components/coin/CoinBuyMenu.tsx
 badd +5 main.jsx
-badd +54 components/user/UserCoinNetWorthGraph.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

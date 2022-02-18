@@ -1,4 +1,4 @@
-import {MenuItem, Select} from '@mui/material';
+import {MenuItem, Select, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
   Brush,
@@ -13,6 +13,7 @@ import {
   ZAxis,
 } from 'recharts';
 import {Transaction} from '../../types';
+import Visibility from '../Visibility';
 
 interface UserTradesGraphProps {
   userTransactions: Transaction[];
@@ -83,7 +84,6 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
         userTransactions,
         selectedCoin,
       );
-      console.log(buyTrades, sellTrades);
       setBuyData(buyTrades);
       setSellData(sellTrades);
     }
@@ -91,19 +91,25 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
 
   return (
     <div style={{fontSize: 12, marginBottom: 40, marginTop: 30}}>
-      <div style={{margin: 'auto', width: 'max-content'}}>
-        <Select
-          labelId="name-label"
-          value={selectedCoin}
-          label="Coin"
-          onChange={e => setSelectedCoin(e.target.value)}>
-          {userCoins.map(item => (
-            <MenuItem value={item} key={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
+      <Typography variant="h4" textAlign="center" sx={{marginBottom: 2}}>
+        Trades for {selectedCoin}
+      </Typography>
+
+      <Visibility hide={Boolean(coinId)}>
+        <div style={{margin: 'auto', width: 'max-content'}}>
+          <Select
+            labelId="name-label"
+            value={selectedCoin}
+            label="Coin"
+            onChange={e => setSelectedCoin(e.target.value)}>
+            {userCoins.map(item => (
+              <MenuItem value={item} key={item}>
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+      </Visibility>
       <ResponsiveContainer width="100%" height={500}>
         <ScatterChart
           width={730}
