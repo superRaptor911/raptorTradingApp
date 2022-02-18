@@ -69,4 +69,6 @@ Note: There is a bug in transactions, it will be fixed in next update
 # Raptor Trading v2.53
 
 * Fixed not going to top when page changes
-* Added User Portfolio Graph in user menu
+* Added User Portfolio Graph in user page
+* Added User Trades Graph in user page
+* Added User Trades Graph in coin page
