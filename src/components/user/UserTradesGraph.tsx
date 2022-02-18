@@ -43,8 +43,10 @@ const getCoinsFromTransactions = (transactions: Transaction[]) => {
 const getBuyAndSellData = (transactions: Transaction[], coinId: string) => {
   const buyTrades: TradeData[] = [];
   const sellTrades: TradeData[] = [];
-  const filteredTrans = transactions.filter(item => item.coinId == coinId);
-  let i = 0;
+  const filteredTrans = transactions
+    .filter(item => item.coinId == coinId)
+    .reverse();
+  let i = 1;
   filteredTrans.forEach(item => {
     const tradeData: TradeData = {
       amount: item.coinCount,
@@ -111,7 +113,6 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
           <XAxis
             dataKey="id"
             name="ID"
-            unit="s"
             type="number"
             domain={['dataMin - 1', 'dataMax + 1']}
           />
