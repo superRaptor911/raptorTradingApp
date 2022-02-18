@@ -1,4 +1,4 @@
-import create, {GetState, SetState} from 'zustand';
+import create from 'zustand';
 import {persist} from 'zustand/middleware';
 import {
   getCoinPrices,
@@ -33,7 +33,7 @@ interface Store {
   loadFundTransfers: () => void;
 }
 
-export const useStore = create<Store, SetState<Store>, GetState<Store>>(
+export const useStore = create<Store>(
   persist(
     (set, get) => ({
       password: null,

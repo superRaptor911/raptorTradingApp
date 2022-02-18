@@ -1,7 +1,6 @@
 import {MenuItem, Select, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
-  Brush,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -44,7 +43,7 @@ const getCoinsFromTransactions = (transactions: Transaction[]) => {
 const getBuyAndSellData = (transactions: Transaction[], coinId: string) => {
   const buyTrades: TradeData[] = [];
   const sellTrades: TradeData[] = [];
-  const filteredTrans = transactions
+  let filteredTrans = transactions
     .filter(item => item.coinId == coinId)
     .reverse();
   let i = 1;
@@ -59,7 +58,7 @@ const getBuyAndSellData = (transactions: Transaction[], coinId: string) => {
       : buyTrades.push(tradeData);
   });
 
-  return [buyTrades, sellTrades];
+  return {buyTrades: buyTrades, sellTrades: sellTrades, count: i};
 };
 
 const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
@@ -80,7 +79,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
 
   useEffect(() => {
     if (selectedCoin != '') {
-      const [buyTrades, sellTrades] = getBuyAndSellData(
+      const {buyTrades, sellTrades} = getBuyAndSellData(
         userTransactions,
         selectedCoin,
       );
@@ -136,10 +135,9 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
           />
           <Tooltip cursor={{strokeDasharray: '3 3'}} />
           <Legend />
-          <Scatter name="Buy" data={buyData} fill="green" />
-          <Scatter name="Sell" data={sellData} fill="red" />
-
-          {/* {data.length > 10 && <Brush />} */}
+          <Scatter name="Buy" data={buyData} fill="green" line />
+          <Scatter name="Sell" data={sellData} fill="red" line />
+          {/* <Brush dataKey="id" height={30} stroke="#8884d8" /> */}
         </ScatterChart>
       </ResponsiveContainer>
     </div>

@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {
   ResponsiveContainer,
   BarChart,
-  CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
