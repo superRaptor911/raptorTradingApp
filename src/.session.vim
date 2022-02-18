@@ -13,12 +13,12 @@ argglobal
 edit components/user/UserTradesGraph.tsx
 argglobal
 balt components/user/UserCoinNetWorthGraph.tsx
-let s:l = 66 - ((22 * winheight(0) + 22) / 45)
+let s:l = 65 - ((21 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 66
-normal! 010|
+keepjumps 65
+normal! 0
 tabnext 1
 badd +66 components/user/UserTradesGraph.tsx
 badd +93 pages/AddTransactions.tsx

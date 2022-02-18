@@ -2,20 +2,27 @@ import {MenuItem, Select} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {
   Brush,
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Scatter,
+  ScatterChart,
+  ZAxis,
 } from 'recharts';
 import {Transaction} from '../../types';
 
 interface UserTradesGraphProps {
   userTransactions: Transaction[];
   coinId?: string;
+}
+
+interface TradeData {
+  amount: number;
+  price: number;
+  id: number;
 }
 
 const getCoinsFromTransactions = (transactions: Transaction[]) => {
@@ -33,8 +40,28 @@ const getCoinsFromTransactions = (transactions: Transaction[]) => {
   return coins;
 };
 
+const getBuyAndSellData = (transactions: Transaction[], coinId: string) => {
+  const buyTrades: TradeData[] = [];
+  const sellTrades: TradeData[] = [];
+  const filteredTrans = transactions.filter(item => item.coinId == coinId);
+  let i = 0;
+  filteredTrans.forEach(item => {
+    const tradeData: TradeData = {
+      amount: item.coinCount,
+      price: item.cost,
+      id: i++,
+    };
+    item.transType == 'SELL'
+      ? sellTrades.push(tradeData)
+      : buyTrades.push(tradeData);
+  });
+
+  return [buyTrades, sellTrades];
+};
+
 const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
-  const [data, setData] = useState<any>([]);
+  const [buyData, setBuyData] = useState<TradeData[]>([]);
+  const [sellData, setSellData] = useState<TradeData[]>([]);
   const [userCoins, setUserCoins] = useState<string[]>([]);
   const [selectedCoin, setSelectedCoin] = useState('');
 
@@ -50,55 +77,63 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
 
   useEffect(() => {
     if (selectedCoin != '') {
-      const newData = userTransactions
-        .filter(item => item.coinId == selectedCoin)
-        .map(item => {
-          return {
-            uv: item.cost,
-            name: `${item.coinCount} ${item.coinId}`,
-          };
-        });
-
-      setData(newData);
+      const [buyTrades, sellTrades] = getBuyAndSellData(
+        userTransactions,
+        selectedCoin,
+      );
+      console.log(buyTrades, sellTrades);
+      setBuyData(buyTrades);
+      setSellData(sellTrades);
     }
   }, [selectedCoin]);
+
   return (
-    <div style={{fontSize: 12}}>
-      <Select
-        labelId="name-label"
-        value={selectedCoin}
-        label="Coin"
-        onChange={e => setSelectedCoin(e.target.value)}>
-        {userCoins.map(item => (
-          <MenuItem value={item} key={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </Select>
+    <div style={{fontSize: 12, marginBottom: 40, marginTop: 30}}>
+      <div style={{margin: 'auto', width: 'max-content'}}>
+        <Select
+          labelId="name-label"
+          value={selectedCoin}
+          label="Coin"
+          onChange={e => setSelectedCoin(e.target.value)}>
+          {userCoins.map(item => (
+            <MenuItem value={item} key={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
       <ResponsiveContainer width="100%" height={500}>
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 10,
-            left: 10,
-            bottom: 5,
-          }}>
+        <ScatterChart
+          width={730}
+          height={250}
+          margin={{top: 20, right: 20, bottom: 10, left: 10}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis domain={['dataMin', 'dataMax']} />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="uv"
-            stroke="#8884d8"
-            activeDot={{r: 8}}
+          <XAxis
+            dataKey="id"
+            name="ID"
+            unit="s"
+            type="number"
+            domain={['dataMin - 1', 'dataMax + 1']}
           />
-          {data.length > 10 && <Brush />}
-        </LineChart>
+          <YAxis
+            dataKey="price"
+            name="Price"
+            unit=" inr"
+            domain={['dataMin', 'dataMax']}
+          />
+          <ZAxis
+            dataKey="amount"
+            range={[10, 500]}
+            name="Amount"
+            unit={' ' + selectedCoin}
+          />
+          <Tooltip cursor={{strokeDasharray: '3 3'}} />
+          <Legend />
+          <Scatter name="Buy" data={buyData} fill="green" />
+          <Scatter name="Sell" data={sellData} fill="red" />
+
+          {/* {data.length > 10 && <Brush />} */}
+        </ScatterChart>
       </ResponsiveContainer>
     </div>
   );
