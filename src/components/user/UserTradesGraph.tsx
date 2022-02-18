@@ -1,4 +1,5 @@
 import {MenuItem, Select, Typography} from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
 import React, {useEffect, useState} from 'react';
 import {
   XAxis,
@@ -40,12 +41,33 @@ const getCoinsFromTransactions = (transactions: Transaction[]) => {
   return coins;
 };
 
-const getBuyAndSellData = (transactions: Transaction[], coinId: string) => {
+const normalizeTransactions = (transactions: Transaction[]) => {
+  let max = 0;
+  transactions.forEach(item => (max = Math.max(max, item.cost)));
+  const newTransactions = transactions.map(item => {
+    const newItem = {...item};
+    newItem.cost /= max / 100;
+    newItem.cost = Number(newItem.cost.toFixed(1));
+    return newItem;
+  });
+  return newTransactions;
+};
+
+const getBuyAndSellData = (
+  transactions: Transaction[],
+  coinId: string,
+  normalize: boolean,
+) => {
   const buyTrades: TradeData[] = [];
   const sellTrades: TradeData[] = [];
   let filteredTrans = transactions
     .filter(item => item.coinId == coinId)
     .reverse();
+
+  if (normalize) {
+    filteredTrans = normalizeTransactions(filteredTrans);
+  }
+
   let i = 1;
   filteredTrans.forEach(item => {
     const tradeData: TradeData = {
@@ -66,6 +88,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
   const [sellData, setSellData] = useState<TradeData[]>([]);
   const [userCoins, setUserCoins] = useState<string[]>([]);
   const [selectedCoin, setSelectedCoin] = useState('');
+  const [normalize, setNormalize] = useState(false);
 
   useEffect(() => {
     const coins = getCoinsFromTransactions(userTransactions);
@@ -82,11 +105,12 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
       const {buyTrades, sellTrades} = getBuyAndSellData(
         userTransactions,
         selectedCoin,
+        normalize,
       );
       setBuyData(buyTrades);
       setSellData(sellTrades);
     }
-  }, [selectedCoin]);
+  }, [selectedCoin, normalize]);
 
   return (
     <div style={{fontSize: 12, marginBottom: 40, marginTop: 30}}>
@@ -94,8 +118,8 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
         Trades for {selectedCoin}
       </Typography>
 
-      <Visibility hide={Boolean(coinId)}>
-        <div style={{margin: 'auto', width: 'max-content'}}>
+      <div style={{margin: 'auto', width: 'max-content'}}>
+        <Visibility hide={Boolean(coinId)}>
           <Select
             labelId="name-label"
             value={selectedCoin}
@@ -107,8 +131,13 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
               </MenuItem>
             ))}
           </Select>
-        </div>
-      </Visibility>
+        </Visibility>
+        {'  '}Normalize
+        <Checkbox
+          checked={normalize}
+          onChange={e => setNormalize(e.target.checked)}
+        />
+      </div>
       <ResponsiveContainer width="100%" height={500}>
         <ScatterChart
           width={730}
@@ -124,7 +153,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
           <YAxis
             dataKey="price"
             name="Price"
-            unit=" inr"
+            unit={normalize ? ' %' : ' inr'}
             domain={['dataMin', 'dataMax']}
           />
           <ZAxis

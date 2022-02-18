@@ -10,25 +10,26 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit pages/Coin.tsx
+edit components/user/UserTradesGraph.tsx
 argglobal
-balt components/user/UserTradesGraph.tsx
-let s:l = 16 - ((15 * winheight(0) + 22) / 45)
+balt components/wazirx/tradingMenu/PlaceOrder.tsx
+let s:l = 43 - ((22 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 16
-normal! 015|
+keepjumps 43
+normal! 069|
 tabnext 1
-badd +87 components/user/UserTradesGraph.tsx
-badd +54 components/user/UserCoinNetWorthGraph.tsx
+badd +158 pages/Coin.tsx
+badd +113 components/user/UserTradesGraph.tsx
+badd +6 components/user/UserCoinNetWorthGraph.tsx
 badd +93 pages/AddTransactions.tsx
 badd +38 components/coin/IndicatorSelector.jsx
 badd +82 components/coin/CoinGraph.jsx
 badd +70 components/user/UserCoins.tsx
 badd +37 components/user/UserCoinStats.tsx
 badd +15 components/coin/PeriodSelector.jsx
-badd +35 components/user/UserTransactions.tsx
+badd +1 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
 badd +114 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
@@ -36,10 +37,10 @@ badd +65 components/helper.ts
 badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +38 components/CoinList.tsx
 badd +37 pages/AdminLogin.tsx
-badd +60 store.ts
+badd +79 store.ts
 badd +64 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
 badd +1 types.ts
-badd +27 components/UserList.tsx
+badd +1 components/UserList.tsx
 badd +32 api/api.ts
 badd +55 api/wazirxApi.ts
 badd +62 pages/wazirx/WazirxTradingMenuMobile.tsx
@@ -48,7 +49,6 @@ badd +3 pages/wazirx/Automation.tsx
 badd +23 pages/wazirx/StopLossBot.tsx
 badd +222 components/wazirx/stopLossBot/RuleItem.tsx
 badd +69 components/wazirx/tradingMenu/MarketGraph.jsx
-badd +1 pages/Coin.tsx
 badd +119 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +3 components/wazirx/tradingMenu/TradingMenu.tsx
 badd +1 components/wazirx/tradingMenuMobile/uiStore.js
@@ -69,7 +69,7 @@ badd +15 api/request.ts
 badd +9 pages/Home.tsx
 badd +3 utility.ts
 badd +4 components/hooks/useDeviceType.js
-badd +8 components/Visibility.tsx
+badd +6 components/Visibility.tsx
 badd +34 pages/FundTransfer.tsx
 badd +1 pages/AdminMenu.tsx
 badd +34 pages/Transactions.tsx
@@ -78,7 +78,7 @@ badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
 badd +31 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +13 components/user/helper.ts
-badd +2 components/wazirx/tradingMenu/PlaceOrder.tsx
+badd +62 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 badd +6 components/Loading.tsx
 badd +96 components/coin/coinGraphHelper.js
