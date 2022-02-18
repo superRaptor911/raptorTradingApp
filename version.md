@@ -65,3 +65,8 @@ Note: There is a bug in transactions, it will be fixed in next update
 * Fixed stop Loss bug
 * Fixed user transactions not updating in coin page
 * Added buy menu in coin page
+
+# Raptor Trading v2.53
+
+* Fixed not going to top when page changes
+* Added User Portfolio Graph in user menu
