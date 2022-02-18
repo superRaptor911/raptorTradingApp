@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import {useParams} from 'react-router-dom';
@@ -16,13 +16,14 @@ import {
   getCoinPrice,
   getWazirxUser,
 } from '../components/helper';
-import {Coin} from '../types';
+import {Coin, Transaction} from '../types';
 import CoinGraph from '../components/coin/CoinGraph';
 import Loading from '../components/Loading';
 import UserTransaction from '../components/user/UserTransactions';
 import StopLossBot4Coin from '../components/coin/StopLossBot4Coin';
 import CoinBuyMenu from '../components/coin/CoinBuyMenu';
 import useTimer from '../components/hooks/useTimer';
+import UserTradesGraph from '../components/user/UserTradesGraph';
 
 interface CoinDetailsProp {
   coin: Coin;
@@ -77,6 +78,7 @@ const CoinDetails = ({coin}: CoinDetailsProp) => {
 const CoinPage = () => {
   const {coinName}: {coinName: string} = useParams();
   const [coin, setCoin] = useState<Coin | null>();
+  const [userTransactions, setUserTransactions] = useState<Transaction[]>([]);
 
   const coins = useStore(state => state.coins);
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
@@ -88,11 +90,12 @@ const CoinPage = () => {
     setCoin(getCoin(coins, coinName));
   }, [coinName]);
 
-  // Load coin price and transaction list on load
-  // useEffect(() => {
-  //   loadCoinPrices();
-  //   loadTransactions();
-  // }, []);
+  useEffect(() => {
+    if (user) {
+      const list = transactions.filter(item => item.username == user.name);
+      setUserTransactions(list);
+    }
+  }, [transactions]);
 
   // Load coin price and transaction list every 2000 ms
   useTimer(2000, () => {
@@ -130,11 +133,17 @@ const CoinPage = () => {
           <CoinBuyMenu coinId={coin.id} />
           <CoinDetails coin={coin} />
           {user && (
-            <UserTransaction
-              allTransactions={transactions}
-              user={user}
-              coinId={coin.id}
-            />
+            <Fragment>
+              <UserTransaction
+                allTransactions={transactions}
+                user={user}
+                coinId={coin.id}
+              />
+              <UserTradesGraph
+                userTransactions={userTransactions}
+                coinId={coin.id}
+              />
+            </Fragment>
           )}
           <StopLossBot4Coin coinId={coin.id} />
         </div>

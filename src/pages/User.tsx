@@ -37,13 +37,7 @@ const UserPage = () => {
 
   useEffect(() => {
     if (transactions) {
-      let list: Transaction[] = [];
-      transactions.forEach(item => {
-        if (item.username === username) {
-          list.push(item);
-        }
-      });
-
+      const list = transactions.filter(item => item.username == username);
       setUserTransactions(list);
     }
   }, [transactions, username]);
