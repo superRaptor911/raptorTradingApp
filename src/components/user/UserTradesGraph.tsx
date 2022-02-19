@@ -11,6 +11,7 @@ import {
   Scatter,
   ScatterChart,
   ZAxis,
+  ReferenceLine,
 } from 'recharts';
 import {CategoricalChartState} from 'recharts/types/chart/generateCategoricalChart';
 import {Transaction} from '../../types';
@@ -64,11 +65,29 @@ const handleMouseMove = (
   }
 };
 
+const calculateAvgBuyAndSellPrice = (
+  buyTrades: TradeData[],
+  sellTrades: TradeData[],
+) => {
+  let [totBuy, totSell] = [0, 0];
+  let [bn, sn] = [0, 0];
+  buyTrades.forEach(item => {
+    totBuy += item.price * item.amount;
+    bn += item.amount;
+  });
+  sellTrades.forEach(item => {
+    totSell += item.price * item.amount;
+    sn += item.amount;
+  });
+  return [totBuy / bn, totSell / sn];
+};
+
 const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
   const [buyData, setBuyData] = useState<TradeData[]>([]);
   const [sellData, setSellData] = useState<TradeData[]>([]);
   const [userCoins, setUserCoins] = useState<string[]>([]);
   const [selectedCoin, setSelectedCoin] = useState('');
+  const [avgBuySell, setAvgBuySell] = useState([0, 0]);
   const [normalize, setNormalize] = useState(false);
   const [domain, setDomain] = useState([0, 8]);
 
@@ -91,6 +110,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
       );
       setBuyData(buyTrades);
       setSellData(sellTrades);
+      setAvgBuySell(calculateAvgBuyAndSellPrice(buyTrades, sellTrades));
     }
   }, [selectedCoin, normalize]);
 
@@ -171,6 +191,18 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
             fill="red"
             line
             isAnimationActive={false}
+          />
+          <ReferenceLine
+            y={avgBuySell[0]}
+            label="Avg. Buy"
+            stroke="green"
+            strokeDasharray="3 3"
+          />
+          <ReferenceLine
+            y={avgBuySell[1]}
+            label="Avg. Sell"
+            stroke="red"
+            strokeDasharray="3 3"
           />
         </ScatterChart>
       </ResponsiveContainer>
