@@ -12,18 +12,14 @@ import {
   ScatterChart,
   ZAxis,
 } from 'recharts';
+import {CategoricalChartState} from 'recharts/types/chart/generateCategoricalChart';
 import {Transaction} from '../../types';
 import Visibility from '../Visibility';
+import {getBuyAndSellData, TradeData} from './helper';
 
 interface UserTradesGraphProps {
   userTransactions: Transaction[];
   coinId?: string;
-}
-
-interface TradeData {
-  amount: number;
-  price: number;
-  id: number;
 }
 
 const getCoinsFromTransactions = (transactions: Transaction[]) => {
@@ -41,46 +37,31 @@ const getCoinsFromTransactions = (transactions: Transaction[]) => {
   return coins;
 };
 
-const normalizeTransactions = (transactions: Transaction[]) => {
-  let max = 0;
-  transactions.forEach(item => (max = Math.max(max, item.cost)));
-  const newTransactions = transactions.map(item => {
-    const newItem = {...item};
-    newItem.cost /= max / 100;
-    newItem.cost = Number(newItem.cost.toFixed(1));
-    return newItem;
-  });
-  return newTransactions;
+let [Mx, My] = [0, 0];
+let mouseDown = false;
+let factor = 0.02;
+
+const handleMouseDown = (e: CategoricalChartState) => {
+  mouseDown = true;
+
+  if (mouseDown && e.chartX && e.chartY) {
+    [Mx, My] = [e.chartX, e.chartY];
+  }
 };
 
-const getBuyAndSellData = (
-  transactions: Transaction[],
-  coinId: string,
-  normalize: boolean,
+const handleMouseMove = (
+  e: CategoricalChartState,
+  domain: number[],
+  setDomain: any,
 ) => {
-  const buyTrades: TradeData[] = [];
-  const sellTrades: TradeData[] = [];
-  let filteredTrans = transactions
-    .filter(item => item.coinId == coinId)
-    .reverse();
-
-  if (normalize) {
-    filteredTrans = normalizeTransactions(filteredTrans);
+  if (!e) {
+    mouseDown = false;
   }
-
-  let i = 1;
-  filteredTrans.forEach(item => {
-    const tradeData: TradeData = {
-      amount: item.coinCount,
-      price: item.cost,
-      id: i++,
-    };
-    item.transType == 'SELL'
-      ? sellTrades.push(tradeData)
-      : buyTrades.push(tradeData);
-  });
-
-  return {buyTrades: buyTrades, sellTrades: sellTrades, count: i};
+  if (mouseDown && e.chartX && e.chartY) {
+    const [dx, _dy] = [e.chartX - Mx, e.chartY - My];
+    setDomain(domain.map(num => Number((num - dx * factor).toFixed(1))));
+    [Mx, My] = [e.chartX, e.chartY];
+  }
 };
 
 const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
@@ -89,6 +70,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
   const [userCoins, setUserCoins] = useState<string[]>([]);
   const [selectedCoin, setSelectedCoin] = useState('');
   const [normalize, setNormalize] = useState(false);
+  const [domain, setDomain] = useState([0, 8]);
 
   useEffect(() => {
     const coins = getCoinsFromTransactions(userTransactions);
@@ -113,7 +95,13 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
   }, [selectedCoin, normalize]);
 
   return (
-    <div style={{fontSize: 12, marginBottom: 40, marginTop: 30}}>
+    <div
+      style={{
+        fontSize: 12,
+        marginBottom: 40,
+        marginTop: 30,
+        userSelect: 'none',
+      }}>
       <Typography variant="h4" textAlign="center" sx={{marginBottom: 2}}>
         Trades for {selectedCoin}
       </Typography>
@@ -140,6 +128,11 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
       </div>
       <ResponsiveContainer width="100%" height={500}>
         <ScatterChart
+          onMouseDown={handleMouseDown}
+          onMouseMove={e => handleMouseMove(e, domain, setDomain)}
+          onMouseUp={() => {
+            mouseDown = false;
+          }}
           width={730}
           height={250}
           margin={{top: 20, right: 20, bottom: 10, left: 10}}>
@@ -148,7 +141,8 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
             dataKey="id"
             name="ID"
             type="number"
-            domain={['dataMin - 1', 'dataMax + 1']}
+            allowDataOverflow
+            domain={domain}
           />
           <YAxis
             dataKey="price"
@@ -164,9 +158,20 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
           />
           <Tooltip cursor={{strokeDasharray: '3 3'}} />
           <Legend />
-          <Scatter name="Buy" data={buyData} fill="green" line />
-          <Scatter name="Sell" data={sellData} fill="red" line />
-          {/* <Brush dataKey="id" height={30} stroke="#8884d8" /> */}
+          <Scatter
+            name="Buy"
+            data={buyData}
+            fill="green"
+            line
+            isAnimationActive={false}
+          />
+          <Scatter
+            name="Sell"
+            data={sellData}
+            fill="red"
+            line
+            isAnimationActive={false}
+          />
         </ScatterChart>
       </ResponsiveContainer>
     </div>
