@@ -89,7 +89,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
   const [selectedCoin, setSelectedCoin] = useState('');
   const [avgBuySell, setAvgBuySell] = useState([0, 0]);
   const [normalize, setNormalize] = useState(false);
-  const [domain, setDomain] = useState([0, 8]);
+  const [domain, setDomain] = useState([0, 10]);
 
   useEffect(() => {
     const coins = getCoinsFromTransactions(userTransactions);
