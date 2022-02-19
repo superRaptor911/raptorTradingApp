@@ -58,12 +58,11 @@ export const getBuyAndSellData = (
   }
 
   let i = 1;
-  let j = 1;
   filteredTrans.forEach(item => {
     const tradeData: TradeData = {
       amount: item.coinCount,
       price: item.cost,
-      id: item.transType == 'SELL' ? i++ : j++,
+      id: i++,
     };
     item.transType == 'SELL'
       ? sellTrades.push(tradeData)

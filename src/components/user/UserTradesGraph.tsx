@@ -1,6 +1,6 @@
 import {MenuItem, Select, Typography} from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   XAxis,
   YAxis,
@@ -116,6 +116,7 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
 
   return (
     <div
+      onTouchMove={e => console.log(e.changedTouches[0].clientX)}
       style={{
         fontSize: 12,
         marginBottom: 40,
