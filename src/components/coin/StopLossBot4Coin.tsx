@@ -114,12 +114,27 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
           You can only add upto 6 rules!
         </Alert>
       </Visibility>
-      <div style={{width: 'max-content', margin: 'auto', marginBottom: 10}}>
+      <div
+        style={{
+          width: 'max-content',
+          margin: 'auto',
+          marginBottom: 10,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
         <Button
+          style={{marginBottom: 10}}
           variant="contained"
           onClick={addNewRule}
           disabled={limitReached}>
           Add Rule
+        </Button>
+
+        <Button
+          variant="contained"
+          onClick={addNewRule}
+          disabled={limitReached}>
+          Add Trade Rule
         </Button>
       </div>
       <div>
