@@ -11,8 +11,8 @@ const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
   const [price, setPrice] = useState('0');
   const [profitprice, setProfitprice] = useState('0');
   const [lossPrice, setLossPrice] = useState('0');
-  const [profitPercentSlider, setProfitPercentSlider] = useState(0);
-  const [lossPercentSlider, setLossPercentSlider] = useState(0);
+  const [profitPercentSlider, setProfitPercentSlider] = useState(4);
+  const [lossPercentSlider, setLossPercentSlider] = useState(5);
 
   const handleProfitSliderChange = (_event: any, newValue: any) => {
     setProfitPercentSlider(newValue);
@@ -38,17 +38,29 @@ const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
     setLossPercentSlider(Number(percent.toFixed(1)));
   };
 
+  const handlePriceInput = (e: any) => {
+    const val = Number(e.target.value);
+    const lossP = (val * (100 - lossPercentSlider)) / 100;
+    const profitP = (val * (100 + profitPercentSlider)) / 100;
+
+    setPrice(e.target.value);
+    setProfitprice(String(profitP));
+    setLossPrice(String(lossP));
+  };
+
   return (
     <Modal open={visible} onClose={() => setVisible(false)}>
       <Paper
         style={{
           width: '80%',
+          maxWidth: 800,
           height: 'max-content',
           margin: 'auto',
           padding: 8,
-          marginTop: '25%',
+          marginTop: '10%',
         }}>
         <TextField
+          type="number"
           label="Coin Count"
           variant="outlined"
           style={{width: '100%', marginTop: 10}}
@@ -57,16 +69,16 @@ const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
         />
 
         <TextField
-          disabled
+          type="number"
           label="Price"
           variant="outlined"
           style={{width: '100%', marginTop: 12}}
           value={price}
-          onChange={e => setPrice(e.target.value)}
+          onChange={handlePriceInput}
         />
 
         <TextField
-          disabled
+          type="number"
           label="Profit Sell Price"
           variant="outlined"
           style={{width: '100%', marginTop: 12}}
@@ -75,7 +87,7 @@ const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
         />
 
         <TextField
-          disabled
+          type="number"
           label="Loss Sell Price"
           variant="outlined"
           style={{width: '100%', marginTop: 12}}

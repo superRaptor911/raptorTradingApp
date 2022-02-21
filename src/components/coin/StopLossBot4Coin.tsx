@@ -10,6 +10,7 @@ import {StopLoss} from '../../types';
 import Loading from '../Loading';
 import Visibility from '../Visibility';
 import RuleItem from '../wazirx/stopLossBot/RuleItem';
+import TradeRuleModal from './TradeRuleModal';
 
 interface StopLossBot4CoinProps {
   coinId: string;
@@ -35,6 +36,7 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
   const [rules, setRules] = useState<StopLoss[]>([]);
   const [loading, setLoading] = useState(true);
   const [limitReached, setLimitReached] = useState(false);
+  const [showTradeRuleModal, setShowTradeRuleModal] = useState(false);
 
   // Load Rules in initial render
   useEffect(() => {
@@ -132,7 +134,7 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
 
         <Button
           variant="contained"
-          onClick={addNewRule}
+          onClick={() => setShowTradeRuleModal(true)}
           disabled={limitReached}>
           Add Trade Rule
         </Button>
@@ -147,6 +149,10 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
           />
         ))}
       </div>
+      <TradeRuleModal
+        visible={showTradeRuleModal}
+        setVisible={setShowTradeRuleModal}
+      />
     </div>
   );
 };
