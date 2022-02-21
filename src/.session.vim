@@ -10,17 +10,17 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/user/UserTradesGraph.tsx
+edit components/wazirx/stopLossBot/RuleItem.tsx
 argglobal
-balt components/user/helper.ts
-let s:l = 120 - ((36 * winheight(0) + 22) / 45)
+balt components/wazirx/stopLossBot/RulesMenu.tsx
+let s:l = 101 - ((22 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 120
-normal! 039|
+keepjumps 101
+normal! 018|
 tabnext 1
-badd +0 components/user/UserTradesGraph.tsx
+badd +88 components/user/UserTradesGraph.tsx
 badd +65 components/user/helper.ts
 badd +62 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +158 pages/Coin.tsx
@@ -36,7 +36,7 @@ badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
 badd +114 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
 badd +65 components/helper.ts
-badd +22 components/wazirx/stopLossBot/RulesMenu.tsx
+badd +106 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +38 components/CoinList.tsx
 badd +37 pages/AdminLogin.tsx
 badd +79 store.ts
@@ -48,8 +48,8 @@ badd +55 api/wazirxApi.ts
 badd +62 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
-badd +23 pages/wazirx/StopLossBot.tsx
-badd +222 components/wazirx/stopLossBot/RuleItem.tsx
+badd +16 pages/wazirx/StopLossBot.tsx
+badd +105 components/wazirx/stopLossBot/RuleItem.tsx
 badd +69 components/wazirx/tradingMenu/MarketGraph.jsx
 badd +119 components/wazirx/tradingMenuMobile/WazirxTransactionsMobile.jsx
 badd +3 components/wazirx/tradingMenu/TradingMenu.tsx

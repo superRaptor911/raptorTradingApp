@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, {useState, useEffect} from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Alert from '@mui/material/Alert';
@@ -14,6 +13,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {StopLoss} from '../../../types';
+import {genTextualContract, checkIfRuleChanged} from './helper';
+import Visibility from '../../Visibility';
 
 interface RuleItemProps {
   rule: StopLoss;
@@ -30,40 +31,6 @@ const useStyles = createUseStyles({
     marginBottom: 10,
   },
 });
-
-// Get text form of stop loss contract
-const genTextualContract = (
-  coinId: string,
-  price: number,
-  count: number,
-  transType: string,
-  condition: string,
-) => {
-  const str = `${transType} ${count} ${coinId} when price ${condition} than ${price}`;
-  return str;
-};
-
-// Function to check if rule was changed
-const checkIfChanged = (
-  rule: StopLoss,
-  isEnabled: boolean,
-  coinId: string,
-  price: number,
-  count: number,
-  transType: string,
-  condition: string,
-) => {
-  const isChanged = !(
-    rule.isEnabled == isEnabled &&
-    rule.coinId == coinId &&
-    rule.price == price &&
-    rule.count == count &&
-    rule.transType == transType &&
-    rule.condition == condition
-  );
-
-  return isChanged;
-};
 
 const RuleItem = ({rule, updateRule, handleDelete}: RuleItemProps) => {
   const classes = useStyles();
@@ -92,7 +59,7 @@ const RuleItem = ({rule, updateRule, handleDelete}: RuleItemProps) => {
   useEffect(() => {
     setTextual(genTextualContract(coinId, price, count, transType, condition));
     setIsModified(
-      checkIfChanged(
+      checkIfRuleChanged(
         rule,
         isEnabled,
         coinId,
@@ -102,7 +69,7 @@ const RuleItem = ({rule, updateRule, handleDelete}: RuleItemProps) => {
         condition,
       ),
     );
-  }, [isEnabled, coinId, price, count, transType]);
+  }, [isEnabled, coinId, price, count, transType, condition]);
 
   const handleUpdatePress = () => {
     rule.isEnabled = isEnabled;
@@ -208,13 +175,13 @@ const RuleItem = ({rule, updateRule, handleDelete}: RuleItemProps) => {
               sx={{marginLeft: 'auto'}}
             />
           </div>
-          {isModified && (
+          <Visibility hide={!isModified}>
             <Button
               style={{textAlign: 'center', width: '100%', marginTop: 10}}
               onClick={handleUpdatePress}>
               Update
             </Button>
-          )}
+          </Visibility>
         </Paper>
       </AccordionDetails>
     </Accordion>
