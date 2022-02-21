@@ -12,15 +12,16 @@ argglobal
 %argdel
 edit components/user/UserTradesGraph.tsx
 argglobal
-balt components/wazirx/tradingMenu/PlaceOrder.tsx
-let s:l = 156 - ((42 * winheight(0) + 22) / 45)
+balt components/user/helper.ts
+let s:l = 120 - ((36 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 156
-normal! 044|
+keepjumps 120
+normal! 039|
 tabnext 1
-badd +156 components/user/UserTradesGraph.tsx
+badd +0 components/user/UserTradesGraph.tsx
+badd +65 components/user/helper.ts
 badd +62 components/wazirx/tradingMenu/PlaceOrder.tsx
 badd +158 pages/Coin.tsx
 badd +6 components/user/UserCoinNetWorthGraph.tsx
@@ -78,7 +79,6 @@ badd +17 components/user/UserStats.tsx
 badd +86 components/TableCustomPaginationAction.tsx
 badd +37 pages/UserLogin.tsx
 badd +31 components/wazirx/tradingMenuMobile/TradingMenu.jsx
-badd +13 components/user/helper.ts
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 badd +6 components/Loading.tsx
 badd +96 components/coin/coinGraphHelper.js

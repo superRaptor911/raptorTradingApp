@@ -82,6 +82,15 @@ const calculateAvgBuyAndSellPrice = (
   return [totBuy / bn, totSell / sn];
 };
 
+const convertDivEventToRechart = (e: React.TouchEvent<HTMLDivElement>) => {
+  const state: CategoricalChartState = {
+    chartX: e.changedTouches[0].clientX * 3,
+    chartY: e.changedTouches[0].clientY * 3,
+  };
+
+  return state;
+};
+
 const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
   const [buyData, setBuyData] = useState<TradeData[]>([]);
   const [sellData, setSellData] = useState<TradeData[]>([]);
@@ -116,7 +125,13 @@ const UserTradesGraph = ({userTransactions, coinId}: UserTradesGraphProps) => {
 
   return (
     <div
-      onTouchMove={e => console.log(e.changedTouches[0].clientX)}
+      onTouchStart={e => handleMouseDown(convertDivEventToRechart(e))}
+      onTouchEnd={() => {
+        mouseDown = false;
+      }}
+      onTouchMove={e =>
+        handleMouseMove(convertDivEventToRechart(e), domain, setDomain)
+      }
       style={{
         fontSize: 12,
         marginBottom: 40,
