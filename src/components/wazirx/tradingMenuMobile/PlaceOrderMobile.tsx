@@ -13,6 +13,7 @@ import {getWazirxUser} from '../../helper';
 import {Wallet} from '../../../types';
 import {useHistory} from 'react-router-dom';
 import {ROUTES} from '../../../routes';
+import Visibility from '../../Visibility';
 
 interface PlaceOrderProps {
   visible: boolean;
@@ -30,10 +31,13 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
   const loadCoinPrices = useStore(state => state.loadCoinPrices);
 
   const [priceLoading, setPriceLoading] = useState(false);
-  const [count, setCount] = useState<number | string>('0');
+  const [count, setCount] = useState<string>('0');
   const [price, setPrice] = useState<number>(0);
-  const [total, setTotal] = useState<number | string>('0');
+  const [total, setTotal] = useState<string>('0');
   const [isLoading, setIsLoading] = useState(false);
+  const [lastEditedField, setLastEditedField] = useState<'count' | 'total'>(
+    'count',
+  );
 
   useEffect(() => {
     loadCoinPrices();
@@ -46,10 +50,6 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
   }, []);
 
   useEffect(() => {
-    setTotal(Number(count) * Number(price));
-  }, [count, price]);
-
-  useEffect(() => {
     if (coinId) {
       setPrice(
         side === 'SELL' ? coinPrices[coinId].buy : coinPrices[coinId].sell,
@@ -57,6 +57,14 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
       setPriceLoading(false);
     }
   }, [coinId, coinPrices, side]);
+
+  useEffect(() => {
+    if (lastEditedField == 'count') {
+      setTotal(String(price * Number(count)));
+    } else {
+      setCount(String(Number(total) / price));
+    }
+  }, [price]);
 
   const updatePrices = () => {
     setPriceLoading(true);
@@ -99,6 +107,21 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
   if (!coinId || !userWallet) {
     return null;
   }
+
+  const handleCoinCountInput = (e: any) => {
+    const val = Number(e.target.value);
+    setCount(String(val));
+    setTotal(String(val * price));
+    setLastEditedField('count');
+  };
+
+  const handleTotalInput = (e: any) => {
+    const val = Number(e.target.value);
+    setTotal(String(val));
+    setCount(String(val / price));
+    setLastEditedField('total');
+  };
+
   return (
     <Modal open={visible} onClose={() => setVisible(false)}>
       <Paper
@@ -119,9 +142,9 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
           variant="outlined"
           style={{width: '100%', marginTop: 10}}
           value={count}
-          onChange={e => setCount(e.target.value)}
+          onChange={handleCoinCountInput}
         />
-        {getCoinCount() > 0 && (
+        <Visibility hide={getCoinCount() <= 0}>
           <div
             style={{
               display: 'flex',
@@ -130,7 +153,7 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
             }}>
             {coinId + ' ' + getCoinCount()}
           </div>
-        )}
+        </Visibility>
 
         <div style={{display: 'flex'}}>
           <TextField
@@ -152,11 +175,7 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
           variant="outlined"
           style={{width: '100%', marginTop: 14}}
           value={total}
-          onChange={e => {
-            const val = Number(e.target.value);
-            setTotal(e.target.value);
-            setCount(val / price);
-          }}
+          onChange={handleTotalInput}
         />
         <div
           style={{
