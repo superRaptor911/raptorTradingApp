@@ -1,18 +1,50 @@
 import {Button, Modal, Paper, Slider, TextField} from '@mui/material';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useStore} from '../../store';
+import {getWazirxUser} from '../helper';
 
 interface TradeRuleModalProps {
   visible: boolean;
   setVisible: (val: boolean) => void;
+  coinId: string;
+  addRule: (rule: any) => Promise<void>;
 }
 
-const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
+const TradeRuleModal = ({
+  visible,
+  setVisible,
+  coinId,
+  addRule,
+}: TradeRuleModalProps) => {
   const [count, setCount] = useState('0');
   const [price, setPrice] = useState('0');
   const [profitprice, setProfitprice] = useState('0');
   const [lossPrice, setLossPrice] = useState('0');
   const [profitPercentSlider, setProfitPercentSlider] = useState(4);
   const [lossPercentSlider, setLossPercentSlider] = useState(5);
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
+  const transactions = useStore(state => state.transactions);
+
+  useEffect(() => {
+    if (transactions) {
+      const latestTransaction = transactions.find(
+        item => item.username == getWazirxUser()?.name && item.coinId == coinId,
+      );
+
+      if (latestTransaction) {
+        setCount(String(latestTransaction.coinCount));
+        setPrice(String(latestTransaction.cost));
+
+        const val = latestTransaction.cost;
+        const lossP = (val * (100 - lossPercentSlider)) / 100;
+        const profitP = (val * (100 + profitPercentSlider)) / 100;
+
+        setProfitprice(String(profitP));
+        setLossPrice(String(lossP));
+      }
+    }
+  }, [transactions]);
 
   const handleProfitSliderChange = (_event: any, newValue: any) => {
     setProfitPercentSlider(newValue);
@@ -46,6 +78,32 @@ const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
     setPrice(e.target.value);
     setProfitprice(String(profitP));
     setLossPrice(String(lossP));
+  };
+
+  const handleSubmitButton = async () => {
+    const lossRule = {
+      isEnabled: true,
+      coinId: coinId,
+      transType: 'SELL',
+      count: Number(count),
+      price: Number(lossPrice),
+      condition: 'LESS',
+    };
+
+    const profitRule = {
+      isEnabled: true,
+      coinId: coinId,
+      transType: 'SELL',
+      count: Number(count),
+      price: Number(profitprice),
+      condition: 'GREATER',
+    };
+
+    setIsSubmiting(true);
+    await addRule(profitRule);
+    await addRule(lossRule);
+    setIsSubmiting(false);
+    setVisible(false);
   };
 
   return (
@@ -111,9 +169,8 @@ const TradeRuleModal = ({visible, setVisible}: TradeRuleModalProps) => {
         <Button
           style={{width: '100%', marginTop: 12}}
           variant="contained"
-          // disabled={isLoading}
-          // onClick={onSubmit}>
-        >
+          disabled={isSubmiting}
+          onClick={handleSubmitButton}>
           Submit
         </Button>
       </Paper>

@@ -66,7 +66,9 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
     });
   };
 
-  const addNewRule = async () => {
+  const addNewRule = async (
+    customItem: typeof newItem | undefined = undefined,
+  ) => {
     const newItem = {
       id: 0,
       isEnabled: true,
@@ -77,13 +79,15 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
       condition: 'LESS',
     };
 
+    const item = customItem ? customItem : newItem;
+
     await StopLossBotAddRule(
-      newItem.isEnabled,
-      newItem.coinId,
-      newItem.price,
-      newItem.count,
-      newItem.transType,
-      newItem.condition,
+      item.isEnabled,
+      item.coinId,
+      item.price,
+      item.count,
+      item.transType,
+      item.condition,
     );
 
     StopLossBotListRules().then(result => {
@@ -127,7 +131,7 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
         <Button
           style={{marginBottom: 10}}
           variant="contained"
-          onClick={addNewRule}
+          onClick={() => addNewRule()}
           disabled={limitReached}>
           Add Rule
         </Button>
@@ -152,6 +156,8 @@ const StopLossBot4Coin = ({coinId}: StopLossBot4CoinProps) => {
       <TradeRuleModal
         visible={showTradeRuleModal}
         setVisible={setShowTradeRuleModal}
+        coinId={coinId}
+        addRule={addNewRule}
       />
     </div>
   );
