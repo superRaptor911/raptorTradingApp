@@ -110,14 +110,14 @@ const PlaceOrderMobile = ({visible, setVisible}: PlaceOrderProps) => {
 
   const handleCoinCountInput = (e: any) => {
     const val = Number(e.target.value);
-    setCount(String(val));
+    setCount(e.target.value);
     setTotal(String(val * price));
     setLastEditedField('count');
   };
 
   const handleTotalInput = (e: any) => {
     const val = Number(e.target.value);
-    setTotal(String(val));
+    setTotal(e.target.value);
     setCount(String(val / price));
     setLastEditedField('total');
   };
