@@ -1,8 +1,10 @@
 import {getUsernameFromEmail} from '../components/helper';
 import {useStore} from '../store';
+import {serverUrl} from './api';
 import {getRequest, postRequest} from './request';
 
-const url = 'https://raptor-trading.herokuapp.com/';
+// const serverUrl = 'https://raptor-trading-back.herokuapp.com/';
+// const url = 'https://raptor-trading.herokuapp.com/';
 // const url = 'http://localhost:8080/';
 
 export async function WazirxPlaceOrder(
@@ -13,7 +15,7 @@ export async function WazirxPlaceOrder(
 ) {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/add', {
+    const response = await postRequest(serverUrl + 'wazirx/add', {
       username: getUsernameFromEmail(userCred.email),
       password: userCred.password,
       coinId: coinId,
@@ -29,7 +31,7 @@ export async function WazirxPlaceOrder(
 export async function wazirxGetTransactions() {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/list', {
+    const response = await postRequest(serverUrl + 'wazirx/list', {
       username: getUsernameFromEmail(userCred.email),
       password: userCred.password,
     });
@@ -41,7 +43,7 @@ export async function wazirxGetTransactions() {
 export async function WazirxCancelOrder(coinId: string, orderId: string) {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/cancel', {
+    const response = await postRequest(serverUrl + 'wazirx/cancel', {
       username: getUsernameFromEmail(userCred.email),
       password: userCred.password,
       coinId: coinId,
@@ -66,10 +68,13 @@ export async function WazirxGetCoinHistory(
 export async function StopLossBotListRules() {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/stoplossbotlistrules', {
-      username: getUsernameFromEmail(userCred.email),
-      password: userCred.password,
-    });
+    const response = await postRequest(
+      serverUrl + 'wazirx/stoplossbotlistrules',
+      {
+        username: getUsernameFromEmail(userCred.email),
+        password: userCred.password,
+      },
+    );
     return response;
   }
   return null;
@@ -85,16 +90,19 @@ export async function StopLossBotAddRule(
 ) {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/stoplossbotaddrule', {
-      username: getUsernameFromEmail(userCred.email),
-      password: userCred.password,
-      coinId: coinId,
-      price: price,
-      count: count,
-      isEnabled: isEnabled,
-      transType: transType,
-      condition: condition,
-    });
+    const response = await postRequest(
+      serverUrl + 'wazirx/stoplossbotaddrule',
+      {
+        username: getUsernameFromEmail(userCred.email),
+        password: userCred.password,
+        coinId: coinId,
+        price: price,
+        count: count,
+        isEnabled: isEnabled,
+        transType: transType,
+        condition: condition,
+      },
+    );
     return response;
   }
   return null;
@@ -111,17 +119,20 @@ export async function StopLossBotEditRule(
 ) {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/stoplossboteditrule', {
-      username: getUsernameFromEmail(userCred.email),
-      password: userCred.password,
-      id: id,
-      coinId: coinId,
-      price: price,
-      count: count,
-      isEnabled: isEnabled,
-      transType: transType,
-      condition: condition,
-    });
+    const response = await postRequest(
+      serverUrl + 'wazirx/stoplossboteditrule',
+      {
+        username: getUsernameFromEmail(userCred.email),
+        password: userCred.password,
+        id: id,
+        coinId: coinId,
+        price: price,
+        count: count,
+        isEnabled: isEnabled,
+        transType: transType,
+        condition: condition,
+      },
+    );
     return response;
   }
   return null;
@@ -130,11 +141,14 @@ export async function StopLossBotEditRule(
 export async function StopLossBotDeleteRule(id: string) {
   const userCred = useStore.getState().userCred;
   if (userCred) {
-    const response = await postRequest(url + 'wazirx/stoplossbotdeleterule', {
-      username: getUsernameFromEmail(userCred.email),
-      password: userCred.password,
-      id: id,
-    });
+    const response = await postRequest(
+      serverUrl + 'wazirx/stoplossbotdeleterule',
+      {
+        username: getUsernameFromEmail(userCred.email),
+        password: userCred.password,
+        id: id,
+      },
+    );
     return response;
   }
   return null;

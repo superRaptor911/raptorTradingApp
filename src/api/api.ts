@@ -1,7 +1,8 @@
 import {useStore} from '../store';
 import {getRequest, postRequest} from './request';
 
-const url = 'https://raptor-trading.herokuapp.com/';
+// const url = 'https://raptor-trading.herokuapp.com/';
+export const serverUrl = 'https://raptor-trading-back.herokuapp.com/';
 // const url = 'http://localhost:8080/';
 
 export interface API_Response {
@@ -12,36 +13,45 @@ export interface API_Response {
 
 export async function addCoin(name: string, id: string, avatar: string) {
   const password = useStore.getState().password;
-  const response: API_Response | null = await postRequest(url + 'coins/add', {
-    name: name,
-    id: id,
-    avatar: avatar,
-    password: password,
-  });
+  const response: API_Response | null = await postRequest(
+    serverUrl + 'coins/add',
+    {
+      name: name,
+      id: id,
+      avatar: avatar,
+      password: password,
+    },
+  );
   return response;
 }
 
 export async function addUser(username: string, email: string, avatar: string) {
   const password = useStore.getState().password;
-  const response: API_Response | null = await postRequest(url + 'users/add', {
-    name: username,
-    email: email,
-    avatar: avatar,
-    password: password,
-  });
+  const response: API_Response | null = await postRequest(
+    serverUrl + 'users/add',
+    {
+      name: username,
+      email: email,
+      avatar: avatar,
+      password: password,
+    },
+  );
   return response;
 }
 
 export async function loginUser(email: string, password: string) {
-  const response: API_Response | null = await postRequest(url + 'users/login', {
-    email: email,
-    password: password,
-  });
+  const response: API_Response | null = await postRequest(
+    serverUrl + 'users/login',
+    {
+      email: email,
+      password: password,
+    },
+  );
   return response;
 }
 
 export async function getUsers() {
-  const response: API_Response | null = await getRequest(url + 'users');
+  const response: API_Response | null = await getRequest(serverUrl + 'users');
   if (response && response.status) {
     return response.data;
   }
@@ -50,7 +60,7 @@ export async function getUsers() {
 }
 
 export async function getCoins() {
-  const response: API_Response | null = await getRequest(url + 'coins');
+  const response: API_Response | null = await getRequest(serverUrl + 'coins');
   if (response && response.status) {
     return response.data;
   }
@@ -58,7 +68,9 @@ export async function getCoins() {
 }
 
 export async function getCoinPrices() {
-  const response: API_Response | null = await getRequest(url + 'coins/prices');
+  const response: API_Response | null = await getRequest(
+    serverUrl + 'coins/prices',
+  );
   if (response && response.status) {
     return response.data;
   }
@@ -66,7 +78,9 @@ export async function getCoinPrices() {
 }
 
 export async function getTransactions() {
-  const response: API_Response | null = await getRequest(url + 'transaction');
+  const response: API_Response | null = await getRequest(
+    serverUrl + 'transaction',
+  );
   if (response && response.status) {
     return response.data;
   }
@@ -85,7 +99,7 @@ export async function addTransaction(
 ) {
   const password = useStore.getState().password;
   const response: API_Response | null = await postRequest(
-    url + 'transaction/add',
+    serverUrl + 'transaction/add',
     {
       username: username,
       transType: transType,
@@ -102,7 +116,9 @@ export async function addTransaction(
 }
 
 export async function getFundTransfers() {
-  const response: API_Response | null = await getRequest(url + 'fund/list');
+  const response: API_Response | null = await getRequest(
+    serverUrl + 'fund/list',
+  );
   if (response && response.status) {
     return response.data;
   }
@@ -119,7 +135,7 @@ export async function addFundTransfer(
 ) {
   const password = useStore.getState().password;
   const response: API_Response | null = await postRequest(
-    url + 'fund/transfer',
+    serverUrl + 'fund/transfer',
     {
       username: username,
       transType: transType,

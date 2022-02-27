@@ -10,18 +10,20 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit components/coin/TradeRuleModal.tsx
+edit components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
 argglobal
-balt components/coin/StopLossBot4Coin.tsx
-let s:l = 55 - ((9 * winheight(0) + 22) / 45)
+balt components/coin/TradeRuleModal.tsx
+let s:l = 123 - ((31 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 55
-normal! 023|
+keepjumps 123
+normal! 04|
 tabnext 1
+badd +74 components/coin/TradeRuleModal.tsx
+badd +160 components/coin/StopLossBot4Coin.tsx
 badd +2 components/wazirx/stopLossBot/RuleItem.tsx
-badd +0 components/wazirx/stopLossBot/RulesMenu.tsx
+badd +1 components/wazirx/stopLossBot/RulesMenu.tsx
 badd +88 components/user/UserTradesGraph.tsx
 badd +65 components/user/helper.ts
 badd +62 components/wazirx/tradingMenu/PlaceOrder.tsx
@@ -36,8 +38,8 @@ badd +15 components/coin/PeriodSelector.jsx
 badd +1 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
-badd +103 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
-badd +65 components/helper.ts
+badd +147 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
+badd +56 components/helper.ts
 badd +38 components/CoinList.tsx
 badd +37 pages/AdminLogin.tsx
 badd +79 store.ts
@@ -45,7 +47,7 @@ badd +64 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
 badd +1 types.ts
 badd +1 components/UserList.tsx
 badd +32 api/api.ts
-badd +55 api/wazirxApi.ts
+badd +80 api/wazirxApi.ts
 badd +62 pages/wazirx/WazirxTradingMenuMobile.tsx
 badd +24 pages/AddCoin.tsx
 badd +3 pages/wazirx/Automation.tsx
@@ -82,11 +84,9 @@ badd +31 components/wazirx/tradingMenuMobile/TradingMenu.jsx
 badd +15 components/wazirx/tradingMenu/WazirxTransactions.tsx
 badd +6 components/Loading.tsx
 badd +96 components/coin/coinGraphHelper.js
-badd +110 components/coin/StopLossBot4Coin.tsx
 badd +41 components/coin/CoinBuyMenu.tsx
 badd +5 main.jsx
 badd +16 components/wazirx/stopLossBot/helper.ts
-badd +48 components/coin/TradeRuleModal.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
