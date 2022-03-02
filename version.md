@@ -72,3 +72,10 @@ Note: There is a bug in transactions, it will be fixed in next update
 * Added User Portfolio Graph in user page
 * Added User Trades Graph in user page
 * Added User Trades Graph in coin page
+
+# Raptor Trading v2.54
+
+* Fixed partial execution bug in stopLoss bot
+* Added panning in User Trades Graph
+* Added Trade Rule Menu for stop loss in coin page
+* Fixed input bugs in place order menu
