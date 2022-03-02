@@ -6,8 +6,10 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/jsx-runtime',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -17,22 +19,9 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    indent: ['warn', 2],
-    'linebreak-style': ['warn', 'unix'],
-    quotes: ['warn', 'single'],
-    semi: ['warn', 'always'],
-    'prettier/prettier': 'warn',
-    'no-unused-vars': [
-      'warn',
-      {vars: 'all', args: 'after-used', ignoreRestSiblings: false},
-    ],
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'unix'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
   },
-  overrides: [
-    {
-      files: ['*-test.js', '*.spec.js'],
-      rules: {
-        'no-unused-expressions': 'off',
-      },
-    },
-  ],
 };

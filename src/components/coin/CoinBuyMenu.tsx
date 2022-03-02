@@ -1,5 +1,5 @@
 import {Button} from '@mui/material';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import PlaceOrderMobile from '../wazirx/tradingMenuMobile/PlaceOrderMobile';
 import {useTradingStore} from '../wazirx/tradingMenuMobile/uiStore';
 
@@ -12,7 +12,7 @@ interface CoinBuyMenuProps {
   coinId: string;
 }
 
-const BuySellButtons = ({coinId, setShowPlaceMenu}: BuySellButtonsProps) => {
+function BuySellButtons({coinId, setShowPlaceMenu}: BuySellButtonsProps) {
   const setSide = useTradingStore(state => state.setSide);
 
   return (
@@ -38,9 +38,9 @@ const BuySellButtons = ({coinId, setShowPlaceMenu}: BuySellButtonsProps) => {
       </Button>
     </div>
   );
-};
+}
 
-const CoinBuyMenu = ({coinId}: CoinBuyMenuProps) => {
+function CoinBuyMenu({coinId}: CoinBuyMenuProps) {
   const [showPlaceMenu, setShowPlaceMenu] = useState(false);
   const setSelectedCoin = useTradingStore(state => state.setSelectedCoinId);
 
@@ -54,6 +54,6 @@ const CoinBuyMenu = ({coinId}: CoinBuyMenuProps) => {
       <PlaceOrderMobile visible={showPlaceMenu} setVisible={setShowPlaceMenu} />
     </div>
   );
-};
+}
 
 export default CoinBuyMenu;
