@@ -16,4 +16,5 @@ export const ROUTES = {
   tradingMenuMobile: '/tradingmobile',
   automations: '/automation',
   stopLossBot: '/stoplossbot',
+  leaderboard: '/leaderboard',
 };

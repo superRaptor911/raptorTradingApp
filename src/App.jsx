@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import {lazy, Suspense} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Loading from './components/Loading';
 import Home from './pages/Home';
@@ -21,6 +21,7 @@ const UserLogin = lazy(() => import('./pages/UserLogin'));
 const WazirxDashboard = lazy(() => import('./pages/wazirx/WazirxDashboard'));
 const Automation = lazy(() => import('./pages/wazirx/Automation'));
 const StopLossBot = lazy(() => import('./pages/wazirx/StopLossBot'));
+const Leaderboard = lazy(() => import('./pages/Leaderboard'));
 const WazirxTradingMenuMobile = lazy(() =>
   import('./pages/wazirx/WazirxTradingMenuMobile'),
 );
@@ -62,6 +63,7 @@ function App() {
               path={ROUTES.tradingMenuMobile}
               component={WazirxTradingMenuMobile}
             />
+            <Route exact path={ROUTES.leaderboard} component={Leaderboard} />
           </Suspense>
         </Switch>
       </Router>

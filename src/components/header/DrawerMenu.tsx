@@ -1,4 +1,3 @@
-import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -31,6 +30,10 @@ const Menus = [
   {
     name: 'Admin Menu',
     link: ROUTES.adminMenu,
+  },
+  {
+    name: 'Leaderboard',
+    link: ROUTES.leaderboard,
   },
 ];
 
