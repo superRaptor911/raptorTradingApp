@@ -18,7 +18,8 @@ const UserCoinStats = ({
   isMobile,
 }: UserCoinStatsProps) => {
   if (prices) {
-    const value = prices[coinId].last * count;
+    const coinPrice = prices[coinId].last;
+    const value = coinPrice * count;
     const investment = Math.max(0, coinInvestment ? coinInvestment[coinId] : 0);
     const profit = value - investment;
     const profitPercent = (100 * profit) / investment;
@@ -31,6 +32,7 @@ const UserCoinStats = ({
       <Fragment>
         <TableCell align="center">{coinCout}</TableCell>
         <TableCell align="center">{avgPrice}</TableCell>
+        <TableCell align="center">{humanReadableValue(coinPrice)}</TableCell>
         <TableCell align="center">{humanReadableValue(investment)}</TableCell>
         <TableCell align="center">{humanReadableValue(value)}</TableCell>
         <TableCell align="center" sx={{color: profit < 0 ? 'red' : 'green'}}>

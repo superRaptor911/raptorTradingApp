@@ -35,7 +35,7 @@ const UserCoins = ({user, transactions}: UserCoinsProps) => {
 
   useEffect(() => {
     if (transactions) {
-      let cids: {[key: string]: number} = {};
+      const cids: {[key: string]: number} = {};
 
       coins.forEach(item => {
         cids[item.id] = 0;
@@ -68,6 +68,7 @@ const UserCoins = ({user, transactions}: UserCoinsProps) => {
             <TableCell>Coin</TableCell>
             <TableCell align="center">Count</TableCell>
             <TableCell align="center">Avg Price</TableCell>
+            <TableCell align="center">Cur Price</TableCell>
             <TableCell align="center">Investment</TableCell>
             <TableCell align="center">Current Value</TableCell>
             <TableCell align="center">Profit</TableCell>

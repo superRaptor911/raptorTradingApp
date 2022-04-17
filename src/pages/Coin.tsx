@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import {useParams} from 'react-router-dom';
@@ -132,12 +132,12 @@ const CoinPage = () => {
         <div style={{marginTop: 30}}>
           <CoinGraph coinId={coin.id} />
 
-          <Visibility hide={!Boolean(user)}>
+          <Visibility hide={!user}>
             <CoinBuyMenu coinId={coin.id} />
           </Visibility>
 
           <CoinDetails coin={coin} />
-          <Visibility hide={!Boolean(user)}>
+          <Visibility hide={!user}>
             <UserTransaction
               allTransactions={transactions}
               user={user}
