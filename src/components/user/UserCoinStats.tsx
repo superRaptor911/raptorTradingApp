@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import {Fragment} from 'react';
 import TableCell from '@mui/material/TableCell';
 import {humanReadableValue} from '../../utility';
 

@@ -10,16 +10,18 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-edit App.jsx
+edit components/user/UserCoinStats.tsx
 argglobal
-balt components/header/DrawerMenu.tsx
-let s:l = 29 - ((28 * winheight(0) + 22) / 45)
+balt components/user/UserCoins.tsx
+let s:l = 51 - ((44 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 29
+keepjumps 51
 normal! 08|
 tabnext 1
+badd +29 App.jsx
+badd +1 components/header/DrawerMenu.tsx
 badd +38 components/CoinList.tsx
 badd +52 components/hooks/useDeviceType.ts
 badd +5 main.jsx
@@ -36,8 +38,8 @@ badd +6 components/user/UserCoinNetWorthGraph.tsx
 badd +93 pages/AddTransactions.tsx
 badd +38 components/coin/IndicatorSelector.jsx
 badd +82 components/coin/CoinGraph.jsx
-badd +70 components/user/UserCoins.tsx
-badd +37 components/user/UserCoinStats.tsx
+badd +60 components/user/UserCoins.tsx
+badd +1 components/user/UserCoinStats.tsx
 badd +15 components/coin/PeriodSelector.jsx
 badd +1 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
@@ -61,7 +63,6 @@ badd +1 components/wazirx/tradingMenuMobile/uiStore.js
 badd +8 components/wazirx/tradingMenu/Wallet.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
 badd +55 components/user/UserFundTransfers.tsx
-badd +1 components/header/DrawerMenu.tsx
 badd +1 components/wazirx/tradingMenu/WazirxCoinList.tsx
 badd +55 components/Header.tsx
 badd +19 routes.ts
@@ -70,7 +71,6 @@ badd +12 pages/AddUser.tsx
 badd +18 components/summary/TotalCoins.tsx
 badd +1 pages/Summary.tsx
 badd +40 pages/User.tsx
-badd +12 App.jsx
 badd +15 api/request.ts
 badd +7 pages/Home.tsx
 badd +3 utility.ts
