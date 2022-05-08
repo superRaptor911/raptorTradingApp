@@ -38,7 +38,7 @@ const DrawerMenu = ({showDrawer, toggleDrawer}: DrawerMenuProps) => {
   const history = useHistory();
   return (
     <Drawer open={showDrawer} onClose={toggleDrawer}>
-      <List style={{maxWidth: '50vw', width: 250}}>
+      <List style={{maxWidth: '50vw', width: 250, marginTop: 62}}>
         {' '}
         {Menus.map((item, id) => (
           <div key={id}>
