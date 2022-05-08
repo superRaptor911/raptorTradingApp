@@ -7,22 +7,13 @@ cd ~/program/react/vite/raptorTradingApp/src
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
+let s:shortmess_save = &shortmess
 set shortmess=aoO
-argglobal
-%argdel
-edit components/user/UserCoinStats.tsx
-argglobal
-balt components/user/UserCoins.tsx
-let s:l = 51 - ((44 * winheight(0) + 22) / 45)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 51
-normal! 08|
-tabnext 1
-badd +29 App.jsx
-badd +1 components/header/DrawerMenu.tsx
-badd +38 components/CoinList.tsx
+badd +1 components/user/UserCoinStats.tsx
+badd +60 components/user/UserCoins.tsx
+badd +48 App.jsx
+badd +34 components/header/DrawerMenu.tsx
+badd +45 components/CoinList.tsx
 badd +52 components/hooks/useDeviceType.ts
 badd +5 main.jsx
 badd +16 components/wazirx/tradingMenuMobile/PlaceOrderMobile.tsx
@@ -38,8 +29,6 @@ badd +6 components/user/UserCoinNetWorthGraph.tsx
 badd +93 pages/AddTransactions.tsx
 badd +38 components/coin/IndicatorSelector.jsx
 badd +82 components/coin/CoinGraph.jsx
-badd +60 components/user/UserCoins.tsx
-badd +1 components/user/UserCoinStats.tsx
 badd +15 components/coin/PeriodSelector.jsx
 badd +1 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
@@ -49,7 +38,7 @@ badd +37 pages/AdminLogin.tsx
 badd +79 store.ts
 badd +64 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
 badd +1 types.ts
-badd +1 components/UserList.tsx
+badd +79 components/UserList.tsx
 badd +32 api/api.ts
 badd +80 api/wazirxApi.ts
 badd +62 pages/wazirx/WazirxTradingMenuMobile.tsx
@@ -64,7 +53,7 @@ badd +8 components/wazirx/tradingMenu/Wallet.tsx
 badd +35 components/summary/TotalInvestmentAndProfit.tsx
 badd +55 components/user/UserFundTransfers.tsx
 badd +1 components/wazirx/tradingMenu/WazirxCoinList.tsx
-badd +55 components/Header.tsx
+badd +67 components/Header.tsx
 badd +19 routes.ts
 badd +13 components/hooks/useTimer.ts
 badd +12 pages/AddUser.tsx
@@ -72,7 +61,7 @@ badd +18 components/summary/TotalCoins.tsx
 badd +1 pages/Summary.tsx
 badd +40 pages/User.tsx
 badd +15 api/request.ts
-badd +7 pages/Home.tsx
+badd +42 pages/Home.tsx
 badd +3 utility.ts
 badd +6 components/Visibility.tsx
 badd +34 pages/FundTransfer.tsx
@@ -88,11 +77,25 @@ badd +96 components/coin/coinGraphHelper.js
 badd +59 components/coin/CoinBuyMenu.tsx
 badd +16 components/wazirx/stopLossBot/helper.ts
 badd +2 pages/Leaderboard.tsx
+badd +5 index.css
+argglobal
+%argdel
+edit components/header/DrawerMenu.tsx
+argglobal
+balt pages/Home.tsx
+let s:l = 51 - ((33 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 51
+normal! 019|
+tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
-set winheight=1 winwidth=20 shortmess=filnxtToOFc
+set winheight=1 winwidth=20
+let &shortmess = s:shortmess_save
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

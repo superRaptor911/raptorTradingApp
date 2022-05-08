@@ -67,6 +67,8 @@ const PlaceOrder = ({coinId}: {coinId: string}) => {
         width: 400,
         height: 'max-content',
         marginBottom: 2,
+        borderRadius: '20px',
+        padding: 2,
       }}>
       <Stack sx={{width: '100%'}} spacing={2}>
         {priceLoading && (

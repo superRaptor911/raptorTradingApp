@@ -67,7 +67,7 @@ const Header = () => {
   const history = useHistory();
   return (
     <Fragment>
-      <AppBar position="fixed">
+      <AppBar position="fixed" style={{background: '#1D1D1D'}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -92,6 +92,8 @@ const Header = () => {
           ) : (
             <Button
               color="inherit"
+              variant="outlined"
+              style={{marginRight: 10}}
               onClick={() => history.push(ROUTES.loginUser)}>
               Login
             </Button>

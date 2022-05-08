@@ -79,3 +79,23 @@ Note: There is a bug in transactions, it will be fixed in next update
 * Added panning in User Trades Graph
 * Added Trade Rule Menu for stop loss in coin page
 * Fixed input bugs in place order menu
+
+
+# Raptor Trading v2.55
+
+* Upgraded ReactJS to v18
+* Added current price field in user coin table (requested by @shine)
+* Minor bug fixes
+
+-- Known bugs/issues
+* Graph flickering (introduced due to react update)
+* Mobile graph gets stuck on click
+
+# Raptor Trading v2.56
+
+* New design (design by Aaron Paul)
+* Minor bug fixes
+
+-- Known bugs/issues
+* Graph flickering (introduced due to react update)
+* Mobile graph gets stuck on click

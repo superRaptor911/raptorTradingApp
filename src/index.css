@@ -6,9 +6,12 @@ body {
   background-color: #f4f4f4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, #F8F8F8 0%, rgba(167, 166, 166, 0.869792) 36.46%, rgba(115, 113, 113, 0.81) 68.75%, #272727 100%);background: linear-gradient(180deg, #F8F8F8 0%, rgba(167, 166, 166, 0.869792) 36.46%, rgba(115, 113, 113, 0.81) 68.75%, #272727 100%);
+  min-height: 100vh;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

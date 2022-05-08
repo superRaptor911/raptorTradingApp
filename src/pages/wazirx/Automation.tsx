@@ -6,13 +6,15 @@ import {ROUTES} from '../../routes';
 const Automation = () => {
   const history = useHistory();
   return (
-    <div style={{width: '90vw', maxWidth: 800, margin: 'auto', marginTop: 100}}>
+    <div
+      style={{width: '90vw', maxWidth: 800, margin: 'auto', marginTop: '10%'}}>
       <Paper
         sx={{
           padding: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          borderRadius: 7,
         }}>
         <Typography variant="h4" style={{marginBottom: 30}}>
           Automations
@@ -22,8 +24,9 @@ const Automation = () => {
           color="secondary"
           style={{width: '90%'}}
           onClick={() => history.push(ROUTES.stopLossBot)}>
-          Stop Loss Bot
+          Auto-Bot
         </Button>
+        <br />
       </Paper>
     </div>
   );

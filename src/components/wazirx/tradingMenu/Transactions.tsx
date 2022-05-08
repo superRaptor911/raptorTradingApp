@@ -11,6 +11,7 @@ import useTimer from '../../hooks/useTimer';
 import {wazirxGetTransactions} from '../../../api/wazirxApi';
 import {useStore} from '../../../store';
 import {WazirxTransaction} from '../../../types';
+import './styles.css';
 
 const changeInTrans = (
   newTrans: WazirxTransaction[],
@@ -57,9 +58,7 @@ const Transactions = () => {
   };
 
   return (
-    <TableContainer
-      component={Paper}
-      sx={{width: 'max-content', height: '50vh'}}>
+    <TableContainer component={Paper} className="transactions">
       <Table sx={{width: 400}} aria-label="custom pagination table">
         <TableHead>
           <TableRow>

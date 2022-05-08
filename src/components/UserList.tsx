@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import {Fragment, useEffect} from 'react';
 import {useStore} from '../store';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -76,7 +76,7 @@ const UserList = () => {
         width: '90vw',
         maxWidth: 1000,
         margin: 'auto',
-        marginTop: 10,
+        marginTop: 2,
         marginBottom: 10,
       }}>
       <Table sx={{minWidth: '50vw'}} aria-label="simple table">

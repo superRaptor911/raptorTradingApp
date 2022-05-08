@@ -11,8 +11,10 @@ const StopLossBot = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          borderRadius: 7,
         }}>
-        <Typography variant="h4">Stop Loss Bot</Typography>
+        <br />
+        <Typography variant="h4">AUTO BOT</Typography>
         <RulesMenu />
       </Paper>
     </div>

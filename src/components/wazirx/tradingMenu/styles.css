@@ -1,0 +1,28 @@
+.transactions {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    width: max-content;
+    height: 40vh;
+}
+
+.transactions::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.sidebar {
+    width: 260;
+    overflow-y: auto;
+    max-height: 80vh;
+
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+
+

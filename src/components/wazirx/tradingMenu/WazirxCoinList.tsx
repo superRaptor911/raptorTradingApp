@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import useTimer from '../../hooks/useTimer';
 import {getCoinPrice} from '../../helper';
+import './styles.css';
 
 interface WazirxCoinListProp {
   setSelectedCoin: (coin: string) => void;
@@ -33,7 +34,7 @@ const WazirxCoinList = ({setSelectedCoin}: WazirxCoinListProp) => {
   }, []);
 
   return (
-    <Paper sx={{width: 260, overflowY: 'auto', maxHeight: '80vh'}}>
+    <Paper className="sidebar">
       <List>
         {coins &&
           coins.map(item => (

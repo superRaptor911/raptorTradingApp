@@ -27,16 +27,8 @@ const Menus = [
     name: 'Automations',
     link: ROUTES.automations,
   },
-  {
-    name: 'Admin Menu',
-    link: ROUTES.adminMenu,
-  },
-  {
-    name: 'Leaderboard',
-    link: ROUTES.leaderboard,
-  },
+  {name: 'Admin Menu', link: ROUTES.adminMenu},
 ];
-
 interface DrawerMenuProps {
   showDrawer: boolean;
   toggleDrawer: () => void;
@@ -46,14 +38,17 @@ const DrawerMenu = ({showDrawer, toggleDrawer}: DrawerMenuProps) => {
   const history = useHistory();
   return (
     <Drawer open={showDrawer} onClose={toggleDrawer}>
-      <List>
+      <List style={{maxWidth: '50vw', width: 250}}>
+        {' '}
         {Menus.map((item, id) => (
           <div key={id}>
+            {' '}
             <ListItem
               button
               onClick={() => {
                 history.push(item.link);
               }}>
+              {' '}
               <ListItemText primary={item.name} />
             </ListItem>
             <Divider />

@@ -42,7 +42,7 @@ const CoinList = () => {
         width: '90vw',
         maxWidth: 1000,
         margin: 'auto',
-        marginTop: 10,
+        marginTop: 2,
       }}>
       <Table sx={{minWidth: '50vw'}} aria-label="simple table">
         <TableHead>
