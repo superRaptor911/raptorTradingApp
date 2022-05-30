@@ -12,7 +12,7 @@ set shortmess=aoO
 badd +1 components/user/UserCoinStats.tsx
 badd +60 components/user/UserCoins.tsx
 badd +48 App.jsx
-badd +34 components/header/DrawerMenu.tsx
+badd +51 components/header/DrawerMenu.tsx
 badd +45 components/CoinList.tsx
 badd +52 components/hooks/useDeviceType.ts
 badd +5 main.jsx
@@ -33,7 +33,7 @@ badd +15 components/coin/PeriodSelector.jsx
 badd +1 components/user/UserTransactions.tsx
 badd +89 components/wazirx/tradingMenu/Transactions.tsx
 badd +1 pages/wazirx/WazirxDashboard.tsx
-badd +56 components/helper.ts
+badd +58 components/helper.ts
 badd +37 pages/AdminLogin.tsx
 badd +79 store.ts
 badd +64 components/wazirx/tradingMenuMobile/TradingCoinListMobile.jsx
@@ -62,7 +62,7 @@ badd +1 pages/Summary.tsx
 badd +40 pages/User.tsx
 badd +15 api/request.ts
 badd +42 pages/Home.tsx
-badd +3 utility.ts
+badd +10 utility.ts
 badd +6 components/Visibility.tsx
 badd +34 pages/FundTransfer.tsx
 badd +1 pages/AdminMenu.tsx
@@ -80,15 +80,15 @@ badd +2 pages/Leaderboard.tsx
 badd +5 index.css
 argglobal
 %argdel
-edit components/header/DrawerMenu.tsx
+edit components/summary/TotalCoins.tsx
 argglobal
-balt pages/Home.tsx
-let s:l = 51 - ((33 * winheight(0) + 22) / 45)
+balt components/helper.ts
+let s:l = 35 - ((34 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 51
-normal! 019|
+keepjumps 35
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
