@@ -1,8 +1,8 @@
 import {useStore} from '../store';
 import {getRequest, postRequest} from './request';
 
-export const serverUrl = 'https://raptor-trading.herokuapp.com/';
-// export const serverUrl = 'https://raptor-trading-back.herokuapp.com/';
+// export const serverUrl = 'https://raptor-trading.herokuapp.com/';
+export const serverUrl = 'https://raptor-trading-back.herokuapp.com/';
 // const url = 'http://localhost:8080/';
 
 export interface API_Response {
